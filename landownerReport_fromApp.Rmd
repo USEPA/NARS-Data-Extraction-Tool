@@ -1,0 +1,197 @@
+---
+title: ""
+author: ""
+date: ""
+params:
+  userDataRMD: 'NULL'
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+#suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+
+```
+
+
+
+```{r verif, echo=FALSE}
+
+include_graphics("NRSA_logo_sm.jpg")
+
+verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME","CREW",
+                                                                                               "LAT_DD","LON_DD","VALXSITE",'ADD_SITE_CHAR',
+                                                                                               "GEN_COM","DRCTNS","RCHWIDTH","TRCHLEN","CREW_LEADER"),
+                       select = c('PARAMETER','RESULT'))
+
+verification_tbl <- subset(verification, !(PARAMETER %in% c("CREW","DRCTNS","RCHWIDTH" )))
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITE_ID'] <- 'Site ID'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LAT_DD'] <- 'Latitude'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LON_DD'] <- 'Longitude'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Number'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Date'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Location'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VALXSITE'] <- 'Sample Type'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='ADD_SITE_CHAR'] <- 'Site Characteristics'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='TRCHLEN'] <- 'Reach Length'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='CREW_LEADER'] <- 'Crew Leader'
+verification_tbl$RESULT[verification_tbl$PARAMETER=='Reach Length'] <- paste(verification_tbl$RESULT[verification_tbl$PARAMETER=='Reach Length'], 'm', sep=' ') 
+
+```
+
+
+```{r field,echo=F}
+## Field parameters
+field <- subset(params[['userDataRMD']][['FIELD']][[1]], PARAMETER %in% c("LOCATION","TIME" ,"DO","TEMPERATURE" ,
+                                                                                 "PH","CONDUCTIVITY","CORRECTED"))
+
+CONDUCTIVITYunits <- ifelse(as.character(subset(field, PARAMETER == 'CORRECTED')$RESULT)=='Y', 'uS/cm @ 25C','uS/cm')
+
+field_tbl <- subset(field, PARAMETER %in% c('TEMPERATURE','DO','PH', 'CONDUCTIVITY'), select = c('PARAMETER','RESULT'))
+field_tbl$group <- field_tbl$PARAMETER
+
+field_tbl$RESULT[field_tbl$PARAMETER == 'DO'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'DO'], 'mg/L', sep = ' ')
+field_tbl$RESULT[field_tbl$PARAMETER == 'TEMPERATURE'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'TEMPERATURE'], 'C', sep = ' ')
+field_tbl$RESULT[field_tbl$PARAMETER == 'CONDUCTIVITY'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'CONDUCTIVITY'], CONDUCTIVITYunits, sep = ' ')
+
+field_tbl$group[field_tbl$group == 'TEMPERATURE'] <- 1
+field_tbl$group[field_tbl$group == 'DO'] <- 2
+field_tbl$group[field_tbl$group == 'PH'] <- 3
+field_tbl$group[field_tbl$group == 'CONDUCTIVITY'] <- 4
+
+field_tbl$PARAMETER[field_tbl$PARAMETER=='TEMPERATURE'] <- 'Temperature'
+field_tbl$PARAMETER[field_tbl$PARAMETER=='DO'] <- 'Dissolved Oxygen'
+field_tbl$PARAMETER[field_tbl$PARAMETER=='PH'] <- 'pH'
+field_tbl$PARAMETER[field_tbl$PARAMETER=='CONDUCTIVITY'] <- 'Conductivity'
+
+field_tbl <- field_tbl[order(field_tbl$group),]
+field_tbl <- subset(field_tbl, select = -group)
+
+```
+```{r assess, echo=FALSE}
+## Assessment info
+assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% c('WEATHER','CONDITIONS','BEAVER_FLOW_MOD'),
+                     select = c('PARAMETER','RESULT'))
+assessment$PARAMETER[assessment$PARAMETER == 'BEAVER_FLOW_MOD'] <- 'Beaver Flow Modifications'
+assessment$PARAMETER[assessment$PARAMETER == 'WEATHER'] <- 'Weather'
+assessment$PARAMETER[assessment$PARAMETER == 'CONDITIONS'] <- 'Conditions'
+
+assessment$group <- assessment$PARAMETER
+assessment$group[assessment$group == 'Beaver Flow Modifications'] <- 4
+assessment$group[assessment$group == 'Weather'] <- 1
+assessment$group[assessment$group == 'Conditions'] <- 2
+assessment$group[assessment$group == 'Observations'] <- 3
+
+assessment <- assessment[order(assessment$group),]
+assessment <- subset(assessment, PARAMETER!='Conditions', select = -group)
+
+```
+
+
+
+```{r samples, echo=FALSE}
+## samples collected
+# generic samples and description
+samples <- data.frame(Sample = c('CHEM', 'WCHL', 'PERI', 'PCHL', 'PBIO', 'PDNA', 'MICX', 'ENTE','BENT'),
+                  Sample.Name = c('Water Chemistry','Water Chlorophyll a','Periphyton Assemblage','Periphyton Chlorophyll a','Periphyton Biomass','Periphyton DNA',
+                                    "Microcystin & Cylindrospermopsin", 'Enterococci','Benthic Macroinvertebrates'),
+                  Description = c('Nutrients (nitrogen and phosphorus), basic anions & cations, turbidity, organic carbon',
+                                  'Chlorophyll a content in water sample','Algal species composition',
+                                  'Chlorophyll a content in periphyton sample','Biomass in periphyton scraping',
+                                  'eDNA fragments in water','Analyzed for algal toxins in water','*E.coli* and enterococci',
+                                  'Benthic macroinvertebrate composition'), stringsAsFactors=F)
+
+# filter to only what was collected
+samplesData <- unique(params[['userDataRMD']][['SAMPLES']][[1]]$SAMPLE_TYPE)[!(unique(params[['userDataRMD']][['SAMPLES']][[1]]$SAMPLE_TYPE) %in% 'SAMP')]
+
+samplesNotColl <- params[['userDataRMD']][['SAMPLES']][[1]]$SAMPLE_TYPE[params[['userDataRMD']][['SAMPLES']][[1]]$PARAMETER=='NOT_COLLECTED' & params[['userDataRMD']][['SAMPLES']][[1]]$RESULT=='Y']
+
+samplesTaken <- setdiff(samplesData, samplesNotColl) 
+
+samples_tbl <- subset(samples, (Sample %in% samplesTaken))
+samples_tbl <- samples_tbl[!duplicated(samples_tbl[,c('Sample.Name')]), c('Sample.Name','Description')]
+
+```
+
+```{r fish, echo=F}
+## Fish 
+# Add code to handle cases where fish not collected
+  fishTaxa <- subset(params[['userDataRMD']][['FISH']][[1]], SAMPLE_TYPE == 'FISH', select = c('LINE','PARAMETER','RESULT'))
+  fishTaxa <- subset(fishTaxa, PARAMETER!='REVIEW')
+  
+if(nrow(fishTaxa)>0){
+  # First get fish counts
+  fishCounts <- subset(fishTaxa, grepl("COUNT_", PARAMETER))
+  fishCounts.1 <- aggregate(x = list(Count = fishCounts$RESULT), by = fishCounts[c('LINE')], FUN = function(x){sum(as.numeric(x), na.rm=TRUE)})
+  # then fix taxa and join
+  fishTaxa.1 <- subset(fishTaxa, PARAMETER == 'NAME_COM')
+  fishTaxa.1 <- merge(fishTaxa.1, fishCounts.1, by = 'LINE')
+  fishTaxa.1 <- subset(fishTaxa.1, select = c('RESULT','Count'))
+  fishTaxa.1 <- fishTaxa.1[order(fishTaxa.1$Count),]
+}else{
+  fishTaxa.1 <- subset(params[['userDataRMD']][['FISHGEAR']][[1]], PARAMETER %in% c('FISH_PROTOCOL','PROTOCOL_COMMENT'), 
+                       select = c('PARAMETER', 'RESULT'))
+  fishTaxa.1$PARAMETER[fishTaxa.1$PARAMETER=='FISH_PROTOCOL'] <- 'Fish Protocol Result'
+  fishTaxa.1$PARAMETER[fishTaxa.1$PARAMETER=='PROTOCOL_COMMENT'] <- 'Comment'
+}
+
+```
+
+## National Rivers and Streams Assessment Landowner Report
+
+#### About
+This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
+
+
+
+```{r row 1 tables, echo=F}  
+kable(verification_tbl,col.names=c('Station Information',''), row.names=FALSE, align=c('l','r')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T) %>%
+  column_spec(2, width = "16em")
+
+kable(field_tbl,col.names=c('Field Data',''), row.names=FALSE, align=c('l','r')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T, width = "10em") %>%
+  column_spec(2, width = "16em")
+
+kable(assessment ,col.names=c('Field Assessment',''), row.names =FALSE, align=c('l','r')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T, width = "10em") %>%
+  column_spec(2, width = "16em")
+
+```
+
+
+
+```{r row 2 tables, echo=F}
+
+kable(samples_tbl, col.names=c('Sample Name', 'Description'), row.names = FALSE, align=c('l','r')) %>%
+  add_header_above(c('Samples Sent for Laboratory Analysis'=2)) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = T) %>%
+  column_spec(1, border_right = T, width = "15em") %>%
+  column_spec(2, width = "20em")
+```
+
+
+
+```{r row 2 tables 2, echo=F}
+
+if(nrow(fishTaxa)>0){
+  kable(fishTaxa.1, align=c('l','r'), col.names = c('Common Name', 'Count'), row.names = FALSE) %>%
+    add_header_above(c("Fish Caught" = 2)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = 'left') %>%
+    column_spec(1, border_right = T, width = "15em") %>%
+    column_spec(2, width = "12em")
+}else{
+  kable(fishTaxa.1, col.names = c('Fish Not Collected', ''), row.names = FALSE, align=c('l','r')) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = 'left') 
+}
+```
+
+

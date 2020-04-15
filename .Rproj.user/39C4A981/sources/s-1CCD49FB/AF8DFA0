@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586988557200.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1537648399",
+    "id" : "AF8DFA0",
+    "lastKnownWriteTime" : 1586990658,
+    "last_content_update" : 1586990658272,
+    "path" : "C:/Users/kblockso/local/eForms_NARS/app.R",
+    "project_path" : "app.R",
+    "properties" : {
+        "cursorPosition" : "19,114",
+        "scrollLine" : "7"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

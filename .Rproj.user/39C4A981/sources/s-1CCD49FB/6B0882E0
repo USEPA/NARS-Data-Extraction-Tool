@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1586988011367.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3729251730",
+    "id" : "6B0882E0",
+    "lastKnownWriteTime" : 1586988109,
+    "last_content_update" : 1586988109054,
+    "path" : "C:/Users/kblockso/local/eForms_NARS/functions/eFormsOrganizeData_byTable_NRSA.r",
+    "project_path" : "functions/eFormsOrganizeData_byTable_NRSA.r",
+    "properties" : {
+        "cursorPosition" : "34,41",
+        "scrollLine" : "15"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
