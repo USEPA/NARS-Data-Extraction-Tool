@@ -56,16 +56,19 @@ ui <- fluidPage(
                                                  select = ''),
                                     h4(strong('Instructions')),
                                     p('1) Choose the directory where you have saved all of the .JSON files associated with a single site visit. A list of all
-                                                         file names within the directory will be available for preview to the right when they are available to the app.'),
+                                                         file names within the directory will be available for preview to the right when they are available to 
+                                      the app.'),
                                     fileInput(inputId='directory', buttonLabel='Browse...', 
                                               label='Please select files within a folder, holding down Ctrl key to select multiple files.',
                                               multiple=TRUE, accept=c('json','JSON')), 
                                     p('2) Click the Upload button below when you are ready to analyze all data in the selected directory.'),
-                                    actionButton('parseFiles','Parse data in selected files'), 
-                                    br(),
+                                    shinyjs::disabled(actionButton('parseFiles','Parse data in selected files')),
+                                    br(), hr(),
                                     p('3) If you want to save the parsed files to the local directory, please click the download button for the appropriate
                                       output file format. The buttons will not be available until the data is finished processing.
-                                      Once the buttons are available, you may download data. Note: saving as .csv will download a 
+                                      Once the buttons are available, you may download data.'), 
+                                    br(),
+                                    p('Note: saving as .csv will download a 
                                       .zip of all .csv files. All downloads will be saved to your downloads folder.'),
                                     downloadButton("downloadxlsx","Save Results as .xlsx"),
                                     downloadButton("downloadcsv","Save Results as .csv")),
@@ -95,6 +98,11 @@ server <- function(input, output, session) {
   },
   deleteFile=FALSE)
   
+  observeEvent(input$survey, {
+    shinyjs::enable('parseFiles')
+  })
+#  observe({ shinyjs::toggleState('parseFiles', input$survey %in% c('nrsa1819','nla17','ncca20'))})
+  
   # Reactive Value to store all user data
   userData <- reactiveValues()
   
@@ -120,7 +128,6 @@ server <- function(input, output, session) {
   
   
   # Don't let user click download button if no data available
-  # observe({ shinyjs::toggleState('parseFiles', input$survey %in% c('nrsa1819','nla17','ncca20'))})
   observe({ shinyjs::toggleState('downloadxlsx', length(userData$finalOut) != 0  )  })
   observe({ shinyjs::toggleState('downloadcsv', length(userData$finalOut) != 0  )  })
   
