@@ -19,18 +19,28 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
       fileName <- gsub("[[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]]", "", fileName)
       fileName <- gsub('.json*', '', fileName)
       fileName <- gsub('.*/', '', fileName)
-      
-      rr <- eFormsParseJSON(filePath)
-      switch(surv,
-             'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
-             'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
-             'nla17' = {tt <- eFormsOrganize_byTable.nla(rr)}
-             # ,
-             # 'nwca21' = {tt <- eFormsOrganize_byTable_NWCA(rr)}
-      )
-      # tt <- eFormsOrganize_byTable(rr)
-      
-      finalOut[[fileName]] <- tt
+      # Limit the files that are processed to avoid error if user selects wrong survey
+      if((surv=='nla17' & fileName %in% c('ASSESSMENT','INDEX_SAMPLE','PROFILE_CALIBRATION','LITTORAL_SAMPLE','PHAB','VERIFICATION','PROFILE_DATA'))|
+         (surv=='nrsa1819' & (fileName %in% c('FISH','FISHGEAR', 'BENTHIC',
+                                             'VERIFICATION',
+                                             'FIELD','SAMPLES','ASSESSMENT',
+                                             'CONSTRAINT','DISCHARGE','SLOPE','TORRENT')|grepl('PHAB',fileName,ignore.case=TRUE)==TRUE))|
+         (surv=='ncca20' & fileName %in% c('ASSESSMENT',
+                                           'CALIBRATION','VERIFICATION','SAMPLES',
+                                           'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS'))){
+        
+          rr <- eFormsParseJSON(filePath)
+          switch(surv,
+                 'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
+                 'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
+                 'nla17' = {tt <- eFormsOrganize_byTable.nla(rr)}
+                 # ,
+                 # 'nwca21' = {tt <- eFormsOrganize_byTable_NWCA(rr)}
+          )
+          # tt <- eFormsOrganize_byTable(rr)
+          
+          finalOut[[fileName]] <- tt
+        }
       }
     }
   
