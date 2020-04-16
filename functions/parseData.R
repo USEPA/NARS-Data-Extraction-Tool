@@ -44,15 +44,27 @@ narsWriteShiny <- function(surv, filelist, finalList){
   subName.out <- unique(finalList[[1]][[1]]$UID)
   print(subName.out)
     objLen <- map(finalList, length)
-    specialCases <- names(objLen[objLen>2]) # deal with list objects with > 2 separately
+
+  if(surv=='nla17'){
+    specialCases <- names(finalList)[substring(names(finalList),1,4)=='PHAB']
     
+    for(i in 1:length(specialCases)){
+      names(finalList)[names(finalList)==specialCases[i]] <- 'PHAB'
+    }
+    
+    others <- finalList[!(names(finalList)=='PHAB')]
+    
+  }else{
+    specialCases <- names(objLen[objLen>2])
     others <- finalList[!(names(finalList) %in% specialCases)]
+  }  
+    
+
   if(surv=='nrsa1819'){  
     phab_channel <- finalList[specialCases]
-    #phab_channel <- sapply(phab_channel, function(x) x$channel, simplify=TRUE)
+    
     phab_channel <- map_df(phab_channel, 'channel')
-    # print(phab_channel)
-
+    
     phab_chanrip <- finalList[specialCases]
     phab_chanrip <- map_df(phab_chanrip, 'chanrip')
     
@@ -65,7 +77,9 @@ narsWriteShiny <- function(surv, filelist, finalList){
     phab_thalweg <- finalList[specialCases]
     phab_thalweg <- map_df(phab_thalweg, 'thalweg')    
     
-    phab <- list(PHAB_channel = phab_channel, PHAB_chanrip = phab_chanrip, PHAB_chanxsec = phab_chanxsec, PHAB_littoral = phab_littoral, PHAB_thalweg = phab_thalweg)
+    phab <- list(PHAB_channel = phab_channel, PHAB_chanrip = phab_chanrip, 
+                 PHAB_chanxsec = phab_chanxsec, PHAB_littoral = phab_littoral, 
+                 PHAB_thalweg = phab_thalweg)
     
     meta <- list(Metadata = metadata.nrsa) 
     
@@ -83,9 +97,17 @@ narsWriteShiny <- function(surv, filelist, finalList){
      
   
   if(surv=='nrsa1819'){  
-    return(c(map(others,1),phab,meta))
+    
+    return(c(map(others,1), phab, meta))
+    
+  }else if(surv=='nla17'){
+    
+    return(c(map(others,1), phab, meta))
+    
   }else{
-    return(c(map(others,1),meta))
+    
+    return(c(map(others,1), meta))
+    
   }
 }
 

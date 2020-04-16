@@ -96,7 +96,7 @@ profile_tbl.wide <- subset(profile_tbl.wide, select = c('DEPTH','OXYGEN','TEMPER
 
 ```
 
-##National Lakes Assessment Landowner Report
+## National Lakes Assessment Landowner Report
 
 #### About
 This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
