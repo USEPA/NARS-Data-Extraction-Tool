@@ -1,0 +1,220 @@
+---
+title: ""
+author: ""
+date: ""
+params:
+  userDataRMD: 'NULL'
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+
+```
+
+
+
+```{r verif, echo=FALSE, messages=FALSE}
+
+include_graphics("NCCA_logo_sm.jpg")
+
+# Verification and habitat info
+verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], 
+                       PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",
+                                        "VALXSITE",'STATION_DEPTH','GEN_COM','SITESAMP'))
+
+verification_tbl <- subset(verification, !(PARAMETER %in% c("CREW")), select=c('PARAMETER','RESULT'))
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITE_ID'] <- 'Site ID'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Number'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Date'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Location'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITESAMP'] <- 'Site Sampled (Y/N)?'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VALXSITE'] <- 'Sample Type'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='STATION_DEPTH'] <- 'Station Depth (m)'
+
+site <- subset(verification_tbl, PARAMETER=='Site ID')$RESULT
+
+
+```
+
+```{r habitat, echo=FALSE}
+if(subset(verification_tbl, PARAMETER=='Site Sampled (Y/N)?')$RESULT=='Y'){
+  habitat <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('HABITAT','BOTTOM_TYPE','MARINE_DEBRIS','SAV','SAV_ABUNDANCE','MACROALGAE'
+  ,'MACRO_ABUNDANCE','MARINE_DEBRIS_TYPE'))
+ 
+  habitat_tbl <- habitat
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='HABITAT'] <- 'Habitat Type'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='MARINE_DEBRIS'] <- 'Marine debris'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='MARINE_DEBRIS_TYPE'] <- 'Marine debris type'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='BOTTOM_TYPE'] <- 'Bottom type'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='SAV'] <- 'Submerged Aquatic Vegetation (SAV)?'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='MACROALGAE'] <- 'Macroalgae?'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='SAV_ABUNDANCE'] <- 'SAV abundance'
+  habitat_tbl$PARAMETER[habitat_tbl$PARAMETER=='MACRO_ABUNDANCE'] <- 'Macroalgae abundance'
+  
+  habitat_tbl <- subset(habitat_tbl, select=c('PARAMETER', 'RESULT'))
+}
+```
+
+```{r assess, echo=FALSE}
+
+## Assessment info
+if(subset(verification_tbl, PARAMETER=='Site Sampled (Y/N)?')$RESULT=='Y'){
+  assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% 
+                       c('WEATHER','DOM_LAND_USE','FOR_AGE_CLASS','TRASH_PLASTIC_BOTTLES',
+                         'TRASH_OTHER_PLASTIC','TRASH_OTHER','FISHING_GEAR','TRASH_ALUMINUM_CANS',
+                         'TRASH_TIRES'), select = c('PARAMETER','RESULT'))
+
+  assessment_tbl <- assessment
+  
+  assessment_tbl$group[assessment_tbl$PARAMETER=='DOM_LAND_USE'] <- 2
+  assessment_tbl$group[assessment_tbl$PARAMETER=='WEATHER'] <- 1
+  assessment_tbl$group[assessment_tbl$PARAMETER=='FOR_AGE_CLASS'] <- 3
+  assessment_tbl$group[assessment_tbl$PARAMETER=='TRASH_PLASTIC_BOTTLES'] <- 5
+  assessment_tbl$group[assessment_tbl$PARAMETER=='TRASH_OTHER_PLASTIC'] <- 6
+  assessment_tbl$group[assessment_tbl$PARAMETER=='TRASH_OTHER'] <- 9
+  assessment_tbl$group[assessment_tbl$PARAMETER=='TRASH_TIRES'] <- 7
+  assessment_tbl$group[assessment_tbl$PARAMETER=='FISHING_GEAR'] <- 2
+  assessment_tbl$group[assessment_tbl$PARAMETER=='TRASH_ALUMINUM_CANS'] <- 4
+  
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='DOM_LAND_USE'] <- 'Shoreline dominant land use'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='WEATHER'] <- 'Weather'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='FOR_AGE_CLASS'] <- 'Shoreline forest age class'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='TRASH_PLASTIC_BOTTLES'] <- 'Plastic bottle trash'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='TRASH_OTHER_PLASTIC'] <- 'Other plastic trash'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='TRASH_OTHER'] <- 'Other trash'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='TRASH_TIRES'] <- 'Trash'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='FISHING_GEAR'] <- 'Fishing gear trash'
+  assessment_tbl$PARAMETER[assessment_tbl$PARAMETER=='TRASH_ALUMINUM_CANS'] <- 'Aluminum can trash'
+  
+  assessment_tbl <- assessment_tbl[order(assessment_tbl$group),]
+  assessment_tbl <- subset(assessment_tbl, select = -group)
+}
+```
+
+```{r samples, echo=FALSE}
+if(subset(verification_tbl, PARAMETER=='Site Sampled (Y/N)?')$RESULT=='Y'){
+  ## samples collected
+  # generic samples and description
+  samples <- data.frame(Sample = c('CHEM', 'WCHL', 'NUTS', 'MICX', 'ENTE','BENT','PHYT','SEDO','SEDX','SEDC','SEDG'),
+                    Sample.Name = c('Water Chemistry','Water Chlorophyll a','Nutrients',
+                                      'Microcystin & Cylindrospermopsin', 'Enterococci','Benthic Macroinvertebrates',
+                                      'Phytoplankton','Sediment Organics','Sediment Toxicity',
+                                      'Sediment TOC','Sediment Grain Size'),
+                    Description = c('Basic anions & cations, turbidity, organic carbon, pH',
+                                    'Chlorophyll a content in water sample','Phosphorus and nitrogen',
+                                    'Analyzed for algal toxins in water','*E.coli* and enterococci',
+                                    'Benthic macroinvertebrate composition','Algal species composition',
+                                    'Organic contaminants in sediments', 'Sediments for toxicity testing','Sediment total organic carbon',
+                                    'Sediment grain size'))
+  # filter to only what was collected
+  samplesTaken <- unique(params[['userDataRMD']][['SAMPLE']][[1]]$SAMPLE_TYPE)[!(unique(params[['userDataRMD']][['SAMPLE']][[1]]$SAMPLE_TYPE) %in% 'SAMP')]
+  
+  samples_tbl <- subset(samples, Sample %in% samplesTaken)
+  samples_tbl <- samples_tbl[!duplicated(samples_tbl[, c('Sample.Name')]), c('Sample.Name','Description')]
+
+}
+```
+
+```{r profile,echo=FALSE}
+if(subset(verification_tbl, PARAMETER=='Site Sampled (Y/N)?')$RESULT=='Y'){
+  ## Profile - skip secchi because might be too confusing to lay person
+  # Must create different table, depending on whether it's GL or coastal
+  if(substring(site, 1, 3)=='NCA'){
+    profile_tbl <- subset(params[['userDataRMD']][['PROFILE']][[1]], 
+                          PARAMETER %in% c('DEPTH','TEMPERATURE','DO','PH','SALINITY'),
+                          select = c('LINE','PARAMETER','RESULT'))
+    
+    profile_tbl.wide <- reshape(profile_tbl, idvar = c('LINE'), direction = 'wide',
+                                v.names = 'RESULT', timevar = 'PARAMETER')
+    profile_tbl.wide <- profile_tbl.wide[order(profile_tbl.wide$LINE),]
+    names(profile_tbl.wide) <- gsub('RESULT\\.', '', names(profile_tbl.wide))
+    
+    profile_tbl.wide <- base::subset(profile_tbl.wide, select = names(profile_tbl.wide) %in% c('DEPTH','DO','TEMPERATURE','PH','SALINITY'))
+   
+  }else{
+    profile_tbl <- subset(params[['userDataRMD']][['PROFILE']][[1]], 
+                          PARAMETER %in% c('DEPTH','TEMPERATURE','DO','PH','CONDUCTIVITY'),
+                          select = c('LINE','PARAMETER','RESULT'))
+    
+    profile_tbl.wide <- reshape(profile_tbl, idvar = c('LINE'), direction = 'wide',
+                                v.names = 'RESULT', timevar = 'PARAMETER')
+    profile_tbl.wide <- profile_tbl.wide[order(profile_tbl.wide$LINE),]
+    names(profile_tbl.wide) <- gsub('RESULT\\.', '', names(profile_tbl.wide))
+    
+    profile_tbl.wide <- base::subset(profile_tbl.wide, select = names(profile_tbl.wide) %in% c('DEPTH','DO','TEMPERATURE','PH','CONDUCTIVITY'))
+   
+  }
+
+}
+```
+
+## National Coastal Condition/Great Lakes Assessment Landowner Report
+
+#### About
+This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
+
+
+
+```{r row 1 tables, echo=F}  
+kable(verification_tbl,col.names=c('Station Information',''), align=c('l','r'), row.names=F) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "left") %>%
+  column_spec(1, border_right = T) %>%
+  column_spec(2, width = "15em")
+
+if(subset(verification_tbl, PARAMETER=='Site Sampled (Y/N)?')$RESULT=='Y'){
+  kable(habitat_tbl,col.names=c('Habitat Data',''), align=c('l','r'), row.names=F) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "left") %>%
+    column_spec(1, border_right = T, width = "10em") %>%
+    column_spec(2, width = "15em")
+  
+  kable(assessment_tbl ,col.names=c('Field Assessment',''), align=c('l','r'), row.names=F) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "left") %>%
+    column_spec(1, border_right = T, width = "10em") %>%
+    column_spec(2, width = "15em")
+}
+
+```
+
+
+```{r row 2 tables, echo=F}
+if(subset(verification_tbl, PARAMETER=='Site Sampled (Y/N)?')$RESULT=='Y'){
+  kable(samples_tbl, col.names=c('Sample Name', 'Description'), row.names = FALSE, align=c('l','r')) %>%
+    add_header_above(c('Samples Sent for Laboratory Analysis'=2)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "15em") %>%
+    column_spec(2, width = "15em")
+  
+  if(substring(site, 1, 3)=='NCA'){
+    kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)',
+                                   'pH','Salinity (%)'), row.names = FALSE, 
+        align=c('l','c','c','c','c')) %>%
+    add_header_above(c("Depth profile" = 5)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "12em") %>%
+    column_spec(2, width = "8em") %>%
+    column_spec(3, width = "8em") %>%
+    column_spec(4, width = "8em") %>%
+    column_spec(5, width = "8em")
+  }else{
+    kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)',
+                                   'pH','Conductivity uS/cm'), row.names = FALSE, 
+        align=c('l','c','c','c','c')) %>%
+    add_header_above(c("Depth profile" = 5)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "12em") %>%
+    column_spec(2, width = "8em") %>%
+    column_spec(3, width = "8em") %>%
+    column_spec(4, width = "8em") %>%
+    column_spec(5, width = "8em")
+    
+  }
+}
+```
+
+

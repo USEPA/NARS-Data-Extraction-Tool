@@ -138,7 +138,7 @@ server <- function(input, output, session) {
   },
   content = function(fname) {
     fs <- c()
-     z <- karenWriteShiny(as.vector(input$directory$name), userData$finalOut) 
+     z <- narsWriteShiny(input$survey, as.vector(input$directory$name), userData$finalOut) 
 
     for (i in 1:length(z)) {
       
@@ -167,12 +167,22 @@ server <- function(input, output, session) {
           "LandownerReport.html",sep="_")
     },
     content= function(file){
-      tempReport <- normalizePath('landownerReport_fromApp.Rmd')
-      imageToSend1 <- normalizePath('NRSA_logo_sm.jpg')  # choose image name
+      switch(input$survey,
+             'nrsa1819' = {reportName = 'nrsaLandownerReport_fromApp.Rmd'},
+             'nla17' = {reportName = 'nlaLandownerReport_fromApp.Rmd'},
+             'ncca20' = {reportName = 'nccaLandownerReport_fromApp.Rmd'}
+             )
+      
+      switch(input$survey,
+             'nrsa1819' = {logoName = 'NRSA_logo_sm.jpg'},
+             'nla17' = {logoName = 'NLA_logo_sm.jpg'},
+             'ncca20' = {logoName = 'NCCA_logo_sm.jpg'})
+      tempReport <- normalizePath(reportName)
+      imageToSend1 <- normalizePath(logoName)  # choose image name
       owd <- setwd(tempdir())
       on.exit(setwd(owd))
-      file.copy(tempReport, 'landownerReport_fromApp.Rmd')
-      file.copy(imageToSend1, 'NRSA_logo_sm.jpg') # same image name
+      file.copy(tempReport, reportName)
+      file.copy(imageToSend1, logoName) # same image name
       
       params <- list(userDataRMD=userData$finalOut)
       

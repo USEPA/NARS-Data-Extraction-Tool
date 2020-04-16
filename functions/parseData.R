@@ -12,21 +12,23 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
 
     
     # This step parses data and then organizes data in each file, ignoring any tracking files
-    if(grepl('TRACKING',fileName,ignore.case=TRUE)==FALSE){
+    if(grepl('TRACKING|SHIPPING',fileName,ignore.case=TRUE)==FALSE){
     
       fileName <- gsub("[[:alnum:]]+[[:punct:]][[:alpha:]]+[[:punct:]][[:alnum:]]+[[:punct:]][[:alnum:]][[:punct:]]", "", fileName)
+      # If the above pattern is not present, it should be the following
+      fileName <- gsub("[[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]]", "", fileName)
       fileName <- gsub('.json*', '', fileName)
       fileName <- gsub('.*/', '', fileName)
       
       rr <- eFormsParseJSON(filePath)
       switch(surv,
              'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
-             'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)}
+             'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
+             'nla17' = {tt <- eFormsOrganize_byTable.nla(rr)}
              # ,
-             # 'nla17' = {tt <- eFormsOrganize_byTable_NLA(rr)},
              # 'nwca21' = {tt <- eFormsOrganize_byTable_NWCA(rr)}
       )
-      tt <- eFormsOrganize_byTable(rr)
+      # tt <- eFormsOrganize_byTable(rr)
       
       finalOut[[fileName]] <- tt
       }
@@ -64,8 +66,21 @@ narsWriteShiny <- function(surv, filelist, finalList){
     phab_thalweg <- map_df(phab_thalweg, 'thalweg')    
     
     phab <- list(PHAB_channel = phab_channel, PHAB_chanrip = phab_chanrip, PHAB_chanxsec = phab_chanxsec, PHAB_littoral = phab_littoral, PHAB_thalweg = phab_thalweg)
+    
+    meta <- list(Metadata = metadata.nrsa) 
+    
+  }else if(surv=='nla17'){
+    phab_all <- finalList[names(finalList)=='PHAB']
+    phab_all <- map_df(phab_all, 'PHAB')
+    
+    phab <- list(PHAB=phab_all)
+    
+    meta <- list(Metadata = metadata.nla)
+    
+  }else if(surv=='ncca20'){
+    meta <- list(Metadata = metadata.ncca) 
   }
-    meta <- list(Metadata = metadata)
+     
   
   if(surv=='nrsa1819'){  
     return(c(map(others,1),phab,meta))
