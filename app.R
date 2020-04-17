@@ -13,7 +13,7 @@ ui <- fluidPage(
    theme="style.css",
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Rapid Data Extraction and Reporting Tool (v. 0.1)",
+   navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 0.1)",
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
                                 column(6,h2(strong('Tool Overview')), offset=1,
@@ -87,7 +87,8 @@ ui <- fluidPage(
               tabPanel(span('Landowner Report', title='Create a basic landowner report'),
                        sidebarPanel(h3('This tool creates a basic report in html format based on data collected during a field visit to a site. 
                                        It can be saved for crew records or provided to the landowner, either via email or printed and mailed.')),
-                       mainPanel(downloadButton('report','Generate Landowner Report (HTML)')))))
+                       mainPanel(
+                         shinyjs::disabled(downloadButton('report','Generate Landowner Report (HTML)'))))))
    
   
 
@@ -106,7 +107,10 @@ server <- function(input, output, session) {
   observeEvent(input$survey, {
     shinyjs::enable('parseFiles')
   })
-#  observe({ shinyjs::toggleState('parseFiles', input$survey %in% c('nrsa1819','nla17','ncca20'))})
+
+  observeEvent(input$parseFiles, {
+    shinyjs::enable('report')
+  })
   
   # Reactive Value to store all user data
   userData <- reactiveValues()

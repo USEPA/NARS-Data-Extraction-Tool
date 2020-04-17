@@ -26,7 +26,7 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
                                              'FIELD','SAMPLES','ASSESSMENT',
                                              'CONSTRAINT','DISCHARGE','SLOPE','TORRENT')|grepl('PHAB',fileName,ignore.case=TRUE)==TRUE))|
          (surv=='ncca20' & fileName %in% c('ASSESSMENT',
-                                           'CALIBRATION','VERIFICATION','SAMPLES',
+                                           'CALIBRATION','VERIFICATION','SAMPLE',
                                            'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS'))){
         
           rr <- eFormsParseJSON(filePath)

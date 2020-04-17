@@ -22,9 +22,11 @@ suppressPackageStartupMessages(library(kableExtra))
 
 include_graphics("NLA_logo_sm.jpg")
 
-verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",                                                        "GEN_COM","CREW_LEADER"), select = c('PARAMETER','RESULT')) 
+verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",                                                        "GEN_COM","CREW_LEADER","SITESAMP"), select = c('PARAMETER','RESULT')) 
   
-verification_tbl <- subset(verification, !(PARAMETER %in% c("CREW")))
+sampled <- subset(verification, PARAMETER=='SITESAMP')$RESULT
+
+verification_tbl <- subset(verification, !(PARAMETER %in% c("CREW","SITESAMP")))
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITE_ID'] <- 'Site ID'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Number'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Date'
@@ -35,65 +37,68 @@ verification_tbl$PARAMETER[verification_tbl$PARAMETER=='CREW_LEADER'] <- 'Crew L
 ```
 
 ```{r assessment, echo=FALSE}
-## Assessment info
-assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% c('TROPHIC_STATE','ALGAL_ABUNDANCE','WILDLIFE','HYDRO_TYPE','SWIMMABILITY'),
-                     select = c('PARAMETER','RESULT'))
-assessment$PARAMETER[assessment$PARAMETER == 'TROPHIC_STATE'] <- 'Trophic State'
-assessment$PARAMETER[assessment$PARAMETER == 'SWIMMABILITY'] <- 'Swimmability'
-assessment$PARAMETER[assessment$PARAMETER == 'ALGAL_ABUNDANCE'] <- 'Algal Abundance and Type'
-assessment$PARAMETER[assessment$PARAMETER == 'WILDLIFE'] <- 'Wildlife Observed'
-assessment$PARAMETER[assessment$PARAMETER == 'HYDRO_TYPE'] <- 'Hydrologic Lake Type'
-
-assessment$group <- assessment$PARAMETER
-assessment$group[assessment$group == 'Trophic State'] <- 1
-assessment$group[assessment$group == 'Swimmability'] <- 2
-assessment$group[assessment$group == 'Hydrologic Lake Type'] <- 3
-assessment$group[assessment$group == 'Algal Abundance and Type'] <- 4
-assessment$group[assessment$group == 'Wildlife Observed'] <- 5
-
-assessment <- assessment[order(assessment$group),]
-assessment <- subset(assessment, select = -group)
-
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['ASSESSMENT']])){
+  ## Assessment info
+  assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% c('TROPHIC_STATE','ALGAL_ABUNDANCE','WILDLIFE','HYDRO_TYPE','SWIMMABILITY'),
+                       select = c('PARAMETER','RESULT'))
+  assessment$PARAMETER[assessment$PARAMETER == 'TROPHIC_STATE'] <- 'Trophic State'
+  assessment$PARAMETER[assessment$PARAMETER == 'SWIMMABILITY'] <- 'Swimmability'
+  assessment$PARAMETER[assessment$PARAMETER == 'ALGAL_ABUNDANCE'] <- 'Algal Abundance and Type'
+  assessment$PARAMETER[assessment$PARAMETER == 'WILDLIFE'] <- 'Wildlife Observed'
+  assessment$PARAMETER[assessment$PARAMETER == 'HYDRO_TYPE'] <- 'Hydrologic Lake Type'
+  
+  assessment$group <- assessment$PARAMETER
+  assessment$group[assessment$group == 'Trophic State'] <- 1
+  assessment$group[assessment$group == 'Swimmability'] <- 2
+  assessment$group[assessment$group == 'Hydrologic Lake Type'] <- 3
+  assessment$group[assessment$group == 'Algal Abundance and Type'] <- 4
+  assessment$group[assessment$group == 'Wildlife Observed'] <- 5
+  
+  assessment <- assessment[order(assessment$group),]
+  assessment <- subset(assessment, select = -group)
+}
 ```
 
 ```{r samples, echo=FALSE}
-## samples collected
-# generic samples and description
-samples <- data.frame(Sample = c('CHEM', 'CHLX', 'NUTS', 'MICX', 'BACT','BENT','PHYX','SEDO','SEDC','SEDG','ZOCN','ZOFN'),
-                      Sample.Name = c('Water Chemistry','Water Chlorophyll a','Nutrients',
-                                    'Microcystin & Cylindrospermopsin', 'Bacteria','Benthic Macroinvertebrates',
-                                    'Phytoplankton','Sediment Organics',
-                                    'Sediment TOC','Sediment Grain Size','Zooplankton-coarse',
-                                    'Zooplankton-fine'),
-                      Description = c('Basic anions & cations, turbidity, organic carbon, pH',
-                                  'Chlorophyll a content in water sample','Phosphorus and nitrogen',
-                                  'Analyzed for algal toxins in water','*E.coli* and enterococci',
-                                  'Benthic macroinvertebrate composition','Algal species composition',
-                                  'Organic contaminants in sediments', 'Sediment total organic carbon',
-                                  'Sediment grain size','Zooplankton captured with coarse mesh',
-                                  'Zooplankton captured with fine mesh'), stringsAsFactors=F)
-
-# filter to only what was collected
-samplesTaken <- params[['userDataRMD']][['INDEX_SAMPLE']][[1]]$SAMPLE_TYPE[params[['userDataRMD']][['INDEX_SAMPLE']][[1]]$PARAMETER %in% 'SAMPLE_ID']
-
-samples_tbl <- subset(samples, Sample %in% samplesTaken)
-samples_tbl <- samples_tbl[!duplicated(samples_tbl[, c('Sample.Name')]), c('Sample.Name','Description')]
-
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['INDEX_SAMPLE']])){
+  ## samples collected
+  # generic samples and description
+  samples <- data.frame(Sample = c('CHEM', 'CHLX', 'NUTS', 'MICX', 'BACT','BENT','PHYX','SEDO','SEDC','SEDG','ZOCN','ZOFN'),
+                        Sample.Name = c('Water Chemistry','Water Chlorophyll a','Nutrients',
+                                      'Microcystin & Cylindrospermopsin', 'Bacteria','Benthic Macroinvertebrates',
+                                      'Phytoplankton','Sediment Organics',
+                                      'Sediment TOC','Sediment Grain Size','Zooplankton-coarse',
+                                      'Zooplankton-fine'),
+                        Description = c('Basic anions & cations, turbidity, organic carbon, pH',
+                                    'Chlorophyll a content in water sample','Phosphorus and nitrogen',
+                                    'Analyzed for algal toxins in water','*E.coli* and enterococci',
+                                    'Benthic macroinvertebrate composition','Algal species composition',
+                                    'Organic contaminants in sediments', 'Sediment total organic carbon',
+                                    'Sediment grain size','Zooplankton captured with coarse mesh',
+                                    'Zooplankton captured with fine mesh'), stringsAsFactors=F)
+  
+  # filter to only what was collected
+  samplesTaken <- params[['userDataRMD']][['INDEX_SAMPLE']][[1]]$SAMPLE_TYPE[params[['userDataRMD']][['INDEX_SAMPLE']][[1]]$PARAMETER %in% 'SAMPLE_ID']
+  
+  samples_tbl <- subset(samples, Sample %in% samplesTaken)
+  samples_tbl <- samples_tbl[!duplicated(samples_tbl[, c('Sample.Name')]), c('Sample.Name','Description')]
+}
 ```
 ```{r profile, echo = FALSE}
-## Profile - skip secchi because might be too confusing to lay person
-profile_tbl <- subset(params[['userDataRMD']][['PROFILE_DATA']][[1]], 
-                      PARAMETER %in% c('DEPTH','TEMPERATURE','OXYGEN','PH','CONDUCTIVITY'), 
-                      select = c('LINE','PARAMETER','RESULT'))
-
-profile_tbl.wide <- reshape(profile_tbl, idvar = c('LINE'), direction = 'wide',
-                            v.names = 'RESULT', timevar = 'PARAMETER')
-profile_tbl.wide <- profile_tbl.wide[order(profile_tbl.wide$LINE),]
-names(profile_tbl.wide) <- gsub('RESULT\\.', '', names(profile_tbl.wide))
-
-profile_tbl.wide <- subset(profile_tbl.wide, select = c('DEPTH','OXYGEN','TEMPERATURE','PH','CONDUCTIVITY'))
-
-
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['PROFILE_DATA']])){
+  ## Profile - skip secchi because might be too confusing to lay person
+  profile_tbl <- subset(params[['userDataRMD']][['PROFILE_DATA']][[1]], 
+                        PARAMETER %in% c('DEPTH','TEMPERATURE','OXYGEN','PH','CONDUCTIVITY'), 
+                        select = c('LINE','PARAMETER','RESULT'))
+  
+  profile_tbl.wide <- reshape(profile_tbl, idvar = c('LINE'), direction = 'wide',
+                              v.names = 'RESULT', timevar = 'PARAMETER')
+  profile_tbl.wide <- profile_tbl.wide[order(profile_tbl.wide$LINE),]
+  names(profile_tbl.wide) <- gsub('RESULT\\.', '', names(profile_tbl.wide))
+  
+  profile_tbl.wide <- subset(profile_tbl.wide, select = c('DEPTH','OXYGEN','TEMPERATURE','PH','CONDUCTIVITY'))
+  
+}
 ```
 
 ## National Lakes Assessment Landowner Report
@@ -109,32 +114,36 @@ kable(verification_tbl,col.names=c('Station Information',''), align=c('l','r'), 
   column_spec(1, border_right = T) %>%
   column_spec(2, width = "15em")
 
-kable(assessment ,col.names=c('Field Assessment',''), align=c('l','r'), row.names=F) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "10em") %>%
-  column_spec(2, width = "15em")
-
+if(sampled=='Y' & exists("assessment")){
+  kable(assessment ,col.names=c('Field Assessment',''), align=c('l','r'), row.names=F) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "10em") %>%
+    column_spec(2, width = "15em")
+}
 ```
 
 
 ```{r row 3 tables, echo=F}
-kable(samples_tbl, col.names=c('Sample Name', 'Description'), row.names = FALSE, align=c('l','r')) %>%
-  add_header_above(c('Samples Sent for Laboratory Analysis'=2)) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "15em") %>%
-  column_spec(2, width = "15em")
+if(sampled=='Y' & exists("samples_tbl")){
+  kable(samples_tbl, col.names=c('Sample Name', 'Description'), row.names = FALSE, align=c('l','r')) %>%
+    add_header_above(c('Samples Sent for Laboratory Analysis'=2)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "15em") %>%
+    column_spec(2, width = "15em")
+}
 ```
 ```{r row3 tables 2, echo=F}
-kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm'), row.names = FALSE, 
-      align=c('l','c','c','c','c')) %>%
-  add_header_above(c("Depth profile" = 5)) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "12em") %>%
-  column_spec(2, width = "8em") %>%
-  column_spec(3, width = "8em") %>%
-  column_spec(4, width = "8em") %>%
-  column_spec(5, width = "8em")
-
+if(sampled=='Y' & exists("profile_tbl.wide")){
+  kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm'), row.names = FALSE, 
+        align=c('l','c','c','c','c')) %>%
+    add_header_above(c("Depth profile" = 5)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "12em") %>%
+    column_spec(2, width = "8em") %>%
+    column_spec(3, width = "8em") %>%
+    column_spec(4, width = "8em") %>%
+    column_spec(5, width = "8em")
+}
 ```
 
 
