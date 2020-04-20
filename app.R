@@ -85,8 +85,9 @@ ui <- fluidPage(
                          h5('Preview files in directory'),
                          tableOutput('preview'))),
               tabPanel(span('Landowner Report', title='Create a basic landowner report'),
-                       sidebarPanel(h3('This tool creates a basic report in html format based on data collected during a field visit to a site. 
-                                       It can be saved for crew records or provided to the landowner, either via email or printed and mailed.')),
+                       sidebarPanel(p('This tool creates a basic report in html format based on data collected during a field visit to a site. 
+                                       It can be saved for crew records or provided to the landowner, either via email or printed and mailed. 
+                                       At a minimum, the', span(strong('verification form')), 'must be submitted.')),
                        mainPanel(
                          shinyjs::disabled(downloadButton('report','Generate Landowner Report (HTML)'))))))
    
