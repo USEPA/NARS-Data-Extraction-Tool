@@ -63,9 +63,10 @@ organizeSamples.ncca <- function(parsedIn){
   aa.long <- reshape(aa, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
                      v.names = 'RESULT', timevar = 'variable', direction = 'long')
   aa.long$SAMPLE_TYPE <- with(aa.long, substring(as.character(variable), 9, 12))
-  aa.long$PARAMETER <- with(aa.long, ifelse(str_detect(variable, '\\_COMMENT'),
-                                      substring(as.character(variable), 9, nchar(as.character(variable))),
-                                      substring(as.character(variable),14,nchar(as.character(variable)))))
+  aa.long$variable <- with(aa.long, gsub('SAMPLES\\.', '', variable))
+  aa.long$PARAMETER <- with(aa.long, ifelse(str_detect(variable, '\\_COMMENT')|variable=='BENTHIC_DISTANCE',
+                                      variable, substring(as.character(variable),6,nchar(as.character(variable)))))
+  aa.long <- subset(aa.long, str_detect(variable, 'REVIEW')==FALSE)
   
   aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
@@ -184,7 +185,8 @@ organizeSampProc.ncca <- function(parsedIn){
   aa.long$variable <- with(aa.long, gsub('SAMPLE\\_PROCESS\\.', '', variable))
   aa.long$SAMPLE_TYPE <- with(aa.long, substring(as.character(variable), 1, 4))
   aa.long <- subset(aa.long, str_detect(variable, 'REVIEW')==FALSE)
-  aa.long$PARAMETER <- substring(aa.long$variable, 6, nchar(aa.long$variable))
+  aa.long$PARAMETER <- ifelse(aa.long$variable=='BENTHIC_DISTANCE', aa.long$variable, 
+                              substring(aa.long$variable, 6, nchar(aa.long$variable)))
   
   aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
