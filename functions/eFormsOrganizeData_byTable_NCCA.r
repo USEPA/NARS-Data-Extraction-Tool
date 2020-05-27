@@ -47,6 +47,7 @@ organizeVerification.ncca <- function(parsedIn){
   aa.long$PARAMETER <- with(aa.long, gsub('VERIFICATION\\.', '', PARAMETER)) 
   
   aa.long$SAMPLE_TYPE <- with(aa.long, ifelse(grepl('MACRO_ALGAE|BOTTOM_TYPE|HABITAT|MACRO_ABUNDANCE|MACROALGAE|MARINE_DEBRIS|MARINE_DEBRIS_TYPE|SAV|SAV_ABUNDANCE', PARAMETER), 'SHAB', 'VERIF'))
+  aa.long <- subset(aa.long, str_detect(PARAMETER, 'REVIEW')==FALSE)
   
   aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
@@ -82,6 +83,7 @@ organizeAssessment.ncca <- function(parsedIn){
                      direction = 'long')
   
   aa.long$PARAMETER <- with(aa.long, gsub("ASSESSMENT\\.", "", PARAMETER))
+  aa.long <- subset(aa.long, str_detect(PARAMETER, 'REVIEW')==FALSE)
   
   aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
@@ -100,6 +102,7 @@ organizeProfile.ncca <- function(parsedIn){
                      v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
   aa.long$PARAMETER <- with(aa.long, str_replace(PARAMETER, "PROFILE\\.",""))
   aa.long$SAMPLE_TYPE <- with(aa.long, ifelse(str_starts(PARAMETER,'CLEAR_TO_BOTTOM|DISAPPEARS|REAPPEARS|SECCHI'),'SECC', SAMPLE_TYPE))
+  aa.long <- subset(aa.long, str_detect(PARAMETER, 'REVIEW')==FALSE)
   
   aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
   
@@ -113,6 +116,7 @@ organizeProfile.ncca <- function(parsedIn){
   bb.long$variable <- with(bb.long, gsub('PROFILE\\.', '', variable))
   bb.long$LINE <- str_extract(bb.long$variable, '[:digit:]+')
   bb.long$PARAMETER <- str_replace(bb.long$variable, '[:digit:]+\\_', '')
+  bb.long <- subset(bb.long, str_detect(variable, 'REVIEW')==FALSE)
 
   bb.out <- base::subset(bb.long, select=c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
   
@@ -132,6 +136,7 @@ organizeCalibration.ncca <- function(parsedIn){
                      v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long') 
   
   aa.long$PARAMETER <- gsub('CALIBRATION\\.', '', aa.long$PARAMETER)
+  aa.long <- subset(aa.long, str_detect(PARAMETER, 'REVIEW')==FALSE)
   
   aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
 

@@ -1,0 +1,9 @@
+---
+applications:
+- name: eformsnars-dev
+  memory: 4000M
+  disk quota: 1500M
+  routes:
+    - route: eformsnars-dev.app.cloud.gov
+  buildpacks:
+    - r_buildpack

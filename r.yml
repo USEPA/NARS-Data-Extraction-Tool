@@ -1,0 +1,13 @@
+---
+packages:
+  - packages:
+    - name: shinyjs
+    - name: purrr
+    - name: RJSONIO
+    - name: stringr
+    - name: writexl
+    - name: zip
+    - name: shinyBS
+    - name: kableExtra
+    - name: knitr
+    - name: magrittr

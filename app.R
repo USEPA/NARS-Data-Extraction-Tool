@@ -225,5 +225,5 @@ server <- function(input, output, session) {
 }
 
 # Run the application 
-shinyApp(ui = ui, server = server)
-# shiny::runApp(list(ui = ui, server = server), host="0.0.0.0", port=strtoi(Sys.getenv("PORT")))
+# shinyApp(ui = ui, server = server)
+ shiny::runApp(list(ui = ui, server = server), host="0.0.0.0", port=strtoi(Sys.getenv("PORT")))
