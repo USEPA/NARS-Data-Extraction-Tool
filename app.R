@@ -196,15 +196,15 @@ server <- function(input, output, session) {
     },
     content= function(file){
       switch(input$survey,
-             'nrsa1819' = {reportName = 'nrsaLandownerReport_fromApp.Rmd'},
-             'nla17' = {reportName = 'nlaLandownerReport_fromApp.Rmd'},
-             'ncca20' = {reportName = 'nccaLandownerReport_fromApp.Rmd'}
+             'nrsa1819' = {reportName <- 'nrsaLandownerReport_fromApp.Rmd'},
+             'nla17' = {reportName <- 'nlaLandownerReport_fromApp.Rmd'},
+             'ncca20' = {reportName <- 'nccaLandownerReport_fromApp.Rmd'}
              )
       
       switch(input$survey,
-             'nrsa1819' = {logoName = 'NRSA_logo_sm.jpg'},
-             'nla17' = {logoName = 'NLA_logo_sm.jpg'},
-             'ncca20' = {logoName = 'NCCA_logo_sm.jpg'})
+             'nrsa1819' = {logoName <- 'NRSA_logo_sm.jpg'},
+             'nla17' = {logoName <- 'NLA_logo_sm.jpg'},
+             'ncca20' = {logoName <- 'NCCA_logo_sm.jpg'})
       tempReport <- normalizePath(reportName)
       imageToSend1 <- normalizePath(logoName)  # choose image name
       owd <- setwd(tempdir())

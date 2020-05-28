@@ -19,12 +19,12 @@ eFormsOrganize_byTable.ncca <- function(rawData){
   switch(sampletype,
     ASSESSMENT = {rr <- organizeAssessment.ncca(parsedData)},
     CALIBRATION = {rr <- organizeCalibration.ncca(parsedData)},
-    VERIFICATION = {rr = organizeVerification.ncca(parsedData)},
-    SAMPLES = {rr = organizeSamples.ncca(parsedData)},
-    PROFILE = {rr = organizeProfile.ncca(parsedData)},
-    ECOFISH = {rr = organizeEcofish.ncca(parsedData)},
-    HHFISH = {rr = organizeHHfish.ncca(parsedData)},
-    SAMPLE_PROCESS = {rr = organizeSampProc.ncca(parsedData)}
+    VERIFICATION = {rr <- organizeVerification.ncca(parsedData)},
+    SAMPLES = {rr <- organizeSamples.ncca(parsedData)},
+    PROFILE = {rr <- organizeProfile.ncca(parsedData)},
+    ECOFISH = {rr <- organizeEcofish.ncca(parsedData)},
+    HHFISH = {rr <- organizeHHfish.ncca(parsedData)},
+    SAMPLE_PROCESS = {rr <- organizeSampProc.ncca(parsedData)}
   )
   
   ss <- list(cbind(visitinfo, rr))

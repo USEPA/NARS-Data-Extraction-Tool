@@ -24,8 +24,8 @@ eFormsOrganize_byTable.nla <- function(rawData){
     PROFILE_CALIBRATION = {rr <- organizeCalibration.nla(parsedData)},
     LITTORAL_SAMPLE = {rr <- organizeLittoral.nla(parsedData)},
     PHAB = {rr <- organizePhab.nla(parsedData)},
-    VERIFICATION = {rr = organizeVerification.nla(parsedData)},
-    PROFILE_DATA = {rr = organizeProfile.nla(parsedData)}
+    VERIFICATION = {rr <- organizeVerification.nla(parsedData)},
+    PROFILE_DATA = {rr <- organizeProfile.nla(parsedData)}
   )
   
   ss <- list(cbind(visitinfo, rr))
