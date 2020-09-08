@@ -1,0 +1,9 @@
+---
+applications:
+- name: nars-dataextr-stage
+  memory: 512M
+  disk quota: 1024M
+  routes:
+    - route: nars-dataextr-stage.app.cloud.gov
+  buildpacks:
+    - r_buildpack

@@ -1,0 +1,9 @@
+---
+applications:
+- name: nars-dataextr-dev
+  memory: 512M
+  disk quota: 1024M
+  routes:
+    - route: nars-dataextr-dev.app.cloud.gov
+  buildpacks:
+    - r_buildpack
