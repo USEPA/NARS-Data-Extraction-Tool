@@ -1,8 +1,6 @@
 ---
 packages:
-- cran_mirror: https://raw.githubusercontent.com/USEPA/cflinuxfs3-CRAN/master/cflinuxfs3/
-  num_threads: 2
-  packages:
+- packages:
     - name: shinyjs
     - name: purrr
     - name: RJSONIO
@@ -12,4 +10,3 @@ packages:
     - name: shinyBS
     - name: kableExtra
     - name: knitr
-    - name: magrittr
