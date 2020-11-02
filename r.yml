@@ -10,3 +10,4 @@ packages:
     - name: shinyBS
     - name: kableExtra
     - name: knitr
+    - name: rmarkdown

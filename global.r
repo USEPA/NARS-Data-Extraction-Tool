@@ -7,6 +7,7 @@ library(stringr)
 library(writexl)
 library(zip, warn.conflicts = FALSE)
 library(shinyBS)
+library(rmarkdown)
 
 source('functions/eFormsParseJSON_basic.r')
 source('functions/eFormsParseJSONtext.r')
