@@ -1,0 +1,2 @@
+RMARKDOWN_PANDOC="/home/vcap/app/bin/pandoc"
+PATH="/home/vcap/app/bin/:${PATH}"
