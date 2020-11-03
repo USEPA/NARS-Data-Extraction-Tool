@@ -657,6 +657,15 @@ License: MIT + file LICENSE
 MD5sum: 64e3438df50c3002d5c93545e76da23a
 NeedsCompilation: yes
 
+Package: packrat
+Version: 0.5.0
+Depends: R (>= 3.0.0)
+Imports: tools, utils
+Suggests: testthat (>= 0.7), devtools, httr, knitr, rmarkdown
+License: GPL-2
+MD5sum: 59a312ef8146a54f7020ad72d540b5ca
+NeedsCompilation: no
+
 Package: parsedate
 Version: 1.2.0
 Imports: rematch2
@@ -942,6 +951,15 @@ License: GPL-3
 MD5sum: 030a1d238d41ee1e5e21e55eba8403b2
 NeedsCompilation: no
 
+Package: rsconnect
+Version: 0.8.16
+Depends: R (>= 3.0.0)
+Imports: curl, digest, jsonlite, openssl, packrat (>= 0.4.8-1), rstudioapi (>= 0.5), yaml (>= 2.1.5)
+Suggests: RCurl, callr, httpuv, knitr, plumber (>= 0.3.2), reticulate, rmarkdown (>= 1.1), shiny, sourcetools, testthat, xtable
+License: GPL-2
+MD5sum: 11312302422a42515f660aff8f4d5105
+NeedsCompilation: no
+
 Package: rstudioapi
 Version: 0.11
 Suggests: testthat, knitr, rmarkdown, clipr
@@ -1199,6 +1217,13 @@ Imports: xfun (>= 0.19)
 Suggests: testit, rstudioapi
 License: MIT + file LICENSE
 MD5sum: a2551f442bd49108f9cad6b0792ce282
+NeedsCompilation: no
+
+Package: tufte
+Version: 0.8
+Imports: htmltools, xfun (>= 0.13), knitr (>= 1.28), rmarkdown (>= 2.1)
+License: GPL-3
+MD5sum: bcf35d8fd51508e709f7b23657216c5a
 NeedsCompilation: no
 
 Package: utf8
