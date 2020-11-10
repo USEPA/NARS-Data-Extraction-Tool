@@ -10,7 +10,7 @@ source('global.r')
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-   theme="style.css",
+#   theme="style.css",
    shinyjs::useShinyjs(),
    # Application title
    navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 0.1)",
