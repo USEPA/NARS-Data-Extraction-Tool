@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "National Lakes Assessment Landowner Report"
 author: ""
 date: ""
 params:
@@ -22,7 +22,7 @@ suppressPackageStartupMessages(library(kableExtra))
 
 include_graphics("NLA_logo_sm.jpg")
 
-verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",                                                        "GEN_COM","CREW_LEADER","SITESAMP"), select = c('PARAMETER','RESULT')) 
+verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",                                                        "SITESAMP"), select = c('PARAMETER','RESULT')) 
   
 sampled <- subset(verification, PARAMETER=='SITESAMP')$RESULT
 
@@ -31,8 +31,8 @@ verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITE_ID'] <- 'Site ID'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Number'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Date'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Location'
-verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
-verification_tbl$PARAMETER[verification_tbl$PARAMETER=='CREW_LEADER'] <- 'Crew Leader'
+# verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
+# verification_tbl$PARAMETER[verification_tbl$PARAMETER=='CREW_LEADER'] <- 'Crew Leader'
 
 ```
 
@@ -100,8 +100,6 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['PROFILE_DATA']])){
   
 }
 ```
-
-## National Lakes Assessment Landowner Report
 
 #### About
 This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.

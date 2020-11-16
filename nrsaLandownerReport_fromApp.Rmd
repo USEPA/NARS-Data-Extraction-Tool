@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "National Rivers and Streams Assessment Landowner Report"
 author: ""
 date: ""
 params:
@@ -25,7 +25,7 @@ include_graphics("NRSA_logo_sm.jpg")
 
 verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME","CREW",
                                                                                                "LAT_DD","LON_DD","VALXSITE",'ADD_SITE_CHAR',
-                                                                                               "GEN_COM","DRCTNS","RCHWIDTH","TRCHLEN","CREW_LEADER","SITESAMP"),
+                                                                                               "DRCTNS","RCHWIDTH","TRCHLEN","SITESAMP"),
                        select = c('PARAMETER','RESULT'))
 sampled <- subset(verification, PARAMETER=='SITESAMP')$RESULT
 
@@ -38,9 +38,9 @@ verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Da
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Location'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VALXSITE'] <- 'Sample Type'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='ADD_SITE_CHAR'] <- 'Site Characteristics'
-verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
+# verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='TRCHLEN'] <- 'Reach Length'
-verification_tbl$PARAMETER[verification_tbl$PARAMETER=='CREW_LEADER'] <- 'Crew Leader'
+# verification_tbl$PARAMETER[verification_tbl$PARAMETER=='CREW_LEADER'] <- 'Crew Leader'
 verification_tbl$RESULT[verification_tbl$PARAMETER=='Reach Length'] <- paste(verification_tbl$RESULT[verification_tbl$PARAMETER=='Reach Length'], 'm', sep=' ') 
 
 
@@ -151,8 +151,6 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['FISH']])){
   }
 }
 ```
-
-## National Rivers and Streams Assessment Landowner Report
 
 #### About
 This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.

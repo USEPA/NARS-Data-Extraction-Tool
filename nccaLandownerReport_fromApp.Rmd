@@ -1,5 +1,5 @@
 ---
-title: " "
+title: "National Coastal Condition/Great Lakes Assessment Landowner Report"
 author: ""
 date: ""
 params:
@@ -25,7 +25,7 @@ include_graphics("NCCA_logo_sm.jpg")
 # Verification and habitat info
 verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], 
                        PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",
-                                        "VALXSITE",'STATION_DEPTH','GEN_COM','SITESAMP'))
+                                        "VALXSITE",'STATION_DEPTH','SITESAMP'))
 sampled <- subset(verification, PARAMETER=='SITESAMP')$RESULT
 
 verification_tbl <- subset(verification, !(PARAMETER %in% c("CREW","SITESAMP")), select=c('PARAMETER','RESULT'))
@@ -35,7 +35,7 @@ verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Da
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Location'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITESAMP'] <- 'Site Sampled (Y/N)?'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VALXSITE'] <- 'Sample Type'
-verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
+# verification_tbl$PARAMETER[verification_tbl$PARAMETER=='GEN_COM'] <- 'General Site Comments'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='STATION_DEPTH'] <- 'Station Depth (m)'
 
 site <- subset(verification_tbl, PARAMETER=='Site ID')$RESULT
@@ -160,8 +160,6 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['PROFILE']])){
 
 }
 ```
-
-## National Coastal Condition/Great Lakes Assessment Landowner Report
 
 #### About
 This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
