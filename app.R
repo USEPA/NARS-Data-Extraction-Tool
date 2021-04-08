@@ -13,7 +13,7 @@ ui <- fluidPage(
 #   theme="style.css",
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 0.1)",
+   navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 1.0)",
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
                                 column(6,h2(strong('Tool Overview')), offset=1,
