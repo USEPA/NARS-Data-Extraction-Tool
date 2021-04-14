@@ -1,5 +1,5 @@
 ---
-title: "National Lakes Assessment Landowner Report"
+title: "National Lakes Assessment Field Visit Summary"
 author: ""
 date: ""
 params:
@@ -39,19 +39,19 @@ verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Location'
 ```{r assessment, echo=FALSE}
 if(sampled=='Y' & !is.null(params[['userDataRMD']][['ASSESSMENT']])){
   ## Assessment info
-  assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% c('TROPHIC_STATE','ALGAL_ABUNDANCE','WILDLIFE','HYDRO_TYPE','SWIMMABILITY'),
+  assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% c('TROPHIC_STATE','WILDLIFE','HYDRO_TYPE'),
                        select = c('PARAMETER','RESULT'))
   assessment$PARAMETER[assessment$PARAMETER == 'TROPHIC_STATE'] <- 'Trophic State'
-  assessment$PARAMETER[assessment$PARAMETER == 'SWIMMABILITY'] <- 'Swimmability'
-  assessment$PARAMETER[assessment$PARAMETER == 'ALGAL_ABUNDANCE'] <- 'Algal Abundance and Type'
+ # assessment$PARAMETER[assessment$PARAMETER == 'SWIMMABILITY'] <- 'Swimmability'
+ # assessment$PARAMETER[assessment$PARAMETER == 'ALGAL_ABUNDANCE'] <- 'Algal Abundance and Type'
   assessment$PARAMETER[assessment$PARAMETER == 'WILDLIFE'] <- 'Wildlife Observed'
   assessment$PARAMETER[assessment$PARAMETER == 'HYDRO_TYPE'] <- 'Hydrologic Lake Type'
   
   assessment$group <- assessment$PARAMETER
   assessment$group[assessment$group == 'Trophic State'] <- 1
-  assessment$group[assessment$group == 'Swimmability'] <- 2
+  # assessment$group[assessment$group == 'Swimmability'] <- 2
   assessment$group[assessment$group == 'Hydrologic Lake Type'] <- 3
-  assessment$group[assessment$group == 'Algal Abundance and Type'] <- 4
+  # assessment$group[assessment$group == 'Algal Abundance and Type'] <- 4
   assessment$group[assessment$group == 'Wildlife Observed'] <- 5
   
   assessment <- assessment[order(assessment$group),]

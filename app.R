@@ -67,37 +67,43 @@ ui <- fluidPage(
                                                              'NCCA 2020' = 'ncca20'),
                                                  select = ''),
                                     h4(strong('Instructions')),
-                                    p('1) Choose the directory where you have saved all of the .JSON files associated
-                                          with a single site visit. A list of all file names within the directory will be
-                                          available for preview to the right when they are available to the app.'),
+                                    p('1) Select all the .JSON files associated with a single site visit by clicking on the ‘Browse’
+                                      button below.  In the directory window that appears, locate the folder in which the files are
+                                      saved, select one or multiple files, and upload them by clicking on the ‘Open’ button.  Note 
+                                      that multiple files may be selected at once by holding down the Ctrl key.  Upon success, a 
+                                      blue ‘Upload complete’ bar appears along with the number of files uploaded.  The uploaded 
+                                      file names will also be listed in the window to the right.'),
                                     fileInput(inputId='directory', buttonLabel='Browse...',
                                               label='Please select files within a folder, holding down Ctrl key to select multiple files.',
                                               multiple=TRUE, accept=c('json','JSON')),
-                                    p('2) Click the Upload button below when you are ready to analyze all data in the selected directory.'),
+                                    p('2) Click on the ‘Parse data’ button below to prepare the uploaded files for conversion to .xlsx 
+                                      and .csv format.'),
                                     shinyjs::disabled(actionButton('parseFiles','Parse data in selected files')),
                                     br(), hr(),
-                                    p('3) If you want to save the parsed files to the local directory, please click the download
-                                          button for the appropriate output file format. The buttons will not be available until
-                                          the data is finished processing. Once the buttons are available, you may download data.'),
+                                    p('3) To download and save the .JSON data in .xlsx or .csv file formats, click on the appropriate
+                                      ‘Save Results’ button below.  A directory window will appear allowing you to choose where to 
+                                      save the files. Note: .xlsx files will save as one file with each .JSON file in a separate 
+                                      tab while .csv files will save as a .zip file with each .JSON file saved as an individual 
+                                      .csv file.'),
                                     br(),
                                     p('Note: saving as .csv will download a
                                       .zip of all .csv files. All downloads will be saved to your downloads folder.'),
                                     downloadButton("downloadxlsx","Save Results as .xlsx"),
                                     downloadButton("downloadcsv","Save Results as .csv")),
-                       bsTooltip('directory','Select directory containing all files for site visit',trigger='hover'),
+                       bsTooltip('directory','Select files for site visit',trigger='hover'),
                        bsTooltip('parseFiles','Click here to parse and organize data',trigger='hover'),
                        bsTooltip('downloadxlsx','Save data to worksheets in an Excel file.',trigger='hover'),
                        bsTooltip('downloadcsv','Save data to comma-delimited files in a .zip file.',trigger='hover'),
                        mainPanel(
                          h5('Preview files in directory'),
                          tableOutput('preview'))),
-              tabPanel(span('Landowner Report', title='Create a basic landowner report'),
+              tabPanel(span('Field Visit Summary', title='Create a basic report on field activities'),
                        sidebarPanel(p('This tool creates a basic report in html format based on data collected during a
                                           field visit to a site. It can be saved for crew records or provided to the landowner,
                                           either via email or printed and mailed. At a minimum, the', span(strong('verification form')),
                                       'must be submitted.')),
                        mainPanel(
-                         shinyjs::disabled(downloadButton('report','Generate Landowner Report (HTML)'))))))
+                         shinyjs::disabled(downloadButton('report','Generate Field Visit Summary (HTML)'))))))
 
 
 
