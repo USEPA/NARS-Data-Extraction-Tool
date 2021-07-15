@@ -21,6 +21,7 @@ eFormsOrganize_byTable.ncca <- function(rawData){
     CALIBRATION = {rr <- organizeCalibration.ncca(parsedData)},
     VERIFICATION = {rr <- organizeVerification.ncca(parsedData)},
     SAMPLES = {rr <- organizeSamples.ncca(parsedData)},
+    SAMPLE_COLLECT = {rr <- organizeSamples.ncca(parsedData)},
     PROFILE = {rr <- organizeProfile.ncca(parsedData)},
     ECOFISH = {rr <- organizeEcofish.ncca(parsedData)},
     HHFISH = {rr <- organizeHHfish.ncca(parsedData)},
@@ -63,8 +64,14 @@ organizeSamples.ncca <- function(parsedIn){
   varLong <- names(parsedIn)
   aa.long <- reshape(aa, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
                      v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  aa.long$SAMPLE_TYPE <- with(aa.long, substring(as.character(variable), 9, 12))
-  aa.long$variable <- with(aa.long, gsub('SAMPLES\\.', '', variable))
+  
+  if(sampletype=='SAMPLES'){
+    aa.long$SAMPLE_TYPE <- substring(as.character(aa.long$variable), 9, 12)
+  }else{
+    aa.long$SAMPLE_TYPE <- substring(as.character(aa.long$variable), 16, 19)
+  }
+
+  aa.long$variable <- with(aa.long, gsub('SAMPLES\\.|SAMPLE_COLLECT\\.', '', variable))
   aa.long$PARAMETER <- with(aa.long, ifelse(str_detect(variable, '\\_COMMENT')|variable=='BENTHIC_DISTANCE',
                                       variable, substring(as.character(variable),6,nchar(as.character(variable)))))
   aa.long <- subset(aa.long, str_detect(variable, 'REVIEW')==FALSE)
