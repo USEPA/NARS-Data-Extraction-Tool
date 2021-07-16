@@ -20,8 +20,8 @@ eFormsOrganize_byTable.ncca <- function(rawData){
     ASSESSMENT = {rr <- organizeAssessment.ncca(parsedData)},
     CALIBRATION = {rr <- organizeCalibration.ncca(parsedData)},
     VERIFICATION = {rr <- organizeVerification.ncca(parsedData)},
-    SAMPLES = {rr <- organizeSamples.ncca(parsedData)},
-    SAMPLE_COLLECT = {rr <- organizeSamples.ncca(parsedData)},
+    SAMPLES = {rr <- organizeSamples.ncca(parsedData, sampletype)},
+    SAMPLE_COLLECT = {rr <- organizeSamples.ncca(parsedData, sampletype)},
     PROFILE = {rr <- organizeProfile.ncca(parsedData)},
     ECOFISH = {rr <- organizeEcofish.ncca(parsedData)},
     HHFISH = {rr <- organizeHHfish.ncca(parsedData)},
@@ -56,7 +56,7 @@ organizeVerification.ncca <- function(parsedIn){
   
 }
 
-organizeSamples.ncca <- function(parsedIn){
+organizeSamples.ncca <- function(parsedIn, sampletype){
   # Simply melt these data by SAMPLE_TYPE and clean up parameter names
   aa <- parsedIn
   aa$SAMPLE_TYPE <- 'SAMPLES'
