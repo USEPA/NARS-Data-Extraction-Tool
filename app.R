@@ -13,7 +13,7 @@ ui <- fluidPage(
 #   theme="style.css",
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 1.0)",
+   navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 1.1)",
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
                                 column(6,h2(strong('Tool Overview')), offset=1,
@@ -87,6 +87,7 @@ ui <- fluidPage(
                                       tab while .csv files will save as a .zip file with each .JSON file saved as an individual 
                                       .csv file.'),
                                     br(),
+                                    downloadButton("downloadxlsx","Save Results as .xlsx"),
                                     downloadButton("downloadcsv","Save Results as .csv")),
                        bsTooltip('directory','Select files for site visit',trigger='hover'),
                        bsTooltip('parseFiles','Click here to parse and organize data',trigger='hover'),
