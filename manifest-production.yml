@@ -7,3 +7,4 @@ applications:
     - route: nars-dataextr.app.cloud.gov
   buildpacks:
     - r_buildpack
+  command: R -f shiny.R
