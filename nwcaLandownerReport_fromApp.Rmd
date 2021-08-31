@@ -1,0 +1,163 @@
+---
+title: "National Wetland Condition Assessment Field Visit Summary"
+author: ""
+date: ""
+params:
+  userDataRMD: 'NULL'
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+#suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+
+```
+
+
+
+```{r verif, echo=FALSE}
+
+include_graphics("NWCA_logo_sm.jpg")
+
+verification_tbl <- subset(params[['userDataRMD']][['AA-1']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "ACTUAL_DATE","AA_LAT", "AA_LON", "HGM_CLASS"),
+                       select = c('PARAMETER','RESULT'))
+
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITE_ID'] <- 'Site ID'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='AA_LAT'] <- 'Latitude'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='AA_LON'] <- 'Longitude'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Number'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='ACTUAL_DATE'] <- 'Sample Date'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='HGM_CLASS'] <- 'HGM Class'
+
+pv1 <- subset(params[['userDataRMD']][['PV-1']][[1]], PARAMETER %in% c('SITESAMP'),
+                       select = c('PARAMETER','RESULT'))
+sampled <- subset(pv1, PARAMETER=='SITESAMP')$RESULT
+
+```
+
+
+```{r palt,echo=F}
+## Physical Alteration - just list over all types observed in any plot
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-1']])){
+  p1 <- subset(params[['userDataRMD']][['P-1']][[1]], str_detect(PARAMETER, 'WADSUB|WOBSTR|VEGREM|VEGREP|SOILHD|SOILMD') & str_detect(PARAMETER, 'NONE_PRESENT')==FALSE & !is.null(RESULT) & RESULT!='',
+               select = c('PARAMETER')) 
+  
+  if(sampled=='Y' & nrow(p1)>0){
+    p1$PATYPE <- with(p1, substring(PARAMETER, 1, 6)) 
+    
+  }
+}
+
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
+  p2 <- subset(params[['userDataRMD']][['P-2']][[1]], str_detect(PARAMETER, 'WADSUB|WOBSTR|VEGREM|VEGREP|SOILHD|SOILMD') & str_detect(PARAMETER, 'NONE_PRESENT')==FALSE & !is.null(RESULT) & RESULT!='',
+               select = c('PARAMETER')) 
+  
+  if(sampled=='Y' & nrow(p2)>0){
+    p2$PATYPE <- with(p2, substring(PARAMETER, 1, 6))
+    if(exists('p1')){
+      p.all <- rbind(p1, p2)
+      puniq <- unique(p.all)
+    }
+  }
+  palt_tbl <- puniq
+  palt_tbl$PATYPE[palt_tbl$PATYPE=='WADSUB'] <- "Water Addition or Substraction Alterations"
+  palt_tbl$PATYPE[palt_tbl$PATYPE=='WOBSTR'] <- "Flow Obstruction Alterations"
+  palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILHD'] <- "Soil Hardening"
+  palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILMD'] <- "Surface Modification"
+  palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREM'] <- "Vegetation Removal"
+  palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
+  
+  palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
+  
+}
+
+
+```
+```{r v2, echo=FALSE}
+## Plant species observed
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['V-2']])){
+  spp <- subset(params[['userDataRMD']][['V-2']][[1]], select = c('SPECIES'))
+  
+  if(sampled=='Y' & nrow(spp)>0){
+    spp <- subset(spp, !is.na(SPECIES))
+    spp_tbl <- unique(spp)
+    spp_tbl <- spp_tbl[order(spp_tbl$SPECIES),]
+  }
+}
+```
+
+
+
+```{r water, echo=FALSE}
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['W-1']])){
+  # Pull DO, cond, pH, and temp of water
+  field_tbl <- subset(params[['userDataRMD']][['W-1']][[1]], PARAMETER %in% c('WATER_TYPE','DO','CONDUCTIVITY','PH','TEMP'),
+                 select = c('PARAMETER','RESULT'))
+  
+  field_tbl$group <- field_tbl$PARAMETER
+  
+  field_tbl$RESULT[field_tbl$PARAMETER == 'DO'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'DO'], 'mg/L', sep = ' ')
+  field_tbl$RESULT[field_tbl$PARAMETER == 'TEMP'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'TEMP'], 'C', sep = ' ')
+  field_tbl$RESULT[field_tbl$PARAMETER == 'CONDUCTIVITY'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'CONDUCTIVITY'], 'uS/cm', sep = ' ')
+  
+  field_tbl$group[field_tbl$group == 'TEMP'] <- 1
+  field_tbl$group[field_tbl$group == 'DO'] <- 2
+  field_tbl$group[field_tbl$group == 'PH'] <- 3
+  field_tbl$group[field_tbl$group == 'CONDUCTIVITY'] <- 4
+  field_tbl$group[field_tbl$group == 'WATER_TYPE'] <- 5
+  
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='TEMP'] <- 'Temperature'
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='DO'] <- 'Dissolved Oxygen'
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='PH'] <- 'pH'
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='CONDUCTIVITY'] <- 'Conductivity'
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='WATER_TYPE'] <- 'Predominant Water Feature'
+  
+  field_tbl <- field_tbl[order(field_tbl$group),]
+  field_tbl <- subset(field_tbl, select = -group)
+
+}
+```
+
+#### About
+This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
+
+
+```{r row 1 tables, echo=F}  
+kable(verification_tbl,col.names=c('Station Visit Information',''), row.names=FALSE, align=c('l','r')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T) %>%
+  column_spec(2, width = "16em")
+```
+
+```{r row 1 b tables, echo=F}
+if(sampled=='Y' & exists("field_tbl") & nrow(field_tbl)>0){
+kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FALSE, align=c('l','r')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T, width = "20em") %>%
+  column_spec(2, width = "16em")
+}
+```
+
+```{r row 1 c tables, echo=F}
+if(sampled=='Y' & exists("palt_tbl") & nrow(palt_tbl)>0){
+kable(palt_tbl ,col.names=c('Types of Physical Alteration Observed'), row.names =FALSE, align=c('l')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T, width = "30em") 
+}
+```
+```{r row 2 tables, echo=F}
+if(sampled=='Y' & exists("spp_tbl")){
+kable(spp_tbl ,col.names=c('Vascular Plant Species Observed'), row.names =FALSE, align=c('l')) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T, width = "30em")
+}
+```
+
+
+
+
+

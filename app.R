@@ -13,57 +13,57 @@ ui <- fluidPage(
 #   theme="style.css",
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Rapid Data Extraction & Reporting Tool (v. 1.1)",
+   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.0)",
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
                                 column(6,h2(strong('Tool Overview')), offset=1,
                                        p('The NARS Rapid Data Extraction and Reporting Tool expedites data availability
-                                                            to field crews and offers preliminary end-of-day site reports to landowners to
+                                                            to field crews and offers preliminary end-of-day site reports to landowners to 
                                          promote survey awareness and continued sampling support.'),
                                        br(),
                                        p('After completing all sampling and sample processing, crews submit data from the app to ',
                                          span(strong('NARS IM.')),'At that point, all of the .JSON files from that site visit
-                                                            and collected on that iPad will be attached to an email to NARS IM.
+                                                            and collected on that iPad will be attached to an email to NARS IM. 
                                                             The crew can copy that email to other
-                                                            addresses and later save those .JSON files (and any from other iPads
-                                                            used at that site) to a folder containing all of the data collected
-                                                            from an individual site visit. This tool parses and compiles the data
-                                                            from .JSON files into spreadsheet formats to
-                                                            promote data utility and offers and optional site report based on
-                                                            field-collected data, such as field parameters and lists of fish
-                                                            species collected, to be sent by the team lead to the landowner shortly
+                                                            addresses and later save those .JSON files (and any from other iPads 
+                                                            used at that site) to a folder containing all of the data collected 
+                                                            from an individual site visit. This tool parses and compiles the data 
+                                                            from .JSON files into spreadsheet formats to 
+                                                            promote data utility and offers and optional site report based on 
+                                                            field-collected data, such as field parameters and lists of fish 
+                                                            species collected, to be sent by the team lead to the landowner shortly 
                                                             after sampling.'),
                                        br(),
-                                       ),
-                                column(1)), br(), hr(), br(),
+                                ),
+                                column(1)), hr(), br(),
                        fluidRow(column(1), column(10, h3(strong('Instructions')),
-                                                  p('After compiling all of the .JSON files for a site visit into a single directory,
-                                                  users are ready to extract and organize the data. On the Data Upload and Extraction
-                                                  tab, users first select the survey app used to collect the data (NRSA 2018-19,
-                                                  NLA 2017, or NCCA 2020), then select the directory where their data is saved
-                                                    to upload .JSON files to the app for processing. Once the data is uploaded to
+                                                  p('After compiling all of the .JSON files for a site visit into a single directory, 
+                                                  users are ready to extract and organize the data. On the Data Upload and Extraction 
+                                                  tab, users first select the survey app used to collect the data (NRSA 2018-19, 
+                                                  NLA 2017, NCCA 2020, or NWCA 2021), then select the directory where their data is saved 
+                                                    to upload .JSON files to the app for processing. Once the data is uploaded to 
                                                     the app, click the',
-                                                  span(strong('Parse data in selected files')), 'button. Then users will have
-                                                            the option to save the data as a .zip file containing individual .csv
+                                                    span(strong('Parse data in selected files')), 'button. Then users will have 
+                                                            the option to save the data as a .zip file containing individual .csv 
                                                             files or a single MS Excel spreadsheet containing worksheets of each dataset.',
-                                                  span(strong('If data outputs do not look as expected, make sure you have selected the
-                                                            correct survey app. Only valid sample types will be processed for each survey,
+                                                    span(strong('If data outputs do not look as expected, make sure you have selected the 
+                                                            correct survey app. Only valid sample types will be processed for each survey, 
                                                             so if data are missing, that is a possible reason.'))),
                                                   br(),
-                                                  p('After uploading the data, if users want to generate a basic site report for their
-                                                            records or to distribute to the landowner, they may navigate to the Field 
-                                                            Visit Summary
-                                                            tab and follow the on screen prompts to save an
+                                                  p('After uploading the data, if users want to generate a basic site report for their 
+                                                            records or to distribute to the landowner, they may navigate to the Field
+                                                            Visit Summary tab and follow the on screen prompts to save an
                                                             autogenerated HTML file based on their input site data.')
-                                                  ),
-                                column(1))),
-
+                       ),
+                       column(1))),
+              
               tabPanel(span('Data Upload and Extraction',title="Select data to upload and extract"),
-
+                       
                        sidebarPanel(radioButtons('survey',"Select survey app used (select one):",
                                                  choices = c('NRSA 2018-19' = 'nrsa1819',
                                                              'NLA 2017' = 'nla17',
-                                                             'NCCA 2020' = 'ncca20'),
+                                                             'NCCA 2020' = 'ncca20',
+                                                             'NWCA 2021' = 'nwca21'),
                                                  select = ''),
                                     h4(strong('Instructions')),
                                     p('1) Select all the .JSON files associated with a single site visit by clicking on the ‘Browse’
@@ -72,19 +72,19 @@ ui <- fluidPage(
                                       that multiple files may be selected at once by holding down the Ctrl key.  Upon success, a 
                                       blue ‘Upload complete’ bar appears along with the number of files uploaded.  The uploaded 
                                       file names will also be listed in the window to the right.'),
-                                    fileInput(inputId='directory', buttonLabel='Browse...',
+                                    fileInput(inputId='directory', buttonLabel='Browse...', 
                                               label='Please select files within a folder, holding down Ctrl key to select multiple files.',
-                                              multiple=TRUE, accept=c('json','JSON')),
-                                    p('2) Click on the ‘Parse data’ button below to prepare the uploaded files for conversion to .xlsx 
-                                      and .csv format.'),
+                                              multiple=TRUE, accept=c('json','JSON')), 
+                                    p('2) Click on the ‘Parse data’ button below to prepare the uploaded files for conversion to .xlsx and .csv format.'),
                                     shinyjs::disabled(actionButton('parseFiles','Parse data')),
                                     br(), hr(),
                                     p('3) To download and save the .JSON data in .xlsx or .csv file formats, click on the appropriate
                                       ‘Save Results’ button below.  A directory window will appear allowing you to choose where to 
                                       save the files. Note: .xlsx files will save as one file with each .JSON file in a separate 
                                       tab while .csv files will save as a .zip file with each .JSON file saved as an individual 
-                                      .csv file.'),
+                                      .csv file.'), 
                                     br(),
+                                    
                                     downloadButton("downloadxlsx","Save Results as .xlsx"),
                                     downloadButton("downloadcsv","Save Results as .csv")),
                        bsTooltip('directory','Select files for site visit',trigger='hover'),
@@ -95,10 +95,11 @@ ui <- fluidPage(
                          h5('Uploaded file name(s)'),
                          tableOutput('preview'))),
               tabPanel(span('Field Visit Summary', title='Create a basic report on field activities'),
-                       sidebarPanel(p('This tool creates a basic report in html format based on data collected during a
-                                          field visit to a site. It can be saved for crew records or provided to the landowner,
-                                          either via email or printed and mailed. At a minimum, the', span(strong('verification form')),
-                                      'must be submitted.')),
+                       sidebarPanel(p('This tool creates a basic report in html format based on data collected 
+                       during a field visit to a site. It can be saved for crew records or provided to the landowner, 
+                                          either via email or printed and mailed. At a minimum, the', 
+                                      span(strong('verification form')), 
+                                      '(or PV-1 and AA-1 for NWCA) must be submitted.')),
                        mainPanel(
                          shinyjs::disabled(downloadButton('report','Generate Field Visit Summary (HTML)'))))))
 
@@ -202,13 +203,15 @@ server <- function(input, output, session) {
       switch(input$survey,
              'nrsa1819' = {reportName <- 'nrsaLandownerReport_fromApp.Rmd'},
              'nla17' = {reportName <- 'nlaLandownerReport_fromApp.Rmd'},
-             'ncca20' = {reportName <- 'nccaLandownerReport_fromApp.Rmd'}
-             )
-
+             'ncca20' = {reportName <- 'nccaLandownerReport_fromApp.Rmd'},
+             'nwca21' = {reportName <- 'nwcaLandownerReport_fromApp.Rmd'}
+      )
+      
       switch(input$survey,
              'nrsa1819' = {logoName <- 'NRSA_logo_sm.jpg'},
              'nla17' = {logoName <- 'NLA_logo_sm.jpg'},
-             'ncca20' = {logoName <- 'NCCA_logo_sm.jpg'})
+             'ncca20' = {logoName <- 'NCCA_logo_sm.jpg'},
+             'nwca21' = {logoName <- 'NWCA_logo_sm.jpg'})
       tempReport <- normalizePath(reportName)
       imageToSend1 <- normalizePath(logoName)  # choose image name
       owd <- setwd(tempdir())

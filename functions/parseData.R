@@ -13,7 +13,7 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
     
     # This step parses data and then organizes data in each file, ignoring any tracking files
     if(grepl('TRACKING|SHIPPING',fileName,ignore.case=TRUE)==FALSE){
-    
+      
       fileName <- gsub("[[:alnum:]]+[[:punct:]][[:alpha:]]+[[:punct:]][[:alnum:]]+[[:punct:]][[:alnum:]][[:punct:]]", "", fileName)
       # If the above pattern is not present, it should be the following
       fileName <- gsub("[[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]]", "", fileName)
@@ -22,22 +22,22 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
       # Limit the files that are processed to avoid error if user selects wrong survey
       if((surv=='nla17' & str_detect(fileName, 'ASSESSMENT|INDEX_SAMPLE|PROFILE_CALIBRATION|LITTORAL_SAMPLE|PHAB|VERIFICATION|PROFILE_DATA'))|
          (surv=='nrsa1819' & (fileName %in% c('FISH','FISHGEAR', 'BENTHIC',
-                                             'VERIFICATION',
-                                             'FIELD','SAMPLES','ASSESSMENT',
-                                             'CONSTRAINT','DISCHARGE','SLOPE','TORRENT')|grepl('PHAB',fileName,ignore.case=TRUE)==TRUE))|
+                                              'VERIFICATION',
+                                              'FIELD','SAMPLES','ASSESSMENT',
+                                              'CONSTRAINT','DISCHARGE','SLOPE','TORRENT')|grepl('PHAB',fileName,ignore.case=TRUE)==TRUE))|
          (surv=='ncca20' & fileName %in% c('ASSESSMENT',
                                            'CALIBRATION','VERIFICATION','SAMPLE',
-                                           'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS'))){
+                                           'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS'))|
+         (surv=='nwca21' & fileName %in% c('AA-1','H-1','P-1','P-2','PV-1','S-1','V-1','V-2','V-3','V-4','W-1'))){
         
-          rr <- eFormsParseJSON(filePath)
-          switch(surv,
-                 'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
-                 'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
-                 'nla17' = {tt <- eFormsOrganize_byTable.nla(rr)}
-                 # ,
-                 # 'nwca21' = {tt <- eFormsOrganize_byTable_NWCA(rr)}
-          )
-          # tt <- eFormsOrganize_byTable(rr)
+        rr <- eFormsParseJSON(filePath)
+        switch(surv,
+               'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
+               'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
+               'nla17' = {tt <- eFormsOrganize_byTable.nla(rr)},
+               'nwca21' = {tt <- eFormsOrganize_byTable.nwca(rr)}
+        )
+        # tt <- eFormsOrganize_byTable(rr)
           
           finalOut[[fileName]] <- tt
         }
@@ -103,6 +103,8 @@ narsWriteShiny <- function(surv, filelist, finalList){
     
   }else if(surv=='ncca20'){
     meta <- list(Metadata = metadata.ncca) 
+  }else if(surv=='nwca21'){
+    meta <- list(Metadata = metadata.nwca)
   }
      
   
