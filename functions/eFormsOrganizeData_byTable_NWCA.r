@@ -409,7 +409,7 @@ organizeV2.nwca <- function(parsedIn){
     ee.out.wide$COMMENT <- ''
   }
   
-  if(!is.vector(ee.out.wide$PLOT_NOT_SAMPLED)){
+  if(!is.vector(ee.out.wide[['PLOT_NOT_SAMPLED']])){
     ee.out.wide$PLOT_NOT_SAMPLED <- ''
   }
   
