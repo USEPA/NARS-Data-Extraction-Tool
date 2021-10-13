@@ -58,21 +58,24 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
   
   if(sampled=='Y' & nrow(p2)>0){
     p2$PATYPE <- with(p2, substring(PARAMETER, 1, 6))
-    if(exists('p1')){
+    if(exists('p1') & nrow(p1)>0){
       p.all <- rbind(p1, p2)
       puniq <- unique(p.all)
     }
+  }else if(sampled=='Y' & nrow(p1)>0){
+    puniq <- unique(p1)
   }
-  palt_tbl <- puniq
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='WADSUB'] <- "Water Addition or Substraction Alterations"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='WOBSTR'] <- "Flow Obstruction Alterations"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILHD'] <- "Soil Hardening"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILMD'] <- "Surface Modification"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREM'] <- "Vegetation Removal"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
-  
-  palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
-  
+  if(exists('puniq')){
+    palt_tbl <- puniq
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='WADSUB'] <- "Water Addition or Substraction Alterations"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='WOBSTR'] <- "Flow Obstruction Alterations"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILHD'] <- "Soil Hardening"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILMD'] <- "Surface Modification"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREM'] <- "Vegetation Removal"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
+   
+    palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
+  } 
 }
 
 
@@ -143,10 +146,14 @@ kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FA
 ```
 
 ```{r row 1 c tables, echo=F}
-if(sampled=='Y' & exists("palt_tbl") & nrow(palt_tbl)>0){
-kable(palt_tbl ,col.names=c('Types of Physical Alteration Observed'), row.names =FALSE, align=c('l')) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "30em") 
+if(sampled=='Y' & exists("palt_tbl")){
+  if(nrow(palt_tbl)>0){
+
+  kable(palt_tbl ,col.names=c('Types of Physical Alteration Observed'), 
+        row.names =FALSE, align=c('l')) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "30em") 
+  }
 }
 ```
 ```{r row 2 tables, echo=F}

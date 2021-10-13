@@ -171,19 +171,24 @@ organizeSoil.nwca <- function(parsedIn){
   }  
   # bb pulls out and formats species by line number and sample type
   bb <- subset(parsedIn, select=str_detect(names(parsedIn), 'SOIL\\.[:digit:]'))
-  bb$SAMPLE_TYPE <- 'SOIL_PROF'
-  
-  varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
-  bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
-                     v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  bb.long$variable <- with(bb.long, gsub('SOIL\\.','',variable))
-  bb.long$HORIZON <- with(bb.long, str_extract(variable, '[:digit:]+'))
-  bb.long$PAGE <- '1'
-  bb.long$PARAMETER <- with(bb.long, substring(variable, 3, nchar(variable)))
-  
-  bb.out <- subset(bb.long, select = c('SAMPLE_TYPE','PAGE','HORIZON','PARAMETER','RESULT'))
-  
-  cc <- rbind(aa.out, bb.out) 
+  if(ncol(bb)>0){
+    bb$SAMPLE_TYPE <- 'SOIL_PROF'
+    
+    varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
+    bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
+                       v.names = 'RESULT', timevar = 'variable', direction = 'long')
+    bb.long$variable <- with(bb.long, gsub('SOIL\\.','',variable))
+    bb.long$HORIZON <- with(bb.long, str_extract(variable, '[:digit:]+'))
+    bb.long$PAGE <- '1'
+    bb.long$PARAMETER <- with(bb.long, substring(variable, 3, nchar(variable)))
+    
+    bb.out <- subset(bb.long, select = c('SAMPLE_TYPE','PAGE','HORIZON','PARAMETER','RESULT'))
+    
+    cc <- rbind(aa.out, bb.out) 
+    
+  }else{
+    cc <- aa.out
+  } 
   
   return(cc)
 }
