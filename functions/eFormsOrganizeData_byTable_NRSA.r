@@ -519,7 +519,7 @@ organizePhab_B.nrsa <- function(parsedIn){
   
   if(nrow(littoral)>0){
     littoral$SAMPLE_TYPE <- 'LITTORALB'
-    littoral$PARAMTER <- littoral$variable.1
+    littoral$PARAMETER <- littoral$variable.1
     
     littoral.out <- subset(littoral, select = c('SAMPLE_TYPE','PARAMETER','TRANSECT','RESULT'))
   }else{
