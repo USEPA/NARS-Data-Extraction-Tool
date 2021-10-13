@@ -188,8 +188,9 @@ organizeSoil.nwca <- function(parsedIn){
     
   }else{
     cc <- aa.out
-  } 
-  
+
+  }  
+
   return(cc)
 }
 
