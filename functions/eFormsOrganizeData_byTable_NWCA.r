@@ -239,83 +239,100 @@ organizeV2.nwca <- function(parsedIn){
   bb <- subset(parsedIn, select=str_detect(names(parsedIn), 'SPECIES\\.[:digit:]') & 
                  str_detect(names(parsedIn), 'PLOT_NOT_SAMPLED')==FALSE & 
                  str_detect(names(parsedIn), 'SAMPLE_ID')==FALSE)
-  bb$SAMPLE_TYPE <- 'PLANT'
-  
-  varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
-  bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
-                     v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  bb.long$variable <- with(bb.long, gsub('SPECIES\\.','',variable))
-  bb.long$LINE <- with(bb.long, str_extract(variable, '[:digit:]+'))
-  bb.long$variable <- with(bb.long, str_remove(variable, '[:digit:]+\\_'))
-  bb.long$PLOT <- with(bb.long, substring(variable, 1, 1))
-  bb.long$PARAMETER <- with(bb.long, substring(variable, 3, nchar(variable)))
-  
-  bb.out <- subset(bb.long, !(PARAMETER %in% c('SPECIES', 'COLLECT_NO', 'TES_SPECIES')),
-                              select = c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
-  
-  # Pull SPECIES to be separate to fill in values for all plots for that line
-  # Species name only occur where species are first entered
-  # There are some cases where more than one species name is listed for a given line number
-  # If value is present for a line, keep it, but if missing, fill in with the first occurrence
-  cc <- subset(bb.long, PARAMETER %in% c('SPECIES') & RESULT!='' & !is.na(RESULT))
-  
-  cc.spp <- subset(cc, select=c('SAMPLE_TYPE','LINE', 'PARAMETER','RESULT'))
-  cc.spp <- unique(cc.spp)
-
-  cc.plots <- unique(subset(bb.long, select=c('LINE','PLOT')))
-  
-  # Need to see if there are multiple species per line
- if(nrow(cc.spp[duplicated(cc.spp[,c('SAMPLE_TYPE','LINE','PARAMETER')]),])==0){
-   cc.spp.1 <- merge(cc.spp, cc.plots, by=c('LINE'))
-   
-   cc.out <- subset(cc.spp.1, select=c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
- }else{
-
-   cc.altspp <- subset(bb.long, PARAMETER %in% c('SPECIES'))
-   
-   cc.uniq <- unique(subset(cc.altspp, RESULT!='' & !is.na(RESULT), 
-                     select=c('SAMPLE_TYPE','LINE','PARAMETER','RESULT')))
-   
-   cc.first <- cc.uniq[!duplicated(cc.uniq[,c('SAMPLE_TYPE','LINE','PARAMETER')]),]
-   
-   cc.match <- merge(cc.altspp, cc.plots, by = c('LINE','PLOT'), all.y=TRUE) 
-   cc.match$SAMPLE_TYPE <- 'PLANT'
-   cc.match$PARAMETER <- 'SPECIES'
-   
-   cc.match.1 <- merge(cc.match, cc.first, by = c('SAMPLE_TYPE','LINE','PARAMETER'))
-   
-   cc.match.1$RESULT <- with(cc.match.1, ifelse(is.na(RESULT.x)|RESULT.x=='', RESULT.y, RESULT.x)) 
-   
-   cc.out <- subset(cc.match.1, select = c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
- }
-  
- # Now look at just TES_SPECIES and fill in missing rows that were sampled
-  tes <- subset(bb.long, PARAMETER %in% c('TES_SPECIES') & RESULT!='' & !is.na(RESULT))  
-  
-  tes.uniq <- subset(tes, select=c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
-  tes.uniq <- unique(tes.uniq)
-  
-  tes.plots <- unique(subset(bb.long, select=c('LINE','PLOT')))
-  
-  tes.out <- merge(tes.uniq, tes.plots, by = c('LINE'))
-  
- # Now COLLECT_NO, which may have multiple values and also missing values on a given line
-  coll <- subset(bb.long, PARAMETER %in% c('COLLECT_NO') & RESULT!='' & !is.na(RESULT))
-   
-  coll.plots <- unique(subset(bb.long, LINE %in% coll$LINE, select = c('SAMPLE_TYPE','LINE','PLOT')))
-  
-  coll.uniq <- unique(subset(coll, select=c('LINE','PARAMETER','RESULT')))
-  coll.uniq <- coll.uniq[order(coll.uniq$RESULT, decreasing=TRUE),]
-  
-  coll.first <- coll.uniq[!duplicated(coll.uniq[,c('LINE','PARAMETER')]),]
-  
-  coll.match <- merge(coll.plots, coll.first, by=c('LINE'))
-  
-  coll.match.1 <- merge(coll.match, coll, by=c('SAMPLE_TYPE','LINE','PLOT','PARAMETER'), all.x=TRUE)
-  
-  coll.match.1$RESULT <- with(coll.match.1, ifelse(!is.na(RESULT.y) & RESULT.y!='' & RESULT.x!=RESULT.y, RESULT.y, RESULT.x))
-  
-  coll.out <- subset(coll.match.1, select = c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
+  if(ncol(bb)>0){
+    bb$SAMPLE_TYPE <- 'PLANT'
+    
+    varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
+    bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
+                       v.names = 'RESULT', timevar = 'variable', direction = 'long')
+    bb.long$variable <- with(bb.long, gsub('SPECIES\\.','',variable))
+    bb.long$LINE <- with(bb.long, str_extract(variable, '[:digit:]+'))
+    bb.long$variable <- with(bb.long, str_remove(variable, '[:digit:]+\\_'))
+    bb.long$PLOT <- with(bb.long, substring(variable, 1, 1))
+    bb.long$PARAMETER <- with(bb.long, substring(variable, 3, nchar(variable)))
+    
+    bb.out <- subset(bb.long, !(PARAMETER %in% c('SPECIES', 'COLLECT_NO', 'TES_SPECIES')),
+                     select = c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
+    
+    # Pull SPECIES to be separate to fill in values for all plots for that line
+    # Species name only occur where species are first entered
+    # There are some cases where more than one species name is listed for a given line number
+    # If value is present for a line, keep it, but if missing, fill in with the first occurrence
+    cc <- subset(bb.long, PARAMETER %in% c('SPECIES') & RESULT!='' & !is.na(RESULT))
+    
+    cc.spp <- subset(cc, select=c('SAMPLE_TYPE','LINE', 'PARAMETER','RESULT'))
+    cc.spp <- unique(cc.spp)
+    
+    cc.plots <- unique(subset(bb.long, select=c('LINE','PLOT')))
+    
+    # Need to see if there are multiple species per line
+    if(nrow(cc.spp[duplicated(cc.spp[,c('SAMPLE_TYPE','LINE','PARAMETER')]),])==0){
+      cc.spp.1 <- merge(cc.spp, cc.plots, by=c('LINE'))
+      
+      cc.out <- subset(cc.spp.1, select=c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
+    }else{
+      
+      cc.altspp <- subset(bb.long, PARAMETER %in% c('SPECIES'))
+      
+      cc.uniq <- unique(subset(cc.altspp, RESULT!='' & !is.na(RESULT), 
+                               select=c('SAMPLE_TYPE','LINE','PARAMETER','RESULT')))
+      
+      cc.first <- cc.uniq[!duplicated(cc.uniq[,c('SAMPLE_TYPE','LINE','PARAMETER')]),]
+      
+      cc.match <- merge(cc.altspp, cc.plots, by = c('LINE','PLOT'), all.y=TRUE) 
+      cc.match$SAMPLE_TYPE <- 'PLANT'
+      cc.match$PARAMETER <- 'SPECIES'
+      
+      cc.match.1 <- merge(cc.match, cc.first, by = c('SAMPLE_TYPE','LINE','PARAMETER'))
+      
+      cc.match.1$RESULT <- with(cc.match.1, ifelse(is.na(RESULT.x)|RESULT.x=='', RESULT.y, RESULT.x)) 
+      
+      cc.out <- subset(cc.match.1, select = c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
+    }
+    
+    # Now look at just TES_SPECIES and fill in missing rows that were sampled
+    tes <- subset(bb.long, PARAMETER %in% c('TES_SPECIES') & RESULT!='' & !is.na(RESULT))  
+    
+    tes.uniq <- subset(tes, select=c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
+    tes.uniq <- unique(tes.uniq)
+    
+    tes.plots <- unique(subset(bb.long, select=c('LINE','PLOT')))
+    
+    tes.out <- merge(tes.uniq, tes.plots, by = c('LINE'))
+    
+    # Now COLLECT_NO, which may have multiple values and also missing values on a given line
+    coll <- subset(bb.long, PARAMETER %in% c('COLLECT_NO') & RESULT!='' & !is.na(RESULT))
+    
+    coll.plots <- unique(subset(bb.long, LINE %in% coll$LINE, select = c('SAMPLE_TYPE','LINE','PLOT')))
+    
+    coll.uniq <- unique(subset(coll, select=c('LINE','PARAMETER','RESULT')))
+    coll.uniq <- coll.uniq[order(coll.uniq$RESULT, decreasing=TRUE),]
+    
+    coll.first <- coll.uniq[!duplicated(coll.uniq[,c('LINE','PARAMETER')]),]
+    
+    coll.match <- merge(coll.plots, coll.first, by=c('LINE'))
+    
+    coll.match.1 <- merge(coll.match, coll, by=c('SAMPLE_TYPE','LINE','PLOT','PARAMETER'), all.x=TRUE)
+    
+    coll.match.1$RESULT <- with(coll.match.1, ifelse(!is.na(RESULT.y) & RESULT.y!='' & RESULT.x!=RESULT.y, RESULT.y, RESULT.x))
+    
+    coll.out <- subset(coll.match.1, select = c('SAMPLE_TYPE','LINE','PLOT','PARAMETER','RESULT'))
+  }else{
+    bb.out <- data.frame(SAMPLE_TYPE=character(), LINE=character(), 
+                         PLOT=character(), PARAMETER=character(), 
+                         RESULT=character(), stringsAsFactors=F)
+    
+    cc.out <- data.frame(SAMPLE_TYPE=character(), LINE=character(), 
+                         PLOT=character(), PARAMETER=character(), 
+                         RESULT=character(), stringsAsFactors=F)
+    
+    tes.out <- data.frame(SAMPLE_TYPE=character(), LINE=character(), 
+                          PLOT=character(), PARAMETER=character(), 
+                          RESULT=character(), stringsAsFactors=F)
+    coll.out <- data.frame(SAMPLE_TYPE=character(), LINE=character(), 
+                           PLOT=character(), PARAMETER=character(), 
+                           RESULT=character(), stringsAsFactors=F)
+  }
   
   # Separate out cases where PLOT_NOT_SAMPLED 
   ns <- subset(parsedIn, select=str_detect(names(parsedIn), 'SPECIES\\.[:digit:]') & 
@@ -419,7 +436,7 @@ organizeV2.nwca <- function(parsedIn){
     ee.out.wide$PLOT_NOT_SAMPLED <- ''
   }
   
-  if(!is.vector(ee.out.wide$PLOT_NOT_SAMPLED_COMMENT)){
+  if(!is.vector(ee.out.wide[['PLOT_NOT_SAMPLED_COMMENT']])){
     ee.out.wide$PLOT_NOT_SAMPLED_COMMENT <- ''
   }
   
@@ -437,6 +454,26 @@ organizeV2.nwca <- function(parsedIn){
   
   if(!is.vector(ee.out.wide$COVER_SW)){
     ee.out.wide$COVER_SW <- ''
+  }
+
+  if(!is.vector(ee.out.wide$COVER)){
+    ee.out.wide$COVER <- ''
+  }
+  
+  if(!is.vector(ee.out.wide$HEIGHT)){
+    ee.out.wide$HEIGHT <- ''
+  }
+  
+  if(!is.vector(ee.out.wide$SW)){
+    ee.out.wide$SW <- ''
+  }
+  
+  if(!is.vector(ee.out.wide$NE)){
+    ee.out.wide$NE <- ''
+  }
+  
+  if(!is.vector(ee.out.wide$SPECIES)){
+    ee.out.wide$SPECIES <- ''
   }
   
   varOrder <- c('SAMPLE_TYPE','LINE','PLOT','PLOT_NOT_SAMPLED',
