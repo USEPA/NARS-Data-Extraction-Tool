@@ -58,22 +58,29 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
   
   if(sampled=='Y' & nrow(p2)>0){
     p2$PATYPE <- with(p2, substring(PARAMETER, 1, 6))
-    if(exists('p1')){
+    if(exists('p1') & nrow(p1)>0){
       p.all <- rbind(p1, p2)
       puniq <- unique(p.all)
     }
+  }else if(sampled=='Y' & nrow(p1)>0){
+    puniq <- unique(p1)
   }
-  palt_tbl <- puniq
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='WADSUB'] <- "Water Addition or Substraction Alterations"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='WOBSTR'] <- "Flow Obstruction Alterations"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILHD'] <- "Soil Hardening"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILMD'] <- "Surface Modification"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREM'] <- "Vegetation Removal"
-  palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
-  
-  palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
-  
+  if(exists('puniq')){
+    palt_tbl <- puniq
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='WADSUB'] <- "Water Addition or Substraction Alterations"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='WOBSTR'] <- "Flow Obstruction Alterations"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILHD'] <- "Soil Hardening"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILMD'] <- "Surface Modification"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREM'] <- "Vegetation Removal"
+    palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
+   
+    palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
+  } else{
+    palt_tbl <- data.frame(PATYPE=c("None Observed"),
+                           stringsAsFactors=F)
+  }
 }
+
 
 
 ```
@@ -134,11 +141,13 @@ kable(verification_tbl,col.names=c('Station Visit Information',''), row.names=FA
 ```
 
 ```{r row 1 b tables, echo=F}
-if(sampled=='Y' & exists("field_tbl") & nrow(field_tbl)>0){
-kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FALSE, align=c('l','r')) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "20em") %>%
-  column_spec(2, width = "16em")
+if(sampled=='Y' & exists("field_tbl")){
+  if(nrow(field_tbl)>0){
+  kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FALSE, align=c('l','r')) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "20em") %>%
+    column_spec(2, width = "16em")
+  }
 }
 ```
 
