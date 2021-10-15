@@ -64,6 +64,7 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
     }
   }else if(sampled=='Y' & nrow(p1)>0){
     puniq <- unique(p1)
+
   }
   if(exists('puniq')){
     palt_tbl <- puniq
@@ -75,8 +76,13 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
     palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
    
     palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
-  } 
+  } else{
+    palt_tbl <- data.frame(PATYPE=c("None Observed"),
+                           stringsAsFactors=F)
+  }
+
 }
+
 
 
 ```
@@ -137,11 +143,13 @@ kable(verification_tbl,col.names=c('Station Visit Information',''), row.names=FA
 ```
 
 ```{r row 1 b tables, echo=F}
-if(sampled=='Y' & exists("field_tbl") & nrow(field_tbl)>0){
-kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FALSE, align=c('l','r')) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "20em") %>%
-  column_spec(2, width = "16em")
+if(sampled=='Y' & exists("field_tbl")){
+  if(nrow(field_tbl)>0){
+  kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FALSE, align=c('l','r')) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "20em") %>%
+    column_spec(2, width = "16em")
+  }
 }
 ```
 

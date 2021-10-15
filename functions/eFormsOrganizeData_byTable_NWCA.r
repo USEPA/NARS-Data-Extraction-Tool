@@ -100,22 +100,59 @@ organizePALT.nwca <- function(parsedIn){
   # bb pulls out and formats species by line number and sample type
   bb <- subset(parsedIn, select=str_detect(names(parsedIn), 'COMMENT|BUFF_LAT|BUFF_LON')==FALSE &
                  str_detect(names(parsedIn), '[:digit:]'))
-  bb$SAMPLE_TYPE <- 'BUFF_PALT'
-  
-  varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
-  bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
-                     v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  bb.long$variable <- with(bb.long, sub('BUFFER\\.','',variable))
-  bb.long$LOCATION <- with(bb.long, substring(variable, 1,1))
-  bb.long$PLOT <- with(bb.long, substring(variable, 3,3))
-  bb.long$PARAMETER <- with(bb.long, substring(variable, 5, nchar(variable)))
-  
-  bb.out <- subset(bb.long, select = c('SAMPLE_TYPE','PLOT','LOCATION','PARAMETER','RESULT'))
-  
-  cc <- rbind(aa.out, bb.out) 
-  
-  return(cc)
+  if(ncol(bb)>0){
+    bb$SAMPLE_TYPE <- 'BUFF_PALT'
+    
+    varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
+    bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
+                       v.names = 'RESULT', timevar = 'variable', direction = 'long')
+    bb.long$variable <- with(bb.long, sub('BUFFER\\.','',variable))
+    bb.long$LOCATION <- with(bb.long, substring(variable, 1,1))
+    bb.long$PLOT <- with(bb.long, substring(variable, 3,3))
+    bb.long$PARAMETER <- with(bb.long, substring(variable, 5, nchar(variable)))
+    
+    bb.out <- subset(bb.long, select = c('SAMPLE_TYPE','PLOT','LOCATION','PARAMETER','RESULT'))
+    
+    if(ncol(aa)>0){
+      cc <- rbind(aa.out, bb.out)
+    }else{
+      cc <- bb.out
+    }
+  }else if(ncol(aa)>0){
+    cc <- aa.out
+  }else{
+    cc <- data.frame(SAMPLE_TYPE=character(), PLOT=character(), LOCATION=character(),
+                     PARAMETER=character(), RESULT=character())
   }
+  
+  # Now account for NONE_PRESENT, which has no numeric digits
+  npres <- subset(parsedIn, select=str_detect(names(parsedIn), 'COMMENT|BUFF_LAT|BUFF_LON')==FALSE &
+                    str_detect(names(parsedIn), 'NONE_PRESENT'))
+  
+  if(ncol(npres)>0){
+    npres$SAMPLE_TYPE <- 'BUFF_PALT'
+    
+    varLong <- names(npres)[names(npres)!='SAMPLE_TYPE']
+    npres.long <- reshape(npres, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
+                          v.names = 'RESULT', timevar = 'variable', direction = 'long')
+    npres.long$variable <- with(npres.long, sub('BUFFER\\.','',variable))
+    npres.long$LOCATION <- with(npres.long, substring(variable, 1,1))
+    npres.long$PLOT <- '0'
+    npres.long$PARAMETER <- with(npres.long, substring(variable, 3, nchar(variable)))
+    
+    npres.out <- subset(npres.long, select = c('SAMPLE_TYPE','PLOT','LOCATION','PARAMETER','RESULT'))
+  }
+  
+  if(ncol(npres.out)>0){
+    dd <- rbind(cc, npres.out)
+  }else{
+    dd <- cc
+  }
+  
+  dd <- dd[with(dd, order(LOCATION, PLOT)),]
+  
+  return(dd)
+}
 
 organizeAApalt.nwca <- function(parsedIn){
   # Simply melt these data and clean up parameter names
