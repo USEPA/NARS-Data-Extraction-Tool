@@ -141,6 +141,9 @@ organizePALT.nwca <- function(parsedIn){
     npres.long$PARAMETER <- with(npres.long, substring(variable, 3, nchar(variable)))
     
     npres.out <- subset(npres.long, select = c('SAMPLE_TYPE','PLOT','LOCATION','PARAMETER','RESULT'))
+  }else{
+    npres.out <- data.frame(SAMPLE_TYPE = 'BUFF_PALT', PLOT = NA, LOCATION = NA,
+                            PARAMETER = NA, RESULT = NA)
   }
   
   if(ncol(npres.out)>0){
