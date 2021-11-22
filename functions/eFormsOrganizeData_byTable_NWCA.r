@@ -141,6 +141,9 @@ organizePALT.nwca <- function(parsedIn){
     npres.long$PARAMETER <- with(npres.long, substring(variable, 3, nchar(variable)))
     
     npres.out <- subset(npres.long, select = c('SAMPLE_TYPE','PLOT','LOCATION','PARAMETER','RESULT'))
+  }else{
+    npres.out <- data.frame(SAMPLE_TYPE = 'BUFF_PALT', PLOT = NA, LOCATION = NA,
+                            PARAMETER = NA, RESULT = NA)
   }
   
   if(ncol(npres.out)>0){
@@ -540,6 +543,10 @@ organizeV3.nwca <- function(parsedIn){
                                 'GROUND', 'VEGTYPE'))
     
     aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PLOT','PARAMETER','RESULT'))
+  }else{
+    
+    aa.out <- data.frame(SAMPLE_TYPE='VEGTYPE', PLOT = NA, 
+                         PARAMETER = NA, RESULT = NA)
   }  
  
  return(aa.out)
@@ -567,7 +574,11 @@ organizeV4.nwca <- function(parsedIn){
     #aa.long$PARAMETER <- with(aa.long, gsub("[:digit:]\\_", "", PARAMETER))
     
     aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PLOT','V2_LINE','PARAMETER','RESULT'))
-  }  
+  }else{
+    aa.out <- data.frame(SAMPLE_TYPE = 'TREE', PLOT = NA,
+                         V2_LINE = NA, PARAMETER = NA,
+                         RESULT = NA)
+  }   
   
   return(aa.out)
   
