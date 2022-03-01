@@ -1,0 +1,181 @@
+---
+title: "National Lakes Assessment Field Visit Summary"
+author: ""
+date: ""
+params:
+  userDataRMD: 'NULL'
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(kableExtra))
+
+
+```
+
+
+
+```{r verif, echo=FALSE}
+
+include_graphics("NLA_logo_sm.jpg")
+
+verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c("DATE_COL","LOC_NAME",                                                        "SITESAMP"), select = c('PARAMETER','RESULT')) 
+
+sampled <- subset(verification, PARAMETER=='SITESAMP')$RESULT
+
+site <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], select = c('SITE_ID'))
+site <- unique(site)
+
+visit <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], select = c('VISIT_NO'))
+visit <- unique(visit)
+
+sitevis <- data.frame(PARAMETER = c('SITE_ID','VISIT_NO'), RESULT = c(site$SITE_ID, visit$VISIT_NO))
+
+verification_tbl <- rbind(sitevis, subset(verification, !(PARAMETER %in% c("SITESAMP"))))
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='SITE_ID'] <- 'Site ID'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Number'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='DATE_COL'] <- 'Sample Date'
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='LOC_NAME'] <- 'Lake Name'
+
+
+```
+
+```{r assessment, echo=FALSE}
+if(sampled=='YES' & !is.null(params[['userDataRMD']][['ASSESSMENT']])){
+  ## Assessment info
+  assessment <- subset(params[['userDataRMD']][['ASSESSMENT']][[1]], PARAMETER %in% c('TROPHIC_STATE','WILDLIFE','HYDRO_TYPE'),
+                       select = c('PARAMETER','RESULT'))
+  assessment$PARAMETER[assessment$PARAMETER == 'TROPHIC_STATE'] <- 'Trophic State'
+ # assessment$PARAMETER[assessment$PARAMETER == 'SWIMMABILITY'] <- 'Swimmability'
+ # assessment$PARAMETER[assessment$PARAMETER == 'ALGAL_ABUNDANCE'] <- 'Algal Abundance and Type'
+  assessment$PARAMETER[assessment$PARAMETER == 'WILDLIFE'] <- 'Wildlife Observed'
+  assessment$PARAMETER[assessment$PARAMETER == 'HYDRO_TYPE'] <- 'Hydrologic Lake Type'
+  
+  assessment$group <- assessment$PARAMETER
+  assessment$group[assessment$group == 'Trophic State'] <- 1
+  # assessment$group[assessment$group == 'Swimmability'] <- 2
+  assessment$group[assessment$group == 'Hydrologic Lake Type'] <- 3
+  # assessment$group[assessment$group == 'Algal Abundance and Type'] <- 4
+  assessment$group[assessment$group == 'Wildlife Observed'] <- 5
+  
+  assessment <- assessment[order(assessment$group),]
+  assessment <- subset(assessment, select = -group)
+}
+```
+
+```{r samples, echo=FALSE}
+# Use info from both the INDEX file and from LITTORAL (for ENTE and BENT)
+if(sampled=='YES' & !is.null(params[['userDataRMD']][['INDEX']])){
+  ## samples collected
+  # generic samples and description
+  samples <- data.frame(Sample = c('CHEM', 'CHLX', 'MICZ', 'PHYX','ZOCN','ZOFN','SECH','TRIA','FDNA'),
+                        Sample.Name = c('Water Chemistry','Water Chlorophyll a',
+                                      'Microcystin & Cylindrospermopsin', 
+                                      'Phytoplankton','Zooplankton-coarse',
+                                      'Zooplankton-fine', 'Secchi depth', 'Atrazine', 'Fish eDNA'),
+                        Description = c('Basic anions & cations, turbidity, organic carbon, pH',
+                                    'Chlorophyll a content in water sample',
+                                    'Analyzed for algal toxins in water',
+                                    'Algal species composition',
+                                    'Zooplankton captured with coarse mesh',
+                                    'Zooplankton captured with fine mesh',
+                                    'Water transparency',
+                                    'Atrazine in water', 'Fish environmental DNA'), stringsAsFactors=F)
+  
+  # filter to only what was collected
+  samplesTaken <- params[['userDataRMD']][['INDEX']][[1]]$SAMPLE_TYPE[!(params[['userDataRMD']][['INDEX']][[1]]$PARAMETER %in% c('NOT_COLLECTED','CHEM_SITE_DEPTH'))]
+  
+  samples_tbl <- subset(samples, Sample %in% samplesTaken)
+  samples_tbl <- samples_tbl[!duplicated(samples_tbl[, c('Sample.Name')]), c('Sample.Name','Description')]
+}
+
+if(sampled=='YES' & !is.null(params[['userDataRMD']][['LITTORAL']])){
+  littoral <- data.frame(Sample = c('BENT','ENTE'), 
+                         Sample.Name = c('Benthic macroinvertebrates', 'Bacteria'),
+                         Description = c('Benthic macroinvertebrate composition','*E.coli* and enterococci'))
+  
+  littoral.taken <- params[['userDataRMD']][['LITTORAL']][[1]]$SAMPLE_TYPE[!(params[['userDataRMD']][['LITTORAL']][[1]]$PARAMETER %in% c('NOT_COLLECTED'))]
+  
+  littoral_tbl <- subset(littoral, Sample %in% littoral.taken)
+  littoral_tbl <- littoral_tbl[!duplicated(littoral_tbl[,c('Sample.Name')]), c('Sample.Name', 'Description')]
+}
+
+if(exists('samples_tbl') & exists('littoral_tbl')){
+  samples_tbl <- rbind(samples_tbl, littoral_tbl)
+}else if(!exists('samples_tbl') & exists('littoral_tbl')){
+  samples_tbl <- littoral_tbl
+}
+```
+
+
+
+```{r profile, echo = FALSE}
+if(sampled=='YES' & !is.null(params[['userDataRMD']][['PROFILE']])){
+  ## Profile - skip secchi because might be too confusing to lay person
+  profile_tbl <- subset(params[['userDataRMD']][['PROFILE']][[1]], 
+                        PARAMETER %in% c('DEPTH','TEMPERATURE','OXYGEN','PH','CONDUCTIVITY','METALIMNION'), 
+                        select = c('LINE','PARAMETER','RESULT'))
+  
+  profile_tbl.wide <- reshape(profile_tbl, idvar = c('LINE'), direction = 'wide',
+                              v.names = 'RESULT', timevar = 'PARAMETER')
+  profile_tbl.wide <- profile_tbl.wide[order(profile_tbl.wide$LINE),]
+  names(profile_tbl.wide) <- gsub('RESULT\\.', '', names(profile_tbl.wide))
+  
+  profile_tbl.wide <- subset(profile_tbl.wide, select = c('DEPTH','OXYGEN','TEMPERATURE','PH','CONDUCTIVITY', 'METALIMNION'))
+  profile_tbl.wide$METALIMNION <- with(profile_tbl.wide, ifelse(is.na(METALIMNION), '', 
+                                                                ifelse(METALIMNION=='B', 'Metalimnion bottom',
+                                                                       'Metalimnion Top')))
+  
+}
+```
+
+#### About
+This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
+
+
+
+```{r row 1 tables, echo=F}  
+kable(verification_tbl,col.names=c('Station Information',''), align=c('l','c'), row.names=F) %>%
+  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+  column_spec(1, border_right = T) %>%
+  column_spec(2, width = "15em")
+
+if(sampled=='YES' & exists("assessment")){
+  kable(assessment ,col.names=c('Field Assessment',''), align=c('l','r'), row.names=F) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "10em") %>%
+    column_spec(2, width = "15em")
+}
+```
+
+
+```{r row 3 tables, echo=F}
+if(sampled=='YES' & exists("samples_tbl")){
+  kable(samples_tbl, col.names=c('Sample Name', 'Description'), row.names = FALSE, align=c('l','r')) %>%
+    add_header_above(c('Samples Sent for Laboratory Analysis'=2)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "15em") %>%
+    column_spec(2, width = "15em")
+}
+```
+```{r row3 tables 2, echo=F}
+if(sampled=='YES' & exists("profile_tbl.wide")){
+  kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm', 'Metalimnion'), row.names = FALSE, 
+        align=c('l','c','c','c','c','c')) %>%
+    add_header_above(c("Depth profile" = 6)) %>%
+    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+    column_spec(1, border_right = T, width = "12em") %>%
+    column_spec(2, width = "8em") %>%
+    column_spec(3, width = "8em") %>%
+    column_spec(4, width = "8em") %>%
+    column_spec(5, width = "8em") %>%
+    column_spec(6, width = "8em")
+}
+```
+
+
+
+

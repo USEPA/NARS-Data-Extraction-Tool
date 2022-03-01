@@ -28,16 +28,17 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
          (surv=='ncca20' & fileName %in% c('ASSESSMENT',
                                            'CALIBRATION','VERIFICATION','SAMPLE',
                                            'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS'))|
-         (surv=='nwca21' & fileName %in% c('AA-1','H-1','P-1','P-2','PV-1','S-1','V-1','V-2','V-3','V-4','W-1'))){
+         (surv=='nwca21' & fileName %in% c('AA-1','H-1','P-1','P-2','PV-1','S-1','V-1','V-2','V-3','V-4','W-1'))|
+        (surv=='nla22' & str_detect(fileName, 'ASSESSMENT|INDEX|PROFILE|ESA|FISH|CALIBRATION|LITTORAL|PHAB|VERIFICATION'))){
         
         rr <- eFormsParseJSON(filePath)
         switch(surv,
                'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
                'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
                'nla17' = {tt <- eFormsOrganize_byTable.nla(rr)},
-               'nwca21' = {tt <- eFormsOrganize_byTable.nwca(rr)}
+               'nwca21' = {tt <- eFormsOrganize_byTable.nwca(rr)},
+               'nla22' = {tt <- eFormsOrganize_byTable.nla22(rr)}
         )
-        # tt <- eFormsOrganize_byTable(rr)
           
           finalOut[[fileName]] <- tt
         }
@@ -55,7 +56,7 @@ narsWriteShiny <- function(surv, filelist, finalList){
   print(subName.out)
     objLen <- map(finalList, length)
 
-  if(surv=='nla17'){
+  if(surv %in% c('nla17', 'nla22')){
     specialCases <- names(finalList)[substring(names(finalList),1,4)=='PHAB']
     
     for(i in 1:length(specialCases)){
@@ -93,7 +94,7 @@ narsWriteShiny <- function(surv, filelist, finalList){
     
     meta <- list(Metadata = metadata.nrsa) 
     
-  }else if(surv=='nla17'){
+  }else if(surv %in% c('nla17', 'nla22')){
     phab_all <- finalList[names(finalList)=='PHAB']
     phab_all <- map_df(phab_all, 'PHAB')
     
@@ -112,7 +113,7 @@ narsWriteShiny <- function(surv, filelist, finalList){
     
     return(c(map(others,1), phab, meta))
     
-  }else if(surv=='nla17'){
+  }else if(surv %in% c('nla17', 'nla22')){
     
     return(c(map(others,1), phab, meta))
     

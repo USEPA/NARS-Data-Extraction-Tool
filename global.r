@@ -15,6 +15,7 @@ source('functions/eFormsOrganizeData_byTable_NRSA.r')
 source('functions/eFormsOrganizeData_byTable_NCCA.r')
 source('functions/eFormsOrganizeData_byTable_NLA.r')
 source('functions/eFormsOrganizeData_byTable_NWCA.r')
+source('functions/eFormsOrganizeData_byTable_NLA22.r')
 source('functions/parseData.R')
 
 metadata.nrsa <- readRDS("data/metadata.nrsa.rds")

@@ -13,7 +13,7 @@ ui <- fluidPage(
 #   theme="style.css",
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.0)",
+   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1)",
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
                                 column(6,h2(strong('Tool Overview')), offset=1,
@@ -40,7 +40,7 @@ ui <- fluidPage(
                                                   p('After compiling all of the .JSON files for a site visit into a single directory, 
                                                   users are ready to extract and organize the data. On the Data Upload and Extraction 
                                                   tab, users first select the survey app used to collect the data (NRSA 2018-19, 
-                                                  NLA 2017, NCCA 2020, or NWCA 2021), then select the directory where their data is saved 
+                                                  NLA 2017, NLA 2022, NCCA 2020, or NWCA 2021), then select the directory where their data is saved 
                                                     to upload .JSON files to the app for processing. Once the data is uploaded to 
                                                     the app, click the',
                                                     span(strong('Parse data in selected files')), 'button. Then users will have 
@@ -62,6 +62,7 @@ ui <- fluidPage(
                        sidebarPanel(radioButtons('survey',"Select survey app used (select one):",
                                                  choices = c('NRSA 2018-19' = 'nrsa1819',
                                                              'NLA 2017' = 'nla17',
+                                                             'NLA 2022' = 'nla22',
                                                              'NCCA 2020' = 'ncca20',
                                                              'NWCA 2021' = 'nwca21'),
                                                  select = ''),
@@ -204,14 +205,16 @@ server <- function(input, output, session) {
              'nrsa1819' = {reportName <- 'nrsaLandownerReport_fromApp.Rmd'},
              'nla17' = {reportName <- 'nlaLandownerReport_fromApp.Rmd'},
              'ncca20' = {reportName <- 'nccaLandownerReport_fromApp.Rmd'},
-             'nwca21' = {reportName <- 'nwcaLandownerReport_fromApp.Rmd'}
+             'nwca21' = {reportName <- 'nwcaLandownerReport_fromApp.Rmd'},
+             'nla22' = {reportName <- 'nlaLandownerReport_fromApp22.Rmd'}
       )
       
       switch(input$survey,
              'nrsa1819' = {logoName <- 'NRSA_logo_sm.jpg'},
              'nla17' = {logoName <- 'NLA_logo_sm.jpg'},
              'ncca20' = {logoName <- 'NCCA_logo_sm.jpg'},
-             'nwca21' = {logoName <- 'NWCA_logo_sm.jpg'})
+             'nwca21' = {logoName <- 'NWCA_logo_sm.jpg'},
+             'nla22' = {logoName <- 'NLA_logo_sm.jpg'})
       tempReport <- normalizePath(reportName)
       imageToSend1 <- normalizePath(logoName)  # choose image name
       owd <- setwd(tempdir())
