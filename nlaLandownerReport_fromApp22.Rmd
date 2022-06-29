@@ -95,7 +95,7 @@ if(sampled=='YES' & !is.null(params[['userDataRMD']][['INDEX']])){
 if(sampled=='YES' & !is.null(params[['userDataRMD']][['LITTORAL']])){
   littoral <- data.frame(Sample = c('BENT','ENTE'), 
                          Sample.Name = c('Benthic macroinvertebrates', 'Bacteria'),
-                         Description = c('Benthic macroinvertebrate composition','*E.coli* and enterococci'))
+                         Description = c('Benthic macroinvertebrate composition','Enterococci'))
   
   littoral.taken <- params[['userDataRMD']][['LITTORAL']][[1]]$SAMPLE_TYPE[!(params[['userDataRMD']][['LITTORAL']][[1]]$PARAMETER %in% c('NOT_COLLECTED'))]
   
