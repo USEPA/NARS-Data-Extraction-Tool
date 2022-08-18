@@ -10,7 +10,6 @@ source('global.r')
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
-  # Header Start ----
   tags$html(class = "no-js", lang="en"),
   tags$head(
     tags$meta(charset="utf-8"),
@@ -34,8 +33,7 @@ ui <- fluidPage(
     tags$meta(name="HandheldFriendly", content="true"),
     tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
     tags$meta(`http-equiv`="x-ua-compatible", content="ie=edge"),
-    tags$script(src = "js/pattern-lab-head-script.js"),
-    # tags$title('ContDataQC | US EPA'),
+    tags$title('ContDataQC | US EPA'),
     tags$link(rel="icon", type="image/x-icon", href="https://www.epa.gov/themes/epa_theme/images/favicon.ico"),
     tags$meta(name="msapplication-TileColor", content="#FFFFFF"),
     tags$meta(name="msapplication-TileImage", content="https://www.epa.gov/themes/epa_theme/images/favicon-144.png"),
@@ -89,11 +87,9 @@ ui <- fluidPage(
     '<div class="skiplinks" role="navigation" aria-labelledby="skip-to-main">
       <a id="skip-to-main" href="#main" class="skiplinks__link visually-hidden focusable">Skip to main content</a>
     </div>
-
     <!-- Google Tag Manager (noscript) -->
     <!--noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-L8ZB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript-->
     <!-- End Google Tag Manager (noscript) -->
-
     <div class="dialog-off-canvas-main-canvas" data-off-canvas-main-canvas>
     <section class="usa-banner" aria-label="Official government website">
       <div class="usa-accordion">
@@ -500,8 +496,7 @@ ui <- fluidPage(
       </svg>
     </a>'
   )
-  )
-
+)
 
 # Start of Server -----
 # Define server logic required to draw a histogram
