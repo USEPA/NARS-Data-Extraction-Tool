@@ -33,7 +33,7 @@ ui <- fluidPage(
     tags$meta(name="HandheldFriendly", content="true"),
     tags$meta(name="viewport", content="width=device-width, initial-scale=1.0"),
     tags$meta(`http-equiv`="x-ua-compatible", content="ie=edge"),
-    # tags$title('ContDataQC | US EPA'),
+    tags$title('NARS Data Extraction Tool | US EPA'),
     tags$link(rel="icon", type="image/x-icon", href="https://www.epa.gov/themes/epa_theme/images/favicon.ico"),
     tags$meta(name="msapplication-TileColor", content="#FFFFFF"),
     tags$meta(name="msapplication-TileImage", content="https://www.epa.gov/themes/epa_theme/images/favicon-144.png"),
@@ -215,7 +215,7 @@ ui <- fluidPage(
             <div class="web-area-title"></div>
           </div>
           <div class="l-page__header-last">
-            <a href="#" class="header-link">Contact Us</a>
+            <a href=""https://www.epa.gov/national-aquatic-resource-surveys/forms/contact-us-about-national-aquatic-resource-surveys"" class="header-link">Contact Us</a>
           </div>
         </div>
         <article class="article">'
@@ -226,7 +226,7 @@ ui <- fluidPage(
     </div>
     <div class="l-page__footer">
       <div class="l-constrain">
-        <p><a href="#">Contact Us</a> to ask a question, provide feedback, or report a problem.</p>
+        <p><a href=""https://www.epa.gov/national-aquatic-resource-surveys/forms/contact-us-about-national-aquatic-resource-surveys"">Contact Us</a> to ask a question, provide feedback, or report a problem.</p>
       </div>
     </div>
   </div>'
