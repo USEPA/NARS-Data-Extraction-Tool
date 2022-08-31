@@ -215,7 +215,7 @@ ui <- fluidPage(
             <div class="web-area-title"></div>
           </div>
           <div class="l-page__header-last">
-            <a href=""https://www.epa.gov/national-aquatic-resource-surveys/forms/contact-us-about-national-aquatic-resource-surveys"" class="header-link">Contact Us</a>
+            <a href="https://www.epa.gov/national-aquatic-resource-surveys/forms/contact-us-about-national-aquatic-resource-surveys" class="header-link">Contact Us</a>
           </div>
         </div>
         <article class="article">'
@@ -226,7 +226,7 @@ ui <- fluidPage(
     </div>
     <div class="l-page__footer">
       <div class="l-constrain">
-        <p><a href=""https://www.epa.gov/national-aquatic-resource-surveys/forms/contact-us-about-national-aquatic-resource-surveys"">Contact Us</a> to ask a question, provide feedback, or report a problem.</p>
+        <p><a href="https://www.epa.gov/national-aquatic-resource-surveys/forms/contact-us-about-national-aquatic-resource-surveys">Contact Us</a> to ask a question, provide feedback, or report a problem.</p>
       </div>
     </div>
   </div>'
