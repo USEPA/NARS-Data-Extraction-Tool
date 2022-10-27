@@ -121,8 +121,9 @@ if(sampled=='YES' & !is.null(params[['userDataRMD']][['PROFILE']])){
   
   profile_tbl.wide <- reshape(profile_tbl, idvar = c('LINE'), direction = 'wide',
                               v.names = 'RESULT', timevar = 'PARAMETER')
-  profile_tbl.wide <- profile_tbl.wide[order(profile_tbl.wide$LINE),]
+  
   names(profile_tbl.wide) <- gsub('RESULT\\.', '', names(profile_tbl.wide))
+  profile_tbl.wide <- profile_tbl.wide[order(as.numeric(profile_tbl.wide$DEPTH)),]
   
   profile_tbl.wide <- subset(profile_tbl.wide, select = names(profile_tbl.wide) %in% c('DEPTH','OXYGEN','TEMPERATURE','PH','CONDUCTIVITY', 'METALIMNION'))
   
@@ -131,6 +132,7 @@ if(sampled=='YES' & !is.null(params[['userDataRMD']][['PROFILE']])){
                                                               ifelse(METALIMNION=='B', 'Metalimnion bottom',
                                                                        'Metalimnion Top')))
   }
+  
   
 }
 ```
