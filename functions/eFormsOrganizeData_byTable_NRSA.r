@@ -90,8 +90,11 @@ organizeFish.nrsa <- function(parsedIn){
   
   bb.out <- subset(bb.long, select = c('SAMPLE_TYPE','PAGE','LINE','PARAMETER','RESULT'))
   
-  cc <- rbind(aa.out, bb.out) 
-  
+  if(ncol(aa)>0){
+    cc <- rbind(aa.out, bb.out) 
+  }else{
+    cc <- bb.out
+  }
   return(cc)
 }
 
@@ -182,8 +185,11 @@ organizeSamples.nrsa <- function(parsedIn){
   varLong <- names(parsedIn)
   aa.long <- reshape(aa, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
                      v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  aa.long$SAMPLE_TYPE <- with(aa.long, substring(as.character(variable),9,12))
-  aa.long$PARAMETER <- with(aa.long, substring(as.character(variable),14,nchar(as.character(variable))))
+  aa.long$SAMPLE_TYPE <- ifelse(str_detect(aa.long$variable, 'AMR_BLANK'), 'BCUL', 
+                                substring(as.character(aa.long$variable),9, 12))
+  aa.long$PARAMETER <- ifelse(str_detect(aa.long$variable, 'AMR_BLANK'), 
+                              substring(as.character(aa.long$variable), 9, nchar(as.character(aa.long$variable))),
+                              substring(as.character(aa.long$variable), 14, nchar(as.character(aa.long$variable))))
   
   aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
 
@@ -199,8 +205,10 @@ organizePhab_W.nrsa <- function(parsedIn){
   varLong <- names(parsedIn)[names(parsedIn)!='PROTOCOL']
   parsedIn.long <- reshape(parsedIn, idvar = 'PROTOCOL', varying = varLong, times = varLong,
                            v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  parsedIn.long$TRANSECT <- with(parsedIn.long, substring(variable,7,7))
-  parsedIn.long$variable.1 <- with(parsedIn.long, str_replace(variable,'PHABW\\_[:alpha:]\\.',''))
+  parsedIn.long$TRANSECT <- ifelse(nchar(str_extract(parsedIn.long$variable, "PHABW\\_[:alpha:]+"))==7, 
+                                   substring(parsedIn.long$variable, 7, 7), 
+                                    substring(parsedIn.long$variable, 7, 8))
+  parsedIn.long$variable.1 <- with(parsedIn.long, str_replace(variable,'PHABW\\_[:alpha:]+\\.',''))
 
   # from tblCHANCROSSEC
   xc <- subset(parsedIn.long, str_detect(variable.1,'CROSSSEC_COMMENT')|(variable.1 %in% c("LF_DIST_LB","LC_DIST_LB","CT_DIST_LB",
@@ -211,8 +219,8 @@ organizePhab_W.nrsa <- function(parsedIn){
                                                                                        "LF_EMBED","RC_EMBED")))
   if(nrow(xc)>0){  
     xc$SAMPLE_TYPE <- 'CROSSSECW'
-    xc$TRANSDIR <- with(xc, substring(variable.1,1,2))
-    xc$PARAMETER <- with(xc, substring(variable.1,4,nchar(variable.1)))
+    xc$TRANSDIR <- with(xc, substring(variable.1, 1, 2))
+    xc$PARAMETER <- with(xc, substring(variable.1, 4, nchar(variable.1)))
     
     xc.out <- subset(xc, select = c('SAMPLE_TYPE','PARAMETER','TRANSECT','TRANSDIR','RESULT'))
   }else{
@@ -446,9 +454,11 @@ organizePhab_B.nrsa <- function(parsedIn){
   varLong <- names(parsedIn)[names(parsedIn)!='PROTOCOL']
   parsedIn.long <- reshape(parsedIn, idvar = 'PROTOCOL', varying = varLong, times = varLong,
                            v.names = 'RESULT', timevar = 'variable', direction = 'long')
-  parsedIn.long$TRANSECT <- with(parsedIn.long, substring(variable,7,7))
-  parsedIn.long$variable.1 <- with(parsedIn.long, str_replace(variable,'PHABB\\_[:alpha:]\\.',''))
-  
+  parsedIn.long$TRANSECT <- ifelse(nchar(str_extract(parsedIn.long$variable, "PHABB\\_[:alpha:]+"))==7, 
+                                   substring(parsedIn.long$variable, 7, 7), 
+                                   substring(parsedIn.long$variable, 7, 8))
+  parsedIn.long$variable.1 <- with(parsedIn.long, str_replace(variable,'PHABB\\_[:alpha:]+\\.',''))
+
   # from tblCHANNEL 
   # fish cover
   fishc <- subset(parsedIn.long, str_detect(variable.1,("ALGAE|MACPHY|WOODY|BRUSH|LVTREE|OVRHNG|UNDCUT|BOULDR|STRUCT")))
