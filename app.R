@@ -215,7 +215,7 @@ ui <- fluidPage(
   
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1)",
+   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.1)",
               header = # Individual Page Header
                 HTML(
                   '<div class="l-page  has-footer">
