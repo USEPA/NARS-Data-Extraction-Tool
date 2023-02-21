@@ -288,7 +288,7 @@ ui <- fluidPage(
               tabPanel(span('Data Upload and Extraction',title="Select data to upload and extract"),
                        
                        sidebarPanel(radioButtons('survey',"Select survey app used (select one):",
-                                                 choices = c('NRSA 2018-19' = 'nrsa1819',
+                                                 choices = c('NRSA 2018-19/2023-24' = 'nrsa1819',
                                                              'NLA 2017' = 'nla17',
                                                              'NLA 2022' = 'nla22',
                                                              'NCCA 2020' = 'ncca20',

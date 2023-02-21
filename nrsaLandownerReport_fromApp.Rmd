@@ -106,14 +106,18 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['ASSESSMENT']])){
 if(sampled=='Y' & !is.null(params[['userDataRMD']][['SAMPLES']])){
   ## samples collected
   # generic samples and description
-  samples <- data.frame(Sample = c('CHEM', 'WCHL', 'PERI', 'PCHL', 'PBIO', 'PDNA', 'MICX', 'ENTE','BENT'),
+  samples <- data.frame(Sample = c('CHEM', 'WCHL', 'PERI', 'PCHL', 'PBIO', 'PDNA', 'MICX', 'ENTE','BENT',
+                                   'BCUL', 'BDNA'),
                     Sample.Name = c('Water Chemistry','Water Chlorophyll a','Periphyton Assemblage','Periphyton Chlorophyll a','Periphyton Biomass','Periphyton DNA',
-                                      "Microcystin & Cylindrospermopsin", 'Enterococci','Benthic Macroinvertebrates'),
+                                      "Microcystin & Cylindrospermopsin", 'Enterococci','Benthic Macroinvertebrates',
+                                    'Bacteria Culture', 'Bacteria DNA'),
                     Description = c('Nutrients (nitrogen and phosphorus), basic anions & cations, turbidity, organic carbon',
                                     'Chlorophyll a content in water sample','Algal species composition',
                                     'Chlorophyll a content in periphyton sample','Biomass in periphyton scraping',
                                     'eDNA fragments in water','Analyzed for algal toxins in water','*E.coli* and enterococci',
-                                    'Benthic macroinvertebrate composition'), stringsAsFactors=F)
+                                    'Benthic macroinvertebrate composition', 
+                                    'Antimicrobial resistance bacteria culture sample', 
+                                    'Antimicrobial resistance bacteria DNA sample'), stringsAsFactors=F)
   
   # filter to only what was collected
   samplesData <- unique(params[['userDataRMD']][['SAMPLES']][[1]]$SAMPLE_TYPE)[!(unique(params[['userDataRMD']][['SAMPLES']][[1]]$SAMPLE_TYPE) %in% 'SAMP')]
