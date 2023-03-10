@@ -32,7 +32,8 @@ eFormsOrganize_byTable.nrsa <- function(rawData){
     CONSTRAINT = {rr <- organizeConstraint.nrsa(parsedData)},
     DISCHARGE = {rr <- organizeDischarge.nrsa(parsedData)},
     SLOPE = {rr <- organizeSlope.nrsa(parsedData)},
-    TORRENT = {rr <- organizeTorrent.nrsa(parsedData)}
+    TORRENT = {rr <- organizeTorrent.nrsa(parsedData)},
+    ESA = {rr <- organizeESA.nrsa(parsedData)}
   )
   
   # PHAB sample types create lists of data frames
@@ -601,4 +602,46 @@ organizePhab_B.nrsa <- function(parsedIn){
   names(outdf) <- c('channel','chanrip','littoral','thalweg') 
   
   return(outdf)
+}
+
+organizeESA.nrsa <- function(parsedIn){
+  # Start by separating data that describe samples and those that describe species
+  # aa pulls out sample information by SAMPLE_TYPE and sets LINE=0
+  aa <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:alpha:]')) 
+  if(ncol(aa)>0){
+    aa$LINE <- '0'
+    
+    varLong <- names(aa)[!(names(aa) %in% c('LINE'))]
+    
+    aa.long <- reshape(aa, idvar = c('LINE'), varying = varLong, times = varLong,
+                       v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
+    aa.long$SAMPLE_TYPE <- 'ESA'
+    aa.long$PARAMETER <- with(aa.long, gsub('ESA\\.', '', PARAMETER))
+    
+    aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
+  }  
+  # bb pulls out and formats species by line number and sample type
+  if(ncol(bb)>0){
+    bb <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:digit:]'))
+    
+    bb$SAMPLE_TYPE <- 'ESA'
+    
+    varLong <- names(bb)[names(bb)!='SAMPLE_TYPE']
+    bb.long <- reshape(bb, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
+                       v.names = 'RESULT', timevar = 'variable', direction = 'long')
+    bb.long$variable <- with(bb.long, gsub('ESA\\.','',variable))
+    bb.long$LINE <- with(bb.long, str_extract(variable, '[:digit:]+'))
+    bb.long$PARAMETER <- with(bb.long, 
+                              str_replace(variable,'[:digit:]+\\_', ''))
+    
+    bb.out <- subset(bb.long, select = c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
+  }
+  if(ncol(bb)>0){
+    cc <- rbind(aa.out, bb.out)
+    row.names(cc) <- NULL
+  }else{
+    cc <- aa.out
+    row.names(cc) <- NULL
+  }
+  return(cc)
 }
