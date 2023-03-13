@@ -545,6 +545,11 @@ organizePhab_B.nrsa <- function(parsedIn){
     thalweg$STATION <- with(thalweg, ifelse(variable.1 %in% c('INCREMENT','REACHLENGTH'),'ALL',
                                             str_extract(variable.1,"[:digit:]+")))
     thalweg$PARAMETER <- with(thalweg, str_replace(variable.1,"[:digit:]+\\_|[:digit:]+\\.",''))
+    # If missing number, this means it is the units parameter, so need to add LINE
+    # and remove prefix from parameter name
+    thalweg$PARAMETER <- str_replace(thalweg$PARAMETER, "THALB\\_", "")
+    thalweg$STATION <- with(thalweg, ifelse(is.na(STATION), 0, STATION))
+    
     
     thalweg.out <- subset(thalweg, select = c('SAMPLE_TYPE','PARAMETER','TRANSECT','STATION','RESULT'))
   }else{
@@ -558,6 +563,12 @@ organizePhab_B.nrsa <- function(parsedIn){
     littdepth$SAMPLE_TYPE <- 'CHANDEPTHB'
     littdepth$LINE <- with(littdepth, str_extract(variable.1,"[:digit:]+"))
     littdepth$PARAMETER <- with(littdepth, str_replace(variable.1,"[:digit:]+\\_|[:digit:]+\\.",''))
+    
+    # If missing number, this means it is the units parameter, so need to add LINE
+    # and remove prefix from parameter name
+    littdepth$PARAMETER <- str_replace(littdepth$PARAMETER, "CHANDEPTHB\\_", "")
+    littdepth$LINE <- with(littdepth, ifelse(is.na(LINE), 0, LINE))
+    
     
     littdepth.out <- subset(littdepth, select = c('SAMPLE_TYPE','PARAMETER','TRANSECT','LINE','RESULT'))
   }else{
