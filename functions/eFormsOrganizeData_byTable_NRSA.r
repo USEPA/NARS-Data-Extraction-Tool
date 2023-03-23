@@ -19,41 +19,44 @@ eFormsOrganize_byTable.nrsa <- function(rawData){
   parsedData[,names(parsedData)] <- lapply(parsedData[,names(parsedData)], as.character)
   
   # run parsed data through organizing function, based on sample type 
-  switch(sampletype,
-    FISH = {rr <- organizeFish.nrsa(parsedData)},
-    FISHGEAR = {rr <- organizeFishGear.nrsa(parsedData)},
-    BENTHIC = {rr <- organizeBenthic.nrsa(parsedData)},
-    VERIFICATION = {rr <- organizeVerification.nrsa(parsedData)},
-    FIELD = {rr <- organizeField.nrsa(parsedData)},
-    SAMPLES = {rr <- organizeSamples.nrsa(parsedData)},
-    PHABW = {rr <- organizePhab_W.nrsa(parsedData)},
-    PHABB = {rr <- organizePhab_B.nrsa(parsedData)},
-    ASSESSMENT = {rr <- organizeAssessment.nrsa(parsedData)},
-    CONSTRAINT = {rr <- organizeConstraint.nrsa(parsedData)},
-    DISCHARGE = {rr <- organizeDischarge.nrsa(parsedData)},
-    SLOPE = {rr <- organizeSlope.nrsa(parsedData)},
-    TORRENT = {rr <- organizeTorrent.nrsa(parsedData)},
-    ESA = {rr <- organizeESA.nrsa(parsedData)}
-  )
-  
-  # PHAB sample types create lists of data frames
-  if(sampletype %in% c('PHABW','PHABB')){
-    ss <- rr
-    # Go through each data frame in this list and bind with visit info
-    for(k in 1:length(rr)){
-      if(nrow(ss[[k]])>0){
-        ss[[k]] <- cbind(visitinfo, ss[[k]])
+  if(ncol(parsedData)>0){
+    switch(sampletype,
+      FISH = {rr <- organizeFish.nrsa(parsedData)},
+      FISHGEAR = {rr <- organizeFishGear.nrsa(parsedData)},
+      BENTHIC = {rr <- organizeBenthic.nrsa(parsedData)},
+      VERIFICATION = {rr <- organizeVerification.nrsa(parsedData)},
+      FIELD = {rr <- organizeField.nrsa(parsedData)},
+      SAMPLES = {rr <- organizeSamples.nrsa(parsedData)},
+      PHABW = {rr <- organizePhab_W.nrsa(parsedData)},
+      PHABB = {rr <- organizePhab_B.nrsa(parsedData)},
+      ASSESSMENT = {rr <- organizeAssessment.nrsa(parsedData)},
+      CONSTRAINT = {rr <- organizeConstraint.nrsa(parsedData)},
+      DISCHARGE = {rr <- organizeDischarge.nrsa(parsedData)},
+      SLOPE = {rr <- organizeSlope.nrsa(parsedData)},
+      TORRENT = {rr <- organizeTorrent.nrsa(parsedData)},
+      ESA = {rr <- organizeESA.nrsa(parsedData)},
+      TRACKING = {rr <- organizeSamples.nrsa(parsedData)}
+    )
+
+    # PHAB sample types create lists of data frames
+    if(sampletype %in% c('PHABW','PHABB')){
+      ss <- rr
+      # Go through each data frame in this list and bind with visit info
+      for(k in 1:length(rr)){
+        if(nrow(ss[[k]])>0){
+          ss[[k]] <- cbind(visitinfo, ss[[k]])
+        }
       }
+    }else{ 
+      # For other sample types, bind with visit info and create list 
+      # in process for later use
+      ss <- list(cbind(visitinfo, rr))
     }
-  }else{ 
-    # For other sample types, bind with visit info and create list 
-    # in process for later use
-    ss <- list(cbind(visitinfo, rr))
+    
+    # Add new object to list with sample type name
+    ss[["SAMPLE_TYPE"]] <- sampletype
+    return(ss)
   }
-  
-  # Add new object to list with sample type name
-  ss[["SAMPLE_TYPE"]] <- sampletype
-  return(ss)
 }
 
 #############################################################################################################
@@ -102,6 +105,7 @@ organizeFish.nrsa <- function(parsedIn){
 organizeFishGear.nrsa <- function(parsedIn){
   # Simply melt these data and clean up parameters
   aa <- parsedIn
+  
   aa$SAMPLE_TYPE <- 'FISH'
   
   varLong <- names(aa)[names(aa)!='SAMPLE_TYPE']
@@ -112,6 +116,7 @@ organizeFishGear.nrsa <- function(parsedIn){
   aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
   return(aa.out)
+
 }
 
 organizeBenthic.nrsa <- function(parsedIn){
@@ -150,6 +155,7 @@ organizeBenthic.nrsa <- function(parsedIn){
 organizeVerification.nrsa <- function(parsedIn){
 # Simply melt these data and clean up parameter names
   aa <- parsedIn
+
   aa$SAMPLE_TYPE <- 'VERIF'
   
   varLong <- names(parsedIn)
@@ -160,11 +166,13 @@ organizeVerification.nrsa <- function(parsedIn){
   aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
   return(aa.out)
+  
 }
 
 organizeField.nrsa <- function(parsedIn){
   # Simply melt data, use parameters to assign sample type, and clean up parameter names
   aa <- parsedIn
+
   aa$SAMPLE_TYPE <- 'FIELDMEAS'
   
   varLong <- names(parsedIn)
@@ -176,21 +184,33 @@ organizeField.nrsa <- function(parsedIn){
   aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
 
   return(aa.out)
+  
 }
 
 organizeSamples.nrsa <- function(parsedIn){
   # Simply melt these data by SAMPLE_TYPE and clean up parameter names
   aa <- parsedIn
+ 
   aa$SAMPLE_TYPE <- 'SAMPLES'
   
   varLong <- names(parsedIn)
   aa.long <- reshape(aa, idvar = 'SAMPLE_TYPE', varying = varLong, times = varLong,
                      v.names = 'RESULT', timevar = 'variable', direction = 'long')
+  
+  aa.long$variable <- gsub('TRACKING\\.|SAMPLES\\.', '', aa.long$variable)
+  
   aa.long$SAMPLE_TYPE <- ifelse(str_detect(aa.long$variable, 'AMR_BLANK'), 'BCUL', 
-                                substring(as.character(aa.long$variable),9, 12))
+                                substring(as.character(aa.long$variable), 1, 4))
+  
   aa.long$PARAMETER <- ifelse(str_detect(aa.long$variable, 'AMR_BLANK'), 
-                              substring(as.character(aa.long$variable), 9, nchar(as.character(aa.long$variable))),
-                              substring(as.character(aa.long$variable), 14, nchar(as.character(aa.long$variable))))
+                              as.character(aa.long$variable),
+                              substring(as.character(aa.long$variable), 6, 
+                                        nchar(as.character(aa.long$variable))))
+  # aa.long$SAMPLE_TYPE <- ifelse(str_detect(aa.long$variable, 'AMR_BLANK'), 'BCUL', 
+  #                               substring(as.character(aa.long$variable),9, 12))
+  # aa.long$PARAMETER <- ifelse(str_detect(aa.long$variable, 'AMR_BLANK'), 
+  #                             substring(as.character(aa.long$variable), 9, nchar(as.character(aa.long$variable))),
+  #                             substring(as.character(aa.long$variable), 14, nchar(as.character(aa.long$variable))))
   
   aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
 
@@ -618,22 +638,34 @@ organizePhab_B.nrsa <- function(parsedIn){
 organizeESA.nrsa <- function(parsedIn){
   # Start by separating data that describe samples and those that describe species
   # aa pulls out sample information by SAMPLE_TYPE and sets LINE=0
-  aa <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:alpha:]')) 
-  if(ncol(aa)>0){
-    aa$LINE <- '0'
-    
-    varLong <- names(aa)[!(names(aa) %in% c('LINE'))]
-    
-    aa.long <- reshape(aa, idvar = c('LINE'), varying = varLong, times = varLong,
-                       v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
-    aa.long$SAMPLE_TYPE <- 'ESA'
-    aa.long$PARAMETER <- with(aa.long, gsub('ESA\\.', '', PARAMETER))
-    
-    aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
+  aa <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:alpha:]|ESA\\_[:alpha:]')) 
+  if(ncol(aa)>0 & nrow(aa)>0){
+    if(ncol(aa)==1){
+      aa$LINE <- '0'
+      
+      varLong <- names(aa)[!(names(aa) %in% c('LINE'))]
+      
+      aa.long <- reshape(aa, idvar = c('LINE'), varying = varLong, times = varLong,
+                         v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
+      aa.long$SAMPLE_TYPE <- 'ESA'
+      
+      aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
+    }else{
+      aa$LINE <- '0'
+      
+      varLong <- names(aa)[!(names(aa) %in% c('LINE'))]
+      
+      aa.long <- reshape(aa, idvar = c('LINE'), varying = varLong, times = varLong,
+                         v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
+      aa.long$SAMPLE_TYPE <- 'ESA'
+      aa.long$PARAMETER <- with(aa.long, gsub('ESA\\.', '', PARAMETER))
+      
+      aa.out <- subset(aa.long, select = c('SAMPLE_TYPE','LINE','PARAMETER','RESULT'))
+    }
   }  
   # bb pulls out and formats species by line number and sample type
-  if(ncol(bb)>0){
-    bb <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:digit:]'))
+  bb <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:digit:]'))
+  if(ncol(bb)>0 & nrow(bb)>0){
     
     bb$SAMPLE_TYPE <- 'ESA'
     
