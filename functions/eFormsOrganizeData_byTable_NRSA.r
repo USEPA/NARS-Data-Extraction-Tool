@@ -638,7 +638,9 @@ organizePhab_B.nrsa <- function(parsedIn){
 organizeESA.nrsa <- function(parsedIn){
   # Start by separating data that describe samples and those that describe species
   # aa pulls out sample information by SAMPLE_TYPE and sets LINE=0
-  aa <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:alpha:]|ESA\\_[:alpha:]')) 
+  aa <- subset(parsedIn, select=str_detect(names(parsedIn), 'ESA\\.[:alpha:]|ESA\\_[:alpha:]')) |>
+    subset(select = str_detect(names(parsedIn), 'ESA\\.[:digit:]')==FALSE)
+  
   if(ncol(aa)>0 & nrow(aa)>0){
     if(ncol(aa)==1){
       aa$LINE <- '0'

@@ -32,7 +32,6 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
         (surv=='nla22' & str_detect(fileName, 'ASSESSMENT|INDEX|PROFILE|ESA|FISH|CALIBRATION|LITTORAL|PHAB|VERIFICATION'))){
         
         rr <- eFormsParseJSON(filePath)
-        browser()
         switch(surv,
                'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
                'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
