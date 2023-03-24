@@ -104,8 +104,8 @@ eFormsParseJSON.cleanValues <- function(ll, disallowedCharacters, trimEnds)
           lapply(function(el) {
             rc <- el
             if(is.character(el)) {
-              rc <- gsub(sprintf('([%s])', disallowedCharacters), '', el) %>%
-                iconv('utf-8','latin1')
+              rc <- gsub(sprintf('([%s])', disallowedCharacters), '', el) #%>%
+                #iconv('utf-8','latin1')
               if(trimEnds) rc <- trimws(rc)
             } else if (is.list(el)) {
               rc<-eFormsParseJSON.cleanValues(el, disallowedCharacters, trimEnds)
