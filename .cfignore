@@ -1,6 +1,6 @@
-.Rproj.user
+shiny-app/.Rproj.user
 .git
 .gitignore
-.Rhistory
-.RData
-.Rhistory
+shiny-app/.Rhistory
+shiny-app/.RData
+shiny-app/.Rhistory
