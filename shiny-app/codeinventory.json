@@ -1,0 +1,14 @@
+{
+  "name": "NARS Data Extraction Tool",
+  "description": "Contains R Shiny code for parsing JSON files from mobile apps developed for the National Aquatic Resource Surveys (NARS).",
+  "name": "MIT",
+  "URL":"https://github.com/USEPA/NARS-Data-Extraction-Tool/blob/master/license.md",
+  "usageType": "openSource",
+  "tags": [
+    "EPA",
+    "opensource"
+  ],
+  "contact": {
+    "email": "blocksom.karen@epa.gov"
+  }
+}
