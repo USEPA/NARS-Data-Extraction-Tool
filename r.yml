@@ -11,3 +11,4 @@ packages:
     - name: kableExtra
     - name: knitr
     - name: rmarkdown
+    - name: dplyr
