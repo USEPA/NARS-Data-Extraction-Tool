@@ -74,19 +74,24 @@ narsWriteShiny <- function(surv, filelist, finalList){
   if(surv=='nrsa1819'){  
     phab_channel <- finalList[specialCases]
     
-    phab_channel <- map_df(phab_channel, 'channel')
+    phab_channel <- map(phab_channel, 'channel') %>%
+      list_rbind()
     
     phab_chanrip <- finalList[specialCases]
-    phab_chanrip <- map_df(phab_chanrip, 'chanrip')
+    phab_chanrip <- map(phab_chanrip, 'chanrip') %>%
+      list_rbind()
     
     phab_chanxsec <- finalList[specialCases]
-    phab_chanxsec <- map_df(phab_chanxsec, 'chanxsec')
+    phab_chanxsec <- map(phab_chanxsec, 'chanxsec') %>%
+      list_rbind()
     
     phab_littoral <- finalList[specialCases]
-    phab_littoral <- map_df(phab_littoral, 'littoral')
+    phab_littoral <- map(phab_littoral, 'littoral') %>%
+      list_rbind()
     
     phab_thalweg <- finalList[specialCases]
-    phab_thalweg <- map_df(phab_thalweg, 'thalweg')    
+    phab_thalweg <- map(phab_thalweg, 'thalweg') %>%
+      list_rbind()    
     
     phab <- list(PHAB_channel = phab_channel, PHAB_chanrip = phab_chanrip, 
                  PHAB_chanxsec = phab_chanxsec, PHAB_littoral = phab_littoral, 
@@ -96,7 +101,8 @@ narsWriteShiny <- function(surv, filelist, finalList){
     
   }else if(surv %in% c('nla17', 'nla22')){
     phab_all <- finalList[names(finalList)=='PHAB']
-    phab_all <- map_df(phab_all, 'PHAB')
+    phab_all <- map(phab_all, 'PHAB') %>%
+      list_rbind()
     
     phab <- list(PHAB=phab_all)
     
