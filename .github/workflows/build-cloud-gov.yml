@@ -86,7 +86,6 @@ jobs:
           sf
           rjson
           dplyr
-          Cairo
 
     - name: List R dependencies
       run: |
@@ -96,56 +95,21 @@ jobs:
       run: |
         if [ -d "vendor_r" ]; then rm -fr vendor_r; fi
         Rscript scripts/download_packages.R vendor_r/src/contrib ${{ env.packs }}
-        cd vendor_r/src/contrib
-        if ls sf_* >/dev/null 2>&1; then echo needs_geo=true; else echo needs_geo=false; fi >> $GITHUB_ENV
-        if ls rmarkdown_* >/dev/null 2>&1; then echo needs_pandoc=true; else echo needs_pandoc=false; fi >> $GITHUB_ENV
-        if ls *_R_x86_64-pc-linux-gnu.tar.gz >/dev/null 2>&1; then 
-          find -name '*_R_x86_64-pc-linux-gnu.tar.gz' -print0 | sed -ze "p;s/\_R_x86_64-pc-linux-gnu//" | xargs -0 -n2 mv;
-        fi
-        cd ../../..
       env: 
         GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Copy pandoc executables
-      if: ${{ env.needs_pandoc == 'true' }}
       run: |
         if [ -d "r-bin" ]; then rm -fr r-bin; fi
         mkdir r-bin
         cp /usr/bin/pandoc r-bin
         git add r-bin
-  
-    - name: Pull cairo into r-lib
-      run: |
-        if [ -d "r-lib" ]; then rm -fr r-lib; fi
-        mkdir r-lib
-        cp -r /usr/include/cairo .
-        tar czvf r-lib/cairo.tar.gz cairo
-        git add r-lib
-
-      env:
-        LIBS: libudunits2.so.0 libgeos_c.so libproj.so.22 proj.db libgdal.so.30
-
-    - name: Add additional files to repo if not already there
-      run: |
-        if ! ls manifest*.yml >/dev/null 2>&1; then
-          mv scripts/include/manifest.yml .
-          git add manifest.yml
-        fi
-        if [ ! -f ".cfignore" ]; then
-          mv scripts/include/.cfignore .
-          git add .cfignore
-        fi
-        if [ ! -f "shiny.R" ]; then
-          mv scripts/include/shiny.R .
-          git add shiny.R
-        fi
       
     - name: Upload folder debug-outputs to an artifact
       uses: actions/upload-artifact@v3
       with:
         name: debug-outputs
         path: debug-outputs
-
 
     - name: Commit & Push
       if: ${{ success() }}
