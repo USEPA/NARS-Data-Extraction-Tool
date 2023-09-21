@@ -419,6 +419,15 @@ License: MIT + file LICENSE
 MD5sum: c971042451c31517f7c9abc5a491c682
 NeedsCompilation: yes
 
+Package: ragg
+Version: 1.2.5
+Imports: systemfonts (>= 1.0.3), textshaping (>= 0.3.0)
+LinkingTo: systemfonts, textshaping
+Suggests: covr, graphics, grid, testthat
+License: MIT + file LICENSE
+MD5sum: c02b3ecb314a39f9aa9cfd805bd69689
+NeedsCompilation: yes
+
 Package: rappdirs
 Version: 0.3.3
 Depends: R (>= 3.2)
@@ -586,6 +595,16 @@ LinkingTo: cpp11 (>= 0.2.1)
 Suggests: testthat (>= 2.1.0), covr, knitr, rmarkdown, tools
 License: MIT + file LICENSE
 MD5sum: 9e36a33ea728ba19ed18883fc20a3593
+NeedsCompilation: yes
+
+Package: textshaping
+Version: 0.3.6
+Depends: R (>= 3.2.0)
+Imports: systemfonts (>= 1.0.0)
+LinkingTo: cpp11 (>= 0.2.1), systemfonts (>= 1.0.0)
+Suggests: covr, knitr, rmarkdown
+License: MIT + file LICENSE
+MD5sum: 3374b1770b59a2c5abef5a760f15e494
 NeedsCompilation: yes
 
 Package: tibble
