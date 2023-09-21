@@ -117,6 +117,7 @@ jobs:
     - name: Pull cairo into r-lib
       run: |
         if [ -d "r-lib" ]; then rm -fr r-lib; fi
+        mkdir r-lib
         cp -r /usr/include/cairo .
         tar czvf r-lib/cairo.tar.gz cairo
         git add r-lib
