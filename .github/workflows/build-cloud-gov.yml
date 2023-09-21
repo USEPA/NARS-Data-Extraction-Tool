@@ -2,6 +2,12 @@ name: Copy R Shiny app to cloud-gov branch and request push to dev
 
 on:
   workflow_dispatch:
+    inputs:
+      build_deps:
+        description: 'Also build R dependencies?'
+        required: true
+        default: true
+        type: boolean
 
 permissions:
   contents: write
