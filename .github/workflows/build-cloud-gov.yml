@@ -49,6 +49,7 @@ jobs:
         BUILD_DEPS: ${{ inputs.build_deps }}
 
   download_and_vendor_dependencies:
+    if: ${{ inputs.build_deps }}
     needs: copy_code_to_cloud-gov
     runs-on: ubuntu-latest
     name: Compile and vendor R dependencies for cloud.gov
