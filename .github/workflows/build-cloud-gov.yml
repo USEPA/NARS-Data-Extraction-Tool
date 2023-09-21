@@ -116,13 +116,9 @@ jobs:
   
     - name: Pull cairo into r-lib
       run: |
-        mkdir tempCairo
-        cp -r /usr/include/cairo tempCairo
-        tar czvf cairo.tar.gz tempCairo/
-        rm -fr tempCairo/
         if [ -d "r-lib" ]; then rm -fr r-lib; fi
-        mkdir r-lib
-        mv cairo.tar.gz r-lib
+        cp -r /usr/include/cairo .
+        tar czvf r-lib/cairo.tar.gz cairo
         git add r-lib
 
       env:
