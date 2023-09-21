@@ -27,7 +27,8 @@ eFormsOrganize_byTable.nwca <- function(rawData){
          SPECIES = {rr <- organizeV2.nwca(parsedData)},
          V3 = {rr <- organizeV3.nwca(parsedData)},
          SNAGS = {rr <- organizeV4.nwca(parsedData)},
-         W1 = {rr <- organizeWater.nwca(parsedData)}
+         W1 = {rr <- organizeWater.nwca(parsedData)},
+         stop("unknown sample type")
   )
   
   ss <- list(cbind(visitinfo, rr))

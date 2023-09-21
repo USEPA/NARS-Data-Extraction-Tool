@@ -25,7 +25,8 @@ eFormsOrganize_byTable.nla <- function(rawData){
     LITTORAL_SAMPLE = {rr <- organizeLittoral.nla(parsedData)},
     PHAB = {rr <- organizePhab.nla(parsedData)},
     VERIFICATION = {rr <- organizeVerification.nla(parsedData)},
-    PROFILE_DATA = {rr <- organizeProfile.nla(parsedData)}
+    PROFILE_DATA = {rr <- organizeProfile.nla(parsedData)},
+    stop("unknown sample type")
   )
   
   ss <- list(cbind(visitinfo, rr))

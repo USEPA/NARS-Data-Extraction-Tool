@@ -27,7 +27,8 @@ eFormsOrganize_byTable.nla22 <- function(rawData){
          VERIFICATION = {rr <- organizeVerification.nla22(parsedData)},
          PROFILE_DATA = {rr <- organizeProfile.nla22(parsedData)},
          ESA = {rr <- organizeESA.nla22(parsedData)},
-         FISH = {rr <- organizeFish.nla22(parsedData)}
+         FISH = {rr <- organizeFish.nla22(parsedData)},
+         stop("unknown sample type")
   )
   
   ss <- list(cbind(visitinfo, rr))

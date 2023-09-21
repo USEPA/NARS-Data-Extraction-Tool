@@ -25,7 +25,8 @@ eFormsOrganize_byTable.ncca <- function(rawData){
     PROFILE = {rr <- organizeProfile.ncca(parsedData)},
     ECOFISH = {rr <- organizeEcofish.ncca(parsedData)},
     HHFISH = {rr <- organizeHHfish.ncca(parsedData)},
-    SAMPLE_PROCESS = {rr <- organizeSampProc.ncca(parsedData)}
+    SAMPLE_PROCESS = {rr <- organizeSampProc.ncca(parsedData)}, 
+    stop("unknown sample type")
   )
   
   ss <- list(cbind(visitinfo, rr))
