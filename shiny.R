@@ -2,6 +2,7 @@ library_path <- paste("Library Path: ", Sys.getenv(c("LD_LIBRARY_PATH")))
 print(paste("LD_LIBRARY_PATH: ", library_path))
 
 # options(bitmapType = 'cairo', device = 'png')
+knitr::opts_chunk$set(dev = "ragg_png")
 
 lib_dir <- "/home/vcap/deps/0/r/lib"
 local_lib_dir <- "r-lib"
