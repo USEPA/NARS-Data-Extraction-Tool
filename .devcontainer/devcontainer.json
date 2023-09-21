@@ -7,7 +7,7 @@
 			"installJupyterlab": true
 		},
         "ghcr.io/rocker-org/devcontainer-features/r-packages:1": {
-            "packages": "shinyjs, purrr, RJSONIO, stringr, writexl, zip, shinyBS, kableExtra, knitr, rmarkdown",
+            "packages": "shinyjs,purrr,RJSONIO,stringr,writexl,zip,shinyBS,kableExtra,knitr,rmarkdown",
             "installSystemRequirements": true
         }
 	},
