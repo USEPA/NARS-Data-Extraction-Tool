@@ -21,7 +21,7 @@ suppressPackageStartupMessages(library(kableExtra))
 
 ```{r verif, echo=FALSE}
 
-#include_graphics("NRSA_logo_sm.jpg")
+include_graphics("NRSA_logo_sm.jpg")
 
 verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME","CREW",
                                                                                                "LAT_DD","LON_DD","VALXSITE",'ADD_SITE_CHAR',
