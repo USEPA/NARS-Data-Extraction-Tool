@@ -35,7 +35,8 @@ eFormsOrganize_byTable.nrsa <- function(rawData){
       SLOPE = {rr <- organizeSlope.nrsa(parsedData)},
       TORRENT = {rr <- organizeTorrent.nrsa(parsedData)},
       ESA = {rr <- organizeESA.nrsa(parsedData)},
-      TRACKING = {rr <- organizeSamples.nrsa(parsedData)}
+      TRACKING = {rr <- organizeSamples.nrsa(parsedData)},
+      stop("unknown sample type")
     )
 
     # PHAB sample types create lists of data frames

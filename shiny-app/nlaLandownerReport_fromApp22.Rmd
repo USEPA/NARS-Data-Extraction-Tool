@@ -168,29 +168,51 @@ if(sampled=='YES' & exists("samples_tbl")){
 ```
 ```{r row3 tables 2, echo=F}
 if(sampled=='YES' & exists("profile_tbl.wide")){
-  if('METALIMNION' %in% names(profile_tbl.wide)){
-    kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm', 'Metalimnion'), row.names = FALSE, 
-          align=c('l','c','c','c','c','c')) %>%
-      add_header_above(c("Depth profile" = 6)) %>%
-      kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-      column_spec(1, border_right = T, width = "12em") %>%
-      column_spec(2, width = "8em") %>%
-      column_spec(3, width = "8em") %>%
-      column_spec(4, width = "8em") %>%
-      column_spec(5, width = "8em") %>%
-      column_spec(6, width = "8em")
+  if('CONDUCTIVITY' %in% names(profile_tbl.wide)){
+    if('METALIMNION' %in% names(profile_tbl.wide)){
+      kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm', 'Metalimnion'), row.names = FALSE, 
+            align=c('l','c','c','c','c','c')) %>%
+        add_header_above(c("Depth profile" = 6)) %>%
+        kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+        column_spec(1, border_right = T, width = "12em") %>%
+        column_spec(2, width = "8em") %>%
+        column_spec(3, width = "8em") %>%
+        column_spec(4, width = "8em") %>%
+        column_spec(5, width = "8em") %>%
+        column_spec(6, width = "8em")
+    }else{
+      kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm'), row.names = FALSE, 
+            align=c('l','c','c','c','c')) %>%
+        add_header_above(c("Depth profile" = 5)) %>%
+        kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+        column_spec(1, border_right = T, width = "12em") %>%
+        column_spec(2, width = "8em") %>%
+        column_spec(3, width = "8em") %>%
+        column_spec(4, width = "8em") %>%
+        column_spec(5, width = "8em") 
+    }
   }else{
-    kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH','Conductivity uS/cm'), row.names = FALSE, 
-          align=c('l','c','c','c','c')) %>%
-      add_header_above(c("Depth profile" = 5)) %>%
-      kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-      column_spec(1, border_right = T, width = "12em") %>%
-      column_spec(2, width = "8em") %>%
-      column_spec(3, width = "8em") %>%
-      column_spec(4, width = "8em") %>%
-      column_spec(5, width = "8em") 
+        if('METALIMNION' %in% names(profile_tbl.wide)){
+      kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH', 'Metalimnion'), row.names = FALSE, 
+            align=c('l','c','c','c','c')) %>%
+        add_header_above(c("Depth profile" = 5)) %>%
+        kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+        column_spec(1, border_right = T, width = "12em") %>%
+        column_spec(2, width = "8em") %>%
+        column_spec(3, width = "8em") %>%
+        column_spec(4, width = "8em") %>%
+        column_spec(5, width = "8em") 
+    }else{
+      kable(profile_tbl.wide, col.names = c('Depth (m)','Dissolved Oxygen (mg/L)','Temperature (C)','pH'), row.names = FALSE, 
+            align=c('l','c','c','c')) %>%
+        add_header_above(c("Depth profile" = 4)) %>%
+        kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
+        column_spec(1, border_right = T, width = "12em") %>%
+        column_spec(2, width = "8em") %>%
+        column_spec(3, width = "8em") %>%
+        column_spec(4, width = "8em") 
+    }
   }
-  
   
 }
 ```
