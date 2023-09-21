@@ -119,9 +119,11 @@ jobs:
         mkdir tempCairo
         cp -r /usr/include/cairo tempCairo
         tar czvf cairo.tar.gz tempCairo/
+        rm -fr tempCairo/
+        if [ -d "r-lib" ]; then rm -fr r-lib; fi
         mkdir r-lib
         mv cairo.tar.gz r-lib
-        rm -fr tempCairo/
+        git add r-lib
 
       env:
         LIBS: libudunits2.so.0 libgeos_c.so libproj.so.22 proj.db libgdal.so.30
