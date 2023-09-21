@@ -1,13 +1,3 @@
-Package: Cairo
-Version: 1.6-1
-Depends: R (>= 2.4.0)
-Imports: grDevices, graphics
-Suggests: png
-Enhances: FastRWeb
-License: GPL-2 | GPL-3
-MD5sum: ce5543c68a924306690b43a59c348177
-NeedsCompilation: yes
-
 Package: R6
 Version: 2.5.1
 Depends: R (>= 3.0)
