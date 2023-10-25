@@ -5,7 +5,7 @@ library(dplyr)
 args <- commandArgs(trailingOnly = TRUE)
 
 options(repos =
-    "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest")
+    "https://packagemanager.posit.co/cran/__linux__/jammy/latest")
 
 # Test if a package destination directory was passed as an argument
 if (length(args) == 0) {
