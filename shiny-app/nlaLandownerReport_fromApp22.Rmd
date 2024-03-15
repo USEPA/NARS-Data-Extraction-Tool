@@ -132,6 +132,10 @@ if(sampled=='YES' & !is.null(params[['userDataRMD']][['PROFILE']])){
                                                               ifelse(METALIMNION=='B', 'Metalimnion bottom',
                                                                        'Metalimnion Top')))
   }
+
+  names.order <- c('DEPTH','OXYGEN','TEMPERATURE','PH','CONDUCTIVITY', 'METALIMNION')
+  
+  profile_tbl.wide <- profile_tbl.wide[,na.omit(match(names.order, names(profile_tbl.wide)))]
   
   
 }
