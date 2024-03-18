@@ -131,7 +131,9 @@ jobs:
       run: |
         if [ -d "bin" ]; then rm -fr bin; fi
         mkdir bin
-        tar -czvf bin/pandoc.tar.gz /usr/bin/pandoc
+        ls bin
+        tar -czvf pandoc.tar.gz /usr/bin/pandoc
+        ls ..
         git add bin
         
     - name: Add additional files to repo if not already there
