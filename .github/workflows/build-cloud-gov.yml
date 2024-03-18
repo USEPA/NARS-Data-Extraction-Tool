@@ -133,7 +133,9 @@ jobs:
         mkdir bin
         tar -czvf bin/pandoc.tar.gz -C /usr/bin pandoc
         if [ ! -d "lib" ]; then mkdir lib; fi
-        find / -iname libcmark-gfm.so.0.29 2>/dev/null | xargs -I {} scripts/lib_tar.sh {}
+        chmod +x scripts/lib_tar.sh
+        scripts/lib_tar.sh /usr/lib/x86_64-linux-gnu/libcmark-gfm.so.0.29.0.gfm.3
+        scripts/lib_tar.sh /usr/lib/x86_64-linux-gnu/libcmark-gfm-extensions.so.0.29.0.gfm.3
         git add bin
         git add lib
         
