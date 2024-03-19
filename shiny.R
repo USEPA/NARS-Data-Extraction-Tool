@@ -1,6 +1,8 @@
 library_path <- paste("Library Path: ", Sys.getenv(c("LD_LIBRARY_PATH")))
 print(paste("LD_LIBRARY_PATH: ", library_path))
 
+print(paste("PATH: ", Sys.getenv(c("PATH"))))
+
 knitr::opts_chunk$set(dev = "ragg_png")
 
 lib_dir <- "/home/vcap/deps/0/r/lib"
@@ -24,13 +26,11 @@ if (dir.exists(lib_dir)) {
     Sys.setenv(PROJ_LIB = lib_dir)
 
   }
-  if (dir.exists(local_bin_dir)) {
-    untar(paste(local_bin_dir, "pandoc-3.1.12.3-linux-amd64.tar.gz", sep = "/"), exdir = local_bin_dir, extras = '--strip-components 1')
-    Sys.setenv(RMARKDOWN_PANDOC = local_bin_dir)
-    Sys.setenv(PATH = paste("/home/vcap/app/",
-      local_bin_dir, ":${PATH}", sep = ""))
-  }
+  Sys.setenv(RMARKDOWN_PANDOC = "/home/vcap/deps/0/bin")
+  print("Lib directory:")
   print(list.files(lib_dir))
+  print("/home/vcap/deps/0/bin")
+  print(list.files("/home/vcap/deps/0/bin"))
 }
 
 library(shiny)

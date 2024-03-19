@@ -7,4 +7,6 @@ applications:
     - route: nars-dataextr.app.cloud.gov
   buildpacks:
     - r_buildpack
-  command: R -f shiny.R
+  command: |
+    tar xvzf bin/pandoc-3.1.12.3-linux-amd64.tar.gz --strip-components 1 -C /home/vcap/deps/0/ && \
+    R -f shiny.R
