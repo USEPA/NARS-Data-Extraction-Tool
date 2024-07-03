@@ -1,6 +1,6 @@
 # NARS-Data-Extraction-Tool
 
-Generalized eForms Shiny app to parse data across all NARS surveys
+Generalized Shiny app to parse data across all NARS surveys
 
 ## Description
 
