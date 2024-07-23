@@ -1,0 +1,13 @@
+name: nars_data_extraction_tool
+title: NARS Data Extraction Tool
+username: Karen
+account: Karen
+server: rstudio-connect.dmap-stage.aws.epa.gov
+hostUrl: https://rstudio-connect.dmap-stage.aws.epa.gov/__api__
+appId: 515
+bundleId: 3253
+url: https://rstudio-connect.dmap-stage.aws.epa.gov/content/c132349e-4ba6-4414-849e-e7c11ac2f687/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .github/workflows/build-cloud-gov.yml
