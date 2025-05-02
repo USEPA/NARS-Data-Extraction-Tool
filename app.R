@@ -18,7 +18,7 @@ ui <- fluidPage(
 
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.1)",
+   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.2)",
               # Instructions and About ----
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),

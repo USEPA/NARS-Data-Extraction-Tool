@@ -17,11 +17,13 @@ suppressPackageStartupMessages(library(kableExtra))
 
 ```
 
-
-
-```{r verif, echo=FALSE}
+```{r logo, echo=FALSE, fig.alt = 'NWCA logo'}
 
 include_graphics("NWCA_logo_sm.jpg")
+
+```
+
+```{r verif, echo=FALSE}
 
 verification_tbl <- subset(params[['userDataRMD']][['AA-1']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "ACTUAL_DATE","AA_LAT", "AA_LON", "HGM_CLASS"),
                        select = c('PARAMETER','RESULT'))

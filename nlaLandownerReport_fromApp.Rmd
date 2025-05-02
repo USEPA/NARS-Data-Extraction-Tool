@@ -16,11 +16,14 @@ suppressPackageStartupMessages(library(kableExtra))
 
 ```
 
+```{r logo, echo=FALSE, fig.alt = 'NLA logo'}
+
+include_graphics("NLA_logo_sm.jpg")
+
+```
 
 
 ```{r verif, echo=FALSE}
-
-include_graphics("NLA_logo_sm.jpg")
 
 verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], PARAMETER %in% c('SITE_ID','VISIT_NO', "DATE_COL","LOC_NAME",                                                        "SITESAMP"), select = c('PARAMETER','RESULT')) 
   

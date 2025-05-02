@@ -16,11 +16,13 @@ suppressPackageStartupMessages(library(kableExtra))
 
 ```
 
-
-
-```{r verif, echo=FALSE, messages=FALSE}
+```{r logo, echo=FALSE, fig.alt = 'NCCA logo'}
 
 include_graphics("NCCA_logo_sm.jpg")
+
+```
+
+```{r verif, echo=FALSE, messages=FALSE}
 
 # Verification and habitat info
 verification <- subset(params[['userDataRMD']][['VERIFICATION']][[1]], 
