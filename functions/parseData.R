@@ -27,7 +27,7 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
                                               'CONSTRAINT','DISCHARGE','SLOPE','TORRENT', 'ESA')|grepl('PHAB',fileName,ignore.case=TRUE)==TRUE))|
          (surv=='ncca20' & fileName %in% c('ASSESSMENT',
                                            'CALIBRATION','VERIFICATION','SAMPLE',
-                                           'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS'))|
+                                           'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS', 'ESA'))|
          (surv=='nwca21' & fileName %in% c('AA-1','H-1','P-1','P-2','PV-1','S-1','V-1','V-2','V-3','V-4','W-1'))|
         (surv=='nla22' & str_detect(fileName, 'ASSESSMENT|INDEX|PROFILE|ESA|FISH|CALIBRATION|LITTORAL|PHAB|VERIFICATION'))){
         

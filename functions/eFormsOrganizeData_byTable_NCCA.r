@@ -26,6 +26,7 @@ eFormsOrganize_byTable.ncca <- function(rawData){
     ECOFISH = {rr <- organizeEcofish.ncca(parsedData)},
     HHFISH = {rr <- organizeHHfish.ncca(parsedData)},
     SAMPLE_PROCESS = {rr <- organizeSampProc.ncca(parsedData)}, 
+    ESA = {rr <- organizeESA.ncca(parsedData)},
     stop("unknown sample type")
   )
   
@@ -55,6 +56,20 @@ organizeVerification.ncca <- function(parsedIn){
   
   return(aa.out)
   
+}
+
+organizeESA.ncca <- function(parsedIn){
+  aa <- parsedIn
+  aa$SAMPLE_TYPE <- 'ESA'
+  
+  varLong <- names(parsedIn)
+  aa.long <- reshape(aa, idvar=c('SAMPLE_TYPE'), varying = varLong, times = varLong,
+                     v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
+  
+  aa.long$PARAMETER <- with(aa.long, gsub("ESA\\.", "", PARAMETER))
+  aa.long <- subset(aa.long, str_detect(PARAMETER, 'REVIEW')==FALSE)
+  
+  aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
 }
 
 organizeSamples.ncca <- function(parsedIn, sampletype){

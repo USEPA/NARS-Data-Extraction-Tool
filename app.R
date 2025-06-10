@@ -18,7 +18,7 @@ ui <- fluidPage(
 
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.2)",
+   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.3)",
               # Instructions and About ----
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
@@ -69,7 +69,7 @@ ui <- fluidPage(
                                                  choices = c('NRSA 2018-19/2023-24' = 'nrsa1819',
                                                              'NLA 2017' = 'nla17',
                                                              'NLA 2022' = 'nla22',
-                                                             'NCCA 2020' = 'ncca20',
+                                                             'NCCA 2020/2025' = 'ncca20',
                                                              'NWCA 2021' = 'nwca21'),
                                                  select = ''),
                                     h4(strong('Instructions')),
