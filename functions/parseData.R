@@ -8,9 +8,6 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
     fileName <- filelist[i]
     filePath <- pathlist[i]
     
-    print(fileName)
-
-    
     # This step parses data and then organizes data in each file, ignoring any tracking files
     if(grepl('TRACKING|SHIPPING',fileName,ignore.case=TRUE)==FALSE){
       
@@ -19,6 +16,7 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
       fileName <- gsub("[[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]][[:alnum:]]+[[:punct:]]", "", fileName)
       fileName <- gsub('.json*', '', fileName)
       fileName <- gsub('.*/', '', fileName)
+      
       # Limit the files that are processed to avoid error if user selects wrong survey
       if((surv=='nla17' & str_detect(fileName, 'ASSESSMENT|INDEX_SAMPLE|PROFILE_CALIBRATION|LITTORAL_SAMPLE|PHAB|VERIFICATION|PROFILE_DATA'))|
          (surv=='nrsa1819' & (fileName %in% c('FISH','FISHGEAR', 'BENTHIC',
@@ -28,10 +26,11 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
          (surv=='ncca20' & fileName %in% c('ASSESSMENT',
                                            'CALIBRATION','VERIFICATION','SAMPLE',
                                            'PROFILE','ECOFISH','HHFISH','SAMPLE_PROCESS', 'ESA'))|
-         (surv=='nwca21' & fileName %in% c('AA-1','H-1','P-1','P-2','PV-1','S-1','V-1','V-2','V-3','V-4','W-1'))|
+         (surv=='nwca21' & fileName %in% c('AA-1','H-1','P-1','P-2','PV-1','S-1','V-1','V-2','V-3','V-4','W-1','ESA'))|
         (surv=='nla22' & str_detect(fileName, 'ASSESSMENT|INDEX|PROFILE|ESA|FISH|CALIBRATION|LITTORAL|PHAB|VERIFICATION'))){
-        
+      
         rr <- eFormsParseJSON(filePath)
+        
         switch(surv,
                'nrsa1819' = {tt <- eFormsOrganize_byTable.nrsa(rr)},
                'ncca20' = {tt <- eFormsOrganize_byTable.ncca(rr)},
@@ -53,7 +52,7 @@ narsOrganizationShiny <- function(surv, pathlist, filelist){
 narsWriteShiny <- function(surv, filelist, finalList){
   # Create the first part of the filename for writing to a .csv file, based on visit info and sample type
   subName.out <- unique(finalList[[1]][[1]]$UID)
-  print(subName.out)
+  
     objLen <- map(finalList, length)
 
   if(surv %in% c('nla17', 'nla22')){
@@ -68,6 +67,7 @@ narsWriteShiny <- function(surv, filelist, finalList){
   }else{
     specialCases <- names(objLen[objLen>2])
     others <- finalList[!(names(finalList) %in% specialCases)]
+  
   }  
     
 
@@ -110,7 +110,7 @@ narsWriteShiny <- function(surv, filelist, finalList){
     
   }else if(surv=='ncca20'){
     meta <- list(Metadata = metadata.ncca) 
-  }else if(surv=='nwca21'){
+  }else if(surv == c('nwca21')){
     meta <- list(Metadata = metadata.nwca)
   }
      

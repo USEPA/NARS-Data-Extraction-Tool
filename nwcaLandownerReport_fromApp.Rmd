@@ -1,5 +1,5 @@
 ---
-title: "National Wetland Condition Assessment Field Visit Summary"
+title: "National Wetland Condition Assessment <br> Field Visit Summary"
 author: ""
 date: ""
 params:
@@ -7,6 +7,11 @@ params:
 output: html_document
 ---
 
+```{css, echo=FALSE}
+.title, .author, .date {
+  text-align: center;
+}
+```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -19,7 +24,19 @@ suppressPackageStartupMessages(library(kableExtra))
 
 ```{r logo, echo=FALSE, fig.alt = 'NWCA logo'}
 
-include_graphics("NWCA_logo_sm.jpg")
+# include_graphics("NWCA_logo_sm.jpg")
+tags$div(
+  style = "display: flex; align-items: center;",
+  tags$div(
+    style = "flex: 0 0 150px; margin-right: 20px;",
+    tags$img(src = "NWCA_logo_sm.jpg", style = "max-width: 100%;")
+  ),
+  tags$div(
+    style = "flex: 1;",
+    tags$h3("About"),
+    tags$p("This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.")
+  )
+)
 
 ```
 
@@ -35,11 +52,15 @@ verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VISIT_NO'] <- 'Visit Num
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='ACTUAL_DATE'] <- 'Sample Date'
 verification_tbl$PARAMETER[verification_tbl$PARAMETER=='HGM_CLASS'] <- 'HGM Class'
 
-pv1 <- subset(params[['userDataRMD']][['PV-1']][[1]], PARAMETER %in% c('SITESAMP'),
+pv1 <- subset(params[['userDataRMD']][['PV-1']][[1]], PARAMETER %in% c('SITESAMP', 'VALXSITE'),
                        select = c('PARAMETER','RESULT'))
+verification_tbl <- rbind(verification_tbl, subset(pv1, PARAMETER=='VALXSITE'))
+verification_tbl$PARAMETER[verification_tbl$PARAMETER=='VALXSITE'] <- 'Wetland Type'
+
 sampled <- subset(pv1, PARAMETER=='SITESAMP')$RESULT
 
 ```
+
 
 
 ```{r palt,echo=F}
@@ -69,15 +90,12 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
 
   }
   if(exists('puniq')){
-    palt_tbl <- puniq
-    palt_tbl$PATYPE[palt_tbl$PATYPE=='WADSUB'] <- "Water Addition or Substraction Alterations"
-    palt_tbl$PATYPE[palt_tbl$PATYPE=='WOBSTR'] <- "Flow Obstruction Alterations"
-    palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILHD'] <- "Soil Hardening"
-    palt_tbl$PATYPE[palt_tbl$PATYPE=='SOILMD'] <- "Surface Modification"
-    palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREM'] <- "Vegetation Removal"
-    palt_tbl$PATYPE[palt_tbl$PATYPE=='VEGREP'] <- "Vegetation Replacement"
-   
-    palt_tbl <- unique(subset(palt_tbl, select=c('PATYPE')))
+    palt_tbl <- puniq %>%
+      left_join(PhysAltLabels, by = c("PARAMETER")) %>%
+      filter(!is.na(ALIAS)) %>%
+      select(`Physical Alteration(s) Observed`=ALIAS)
+      
+    
   } else{
     palt_tbl <- data.frame(PATYPE=c("None Observed"),
                            stringsAsFactors=F)
@@ -86,95 +104,168 @@ if(sampled=='Y' & !is.null(params[['userDataRMD']][['P-2']])){
 }
 
 
-
 ```
+
 ```{r v2, echo=FALSE}
 ## Plant species observed
 if(sampled=='Y' & !is.null(params[['userDataRMD']][['V-2']])){
-  spp <- subset(params[['userDataRMD']][['V-2']][[1]], select = c('SPECIES'))
+  spp <- subset(params[['userDataRMD']][['V-2']][[1]], select = c('PLOT', 'SPECIES', 'COVER')) %>% filter(!(str_detect(SPECIES, "DELETE|DISREGARD")))
   
   if(sampled=='Y' & nrow(spp)>0){
-    spp <- subset(spp, !is.na(SPECIES))
-    spp_tbl <- unique(spp)
-    spp_tbl <- spp_tbl[order(spp_tbl$SPECIES),]
+    spp_tbl <- spp %>%
+      filter(!is.na(SPECIES)) %>%
+      group_by(SPECIES) %>%
+      summarize(`% Cover¹` = sum(as.numeric(COVER) / n_distinct(PLOT))) %>%
+      arrange(desc(`% Cover¹`)) %>%
+      rename(`Taxa Name`=SPECIES)
+    
+    # spp <- subset(spp2, !is.na(SPECIES))
+    # spp_tbl <- unique(spp)
+    # spp_tbl <- spp_tbl[order(spp_tbl$SPECIES),]
   }
 }
 ```
 
+```{r soil profile, echo=FALSE}
+if(sampled=='Y' & !is.null(params[['userDataRMD']][['S-1']])){
+  soil_tbl <- subset(params[['userDataRMD']][['S-1']][[1]], PARAMETER %in% c('DEPTH','PIT_DEPTH','SM_HUE','SM_VALUE','SM_CHROMA','HORIZON_NAME', 'SURFACE_WATER_DEPTH'),
+                 select = c('HORIZON', 'PARAMETER','RESULT'))
+}
+```
 
 
 ```{r water, echo=FALSE}
 if(sampled=='Y' & !is.null(params[['userDataRMD']][['W-1']])){
   # Pull DO, cond, pH, and temp of water
-  field_tbl <- subset(params[['userDataRMD']][['W-1']][[1]], PARAMETER %in% c('WATER_TYPE','DO','CONDUCTIVITY','PH','TEMP'),
+  field_tbl <- subset(params[['userDataRMD']][['W-1']][[1]], PARAMETER %in% c('SW_COVERAGE', 'SW_DEPTH_MAX', 'WATER_TYPE'),
                  select = c('PARAMETER','RESULT'))
   
   field_tbl$group <- field_tbl$PARAMETER
   
-  field_tbl$RESULT[field_tbl$PARAMETER == 'DO'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'DO'], 'mg/L', sep = ' ')
-  field_tbl$RESULT[field_tbl$PARAMETER == 'TEMP'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'TEMP'], 'C', sep = ' ')
-  field_tbl$RESULT[field_tbl$PARAMETER == 'CONDUCTIVITY'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'CONDUCTIVITY'], 'uS/cm', sep = ' ')
+  field_tbl$RESULT[field_tbl$PARAMETER == 'SW_COVERAGE'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'SW_COVERAGE'], '%', sep = ' ')
+  field_tbl$RESULT[field_tbl$PARAMETER == 'SW_DEPTH_MAX'] <- paste(field_tbl$RESULT[field_tbl$PARAMETER == 'SW_DEPTH_MAX'], 'cm', sep = ' ')
   
-  field_tbl$group[field_tbl$group == 'TEMP'] <- 1
-  field_tbl$group[field_tbl$group == 'DO'] <- 2
-  field_tbl$group[field_tbl$group == 'PH'] <- 3
-  field_tbl$group[field_tbl$group == 'CONDUCTIVITY'] <- 4
-  field_tbl$group[field_tbl$group == 'WATER_TYPE'] <- 5
+  field_tbl$group[field_tbl$group == 'SW_COVERAGE'] <- 1
+  field_tbl$group[field_tbl$group == 'SW_DEPTH_MAX'] <- 2
+  field_tbl$group[field_tbl$group == 'WATER_TYPE'] <- 3
   
-  field_tbl$PARAMETER[field_tbl$PARAMETER=='TEMP'] <- 'Temperature'
-  field_tbl$PARAMETER[field_tbl$PARAMETER=='DO'] <- 'Dissolved Oxygen'
-  field_tbl$PARAMETER[field_tbl$PARAMETER=='PH'] <- 'pH'
-  field_tbl$PARAMETER[field_tbl$PARAMETER=='CONDUCTIVITY'] <- 'Conductivity'
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='SW_COVERAGE'] <- 'Surface Water Coverage Across AA' 
+  field_tbl$PARAMETER[field_tbl$PARAMETER=='SW_DEPTH_MAX'] <- 'Maximum Surface Water Depth'
   field_tbl$PARAMETER[field_tbl$PARAMETER=='WATER_TYPE'] <- 'Predominant Water Feature'
-  
+
   field_tbl <- field_tbl[order(field_tbl$group),]
   field_tbl <- subset(field_tbl, select = -group)
-
-}
+  
+  field_tbl <- field_tbl %>%
+    left_join(WaterFeatureLabels, by = c("RESULT"="PARAMETER")) %>%
+    mutate(RESULT=ifelse(PARAMETER=="Predominant Water Feature", ALIAS, RESULT)) %>%
+    select(-ALIAS)
+  
+} 
 ```
-
-#### About
-This report provides landowners with preliminary data available after sampling. Additional information can be provided to you after laboratory analyses are completed. If you would like to be notified when this information is available, please contact the Crew Leader.
 
 
 ```{r row 1 tables, echo=F}  
-kable(verification_tbl,col.names=c('Station Visit Information',''), row.names=FALSE, align=c('l','r')) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T) %>%
-  column_spec(2, width = "16em")
-```
 
-```{r row 1 b tables, echo=F}
+
+kable(verification_tbl, col.names=NULL, row.names=FALSE) %>%
+  add_header_above(c("Site Visit Information" = ncol(verification_tbl)), font_size = 16, bold = TRUE) %>%
+  kable_styling("striped", full_width = T, position = "float_left")
+
 if(sampled=='Y' & exists("field_tbl")){
-  if(nrow(field_tbl)>0){
-  kable(field_tbl,col.names=c('Field Water Quality Measurements',''), row.names=FALSE, align=c('l','r')) %>%
-    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-    column_spec(1, border_right = T, width = "20em") %>%
-    column_spec(2, width = "16em")
-  }
+kable(field_tbl, col.names=NULL, row.names=FALSE) %>%
+    add_header_above(c("Hydrology" = ncol(field_tbl)), font_size = 16, bold = TRUE) %>%
+    kable_styling('striped', full_width = T, position = "float_left")
+} else{
+field_tbl <- data.frame(`Water Presence` = c("No Water Observed"),
+                        stringsAsFactors = FALSE)
+
+kable(field_tbl, col.names=NULL, row.names=FALSE) %>%
+  add_header_above(c("Hydrology" = ncol(field_tbl)), font_size = 16, bold = TRUE) %>%
+  kable_styling("striped", full_width = T, position = "float_left")
 }
+
 ```
 
-```{r row 1 c tables, echo=F}
+
+```{r row 2 tables, echo=F}
 if(sampled=='Y' & exists("palt_tbl")){
   if(nrow(palt_tbl)>0){
 
-  kable(palt_tbl ,col.names=c('Types of Physical Alteration Observed'), 
-        row.names =FALSE, align=c('l')) %>%
-    kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-    column_spec(1, border_right = T, width = "30em") 
+  kable(palt_tbl, col.names=NULL, row.names=FALSE) %>%
+      add_header_above(c("Types of Physical Alteration Observed" = ncol(palt_tbl)), font_size = 16, bold = TRUE) %>%
+      kable_styling("striped", full_width = T, position = "float_left")
   }
 }
 ```
-```{r row 2 tables, echo=F}
+
+```{r row 3 tables, echo=F}
 if(sampled=='Y' & exists("spp_tbl")){
-kable(spp_tbl ,col.names=c('Vascular Plant Species Observed'), row.names =FALSE, align=c('l')) %>%
-  kable_styling(bootstrap_options = 'condensed', full_width = F, position = "float_left") %>%
-  column_spec(1, border_right = T, width = "30em")
+kable(spp_tbl) %>%
+  add_header_above(c("Vascular Plant Species Observed" = 2), font_size = 16, bold = TRUE) %>%
+  kable_styling("striped", full_width = T, position = "float_left") %>%
+  footnote(general = "¹ Average % cover across all sampled vegetation plots.")
 }
+
 ```
 
 
+```{r soilprof, echo=FALSE, warning=FALSE, fig.cap='The soil profile plot shows the soil profile and provides a true representation of hue, value and chroma measured in the field and displayed in each horizon block. The surface and top of profile is the 0cm mark and is represented by the gray dotted line. Water level at time of sampling (when applicable) is represented by the blue dotted line and was measured during soil pit excavation. Letter designations in the profile represent soil horizon and layer designations when known by the field scientist (see this [link](https://www.nrcs.usda.gov/resources/education-and-teaching-materials/a-soil-profile) and this [link](https://www.soils4teachers.org/soilhorizons) for more information on soil profiles and naming conventions).'}
 
+if(is.null(params[['userDataRMD']][['S-1']])){
+  cat("Soil data not available for this site.\n")
+} else if (!"DEPTH" %in% soil_tbl$PARAMETER) {
+  # Column missing or all values are NA
+  cat("Soil profile data not available for this site.\n")
+} else {
+
+SPC_object <- soil_tbl %>%
+  pivot_wider(names_from = PARAMETER,
+              values_from = RESULT) %>%
+  fill(SURFACE_WATER_DEPTH) %>%
+  filter(!(HORIZON=="0")) %>%
+  mutate(across(c("DEPTH", "SURFACE_WATER_DEPTH", "PIT_DEPTH"), as.numeric),
+         SITE_ID = verification_tbl$RESULT[[2]],
+         Top_Depth = coalesce(lag(DEPTH), 0),
+         Bottom_Depth = DEPTH,
+         height = Bottom_Depth - Top_Depth,
+         soil_color = munsell2rgb(SM_HUE, SM_VALUE, SM_CHROMA)
+  ) 
+#glimpse(SPC_object)
+
+depths(SPC_object) <- SITE_ID ~ Top_Depth + Bottom_Depth
+
+
+plotSPC(
+  SPC_object,
+  name = 'HORIZON_NAME',
+  id.style = 'none',
+  max.depth = 125,
+  cex.names = 1,
+  cex.axis = 1,
+  name.style = 'center-center',
+  depth.axis = TRUE,
+  hz.depths = TRUE,
+  fixLabelCollisions = TRUE,
+  hz.depths.offset = 0,
+  # color = 'soil_color'  # uncomment if your plotSPC doesn't auto-use soil_color
+  y.offset = 0
+)
+
+# Add title after the plot so it shows up
+title('Soil Profile', line = 1, cex.main = 1.1)
+
+#addVolumeFraction(SPC_object, colname = 'frag_pct')
+
+# If SURFACE_WATER_DEPTH is a single site-level value per profile,
+# abline with a vector will draw multiple horizontal lines across the panel(s).
+water_table_depth <- unique(SPC_object$SURFACE_WATER_DEPTH)
+abline(h = water_table_depth, col = "lightblue", lwd = 2, lty = 2)
+abline(h = 0, col = "darkgray", lwd = 2, lty = 2)
+
+
+}
+
+```
 
 

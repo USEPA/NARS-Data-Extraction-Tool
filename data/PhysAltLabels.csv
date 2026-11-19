@@ -1,0 +1,49 @@
+PARAMETER,ALIAS
+SOILHD_IMPERVIOUS_SURFACE,"Buildings, other structures with impervious footprints"
+SOILHD_NONPAVED_TRAILS,Non-paved trails
+SOILHD_PAVED_ROADS,Paved roads
+SOILHD_RR_POLE_PILING,"Railroad tracks, utility poles or similar structures"
+SOILHD_SOIL_COMPACTION,Soil compaction from human activities
+SOILHD_UNPAVED_ROADS,Unpaved roads
+SOILHD_VEHICLE_RUTS,Offroad vehicle damage to soil surface
+SOILHD_WELLS_PIPELINE,Oil/gas/utility pipelines or other production acitivities
+SOILMD_EXCAVATION_DREDGING,Active or historic excavation or dredging
+SOILMD_LANDFILL,Active or historic landfill
+SOILMD_MINE,Active or historic surface or underground mine
+SOILMD_PILE,"Soil, gravel, spoil, and organic debris heaps from human activities"
+SOILMD_SOIL_DEPOSITION,Soil or sediment deposits from human activities
+SOILMD_SOIL_EROSION,Soil erosion from human activities
+SOILMD_TILLING_PLOWING,"Soil cultivation (e.g. tilling, plowing)"
+SOILMD_TRASH,Visible trash or dumping
+VEGREM_BROWSING,Damage to foliage from excessive animal browsing
+VEGREM_CLEAR_CUT,Clearcut logging of forest
+VEGREM_FIRE,Evidence of intense fires or fire suppression
+VEGREM_GRAZING,Damage to herbacious plants from excessive animal grazing
+VEGREM_HERBICIDE_PESTICIDE,Evidence of herbicide or pesticide use
+VEGREM_MOWING_CLEARING,Mowing or shrub cutting/clearing
+VEGREM_PEST_DAMAGE,Excessive vegetation damage from insects
+VEGREM_SELECTIVE_CUT,Selective cut logging of forest
+VEGREP_ABANDONED_FIELD,Abandoned crop field or evidence of historical cultivation
+VEGREP_CROPS,Presence of any type of row or field crop
+VEGREP_FALLOW_RESTING,Recent fallow or resting crop field
+VEGREP_INTRO_PLANTS,Non-native plants
+VEGREP_LAWN,Maintained grass/turf areas or gardens
+VEGREP_PASTURE,Managed pasture
+VEGREP_RANGE,Rangeland
+VEGREP_SILVICULTURE,"Intensively managed forest plantations, orchards or nurseries"
+WADSUB_CHANNELS_RUTS,Shallow channels or ruts
+WADSUB_CULVERT,Culverts
+WADSUB_DITCH,Ditch or channelized stream
+WADSUB_DRAIN_TILING,Drainage tiles
+WADSUB_IMPERVIOUS_INPUT,Sheetflow from impervious surgaces
+WADSUB_IRRIGATION,Irrigation structures
+WADSUB_PIPE,Point source pipes
+WADSUB_WATER_WITHDRAWAL,Water withdrawal pumps
+WOBSTR_CONTROL_STRUCTURE,Water control structures
+WOBSTR_DAM,Dam or other barriers blocking flow
+WOBSTR_DIKE_BERM_LEVEE,"Artifically-raised banks (e.g., levee, berm)"
+WOBSTR_PILE,"Human-deposited piles (e.g. trash, spoil) impeding water flow"
+WOBSTR_POND,Ponds/lagoons created for agricutural/industrial/recreational use
+WOBSTR_ROAD_RAISED_BED,"Artificially-raised road, railroad, or walkway"
+WOBSTR_SILVICULTURE_BEDDING,Mounding of soil for silviculture/agriculture that impedes or redirects water
+WOBSTR_WALL_RIPRAP,Wall or riprap used on shoreline/bank to prevent erosion

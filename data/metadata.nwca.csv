@@ -1,0 +1,476 @@
+TABLE_NAME,SAMPLE_TYPE,PARAMETER,APP_FORM_NAME,DESCRIPTION,APP_LEGAL_VALUES
+tblASSESSMENT,ASSECHAR,AA_REVIEW,AA1,Was form reviewed,|Y|N
+tblASSESSMENT,ASSECHAR,ANNOTATED_MAP,AA1,Annoted map provided?,|Y|N
+tblASSESSMENT,ASSECHAR,HGM_CLASS,AA1,Hydrogeomorphic Type,|DEPRESSION|FLATS|LACUSTRINE|RIVERINE|SLOPE|TIDAL
+tblASSESSMENT,ASSECHAR,HGM_SUBCLASS,AA1,"HGM subclass, based on value of HGM class selected",
+tblASSESSMENT,ASSECHAR,WETLAND_BOUNDARY,AA1,Wetland boundary AA layout used,
+tblASSESSMENT,ASSEESTAB,AA_AREA,AA1,Area of the AA (ha),
+tblASSESSMENT,ASSEESTAB,AA_CENTER,AA1,Area of the AA (ha),|POINT_AACENTER|POINT_NOT_AACENTER|e.rowData.rowValue
+tblASSESSMENT,ASSEESTAB,AA_LAT,AA1,"Location of  AA center coordinates, latitude dd",
+tblASSESSMENT,ASSEESTAB,AA_LAT_SHIFTED,AA1,"Location of shifted AA coordinates, latitude dd",
+tblASSESSMENT,ASSEESTAB,AA_LAYOUT,AA1,Area of the AA (ha),|STANDARD_CIRCULAR|STANDARD_CIRCULAR_SHIFTED|POLYGON|WETLAND_BOUNDARY|POINT_AA_CENTER|POINT_NOT_AA_CENTER
+tblASSESSMENT,ASSEESTAB,AA_LON,AA1,"Location of  AA center coordinates, longitude dd",
+tblASSESSMENT,ASSEESTAB,AA_LON_SHIFTED,AA1,"Location of shifted AA coordinates, longitude dd",
+tblASSESSMENT,ASSEESTAB,AA_PHOTO_CENTER,AA1,Were photos taken of Point/center and transect lines,|Y|N
+tblASSESSMENT,ASSEESTAB,AA_POINT,AA1,Can an AA that contains the POINT be established?,|Y|N
+tblASSESSMENT,ASSEESTAB,AA_POINT_SHIFTED,AA1,Can an AA be established if the POINT is shifted (less than 60m from original)(NEW in 2016),|Y|N
+tblASSESSMENT,ASSEESTAB,ACTUAL_DATE,AA1,Acual date of AA visit,
+tblASSESSMENT,ASSEESTAB,ESA_ENCOUNTERED,AA1,Acual date of AA visit,|Y|N
+tblASSESSMENT,ASSEESTAB,ESA_SPECIES,AA1,Acual date of AA visit,
+tblASSEWQ,ASSEWQ,CLARITY_CLEAR,W1,Water is clear,|CLEAR
+tblASSEWQ,ASSEWQ,CLARITY_MILKY,W1,Water is milky,|MILKY
+tblASSEWQ,ASSEWQ,CLARITY_OTHER,W1,Other clarity condition(s) defined,
+tblASSEWQ,ASSEWQ,CLARITY_STAINED,W1,Water is stained,|STAINED
+tblASSEWQ,ASSEWQ,CLARITY_TURBID,W1,Water is turbid,|TURBID
+tblASSEWQ,ASSEWQ,COLOR_BLACK,W1,Substrate color is black,|BLACK
+tblASSEWQ,ASSEWQ,COLOR_BROWN,W1,Substrate color is brown,|BROWN
+tblASSEWQ,ASSEWQ,COLOR_GRAY,W1,Substrate color is gray,|GRAY
+tblASSEWQ,ASSEWQ,COLOR_OTHER,W1,Other substrate color(s) defined,|OTHER.+
+tblASSEWQ,ASSEWQ,CONDUCTIVITY,W1,Conductivity by surface water field probe,
+tblASSEWQ,ASSEWQ,DO,W1,Dissolved oxygen by surface water field probe,
+tblASSEWQ,ASSEWQ,PH,W1,pH by surface water field probe,
+tblASSEWQ,ASSEWQ,SMELL_ALGAE,W1,Water smells like algae,|ALGAE
+tblASSEWQ,ASSEWQ,SMELL_CHEMICAL,W1,Water has chemical odor,|CHEMICAL
+tblASSEWQ,ASSEWQ,SMELL_FISHY,W1,Water smells fishy,|FISHY
+tblASSEWQ,ASSEWQ,SMELL_NONE,W1,Water has no odor,|NONE
+tblASSEWQ,ASSEWQ,SMELL_OTHER,W1,Other water odor(s) defined,|OTHER.+
+tblASSEWQ,ASSEWQ,SMELL_ROTTEN,W1,Water smells like rotten vegetation,|ROTTEN
+tblASSEWQ,ASSEWQ,SMELL_SULPHUR,W1,Water smells like sulfur,|SULPHUR
+tblASSEWQ,ASSEWQ,SUB_COBBLE,W1,Substrate is cobble,|COBBLE
+tblASSEWQ,ASSEWQ,SUB_GRAVEL,W1,Substrate is gravel,|GRAVEL
+tblASSEWQ,ASSEWQ,SUB_MINERAL,W1,Sustrate is mineral soil,|MINERAL
+tblASSEWQ,ASSEWQ,SUB_MUCK,W1,Substrate is muck,|MUCK
+tblASSEWQ,ASSEWQ,SUB_ORGANIC,W1,Substrate is organic,|ORGANIC
+tblASSEWQ,ASSEWQ,SUB_OTHER,W1,Other substrate type(s) defined,|OTHER.+
+tblASSEWQ,ASSEWQ,SUB_SAND,W1,Substrate is sand,|SAND
+tblASSEWQ,ASSEWQ,SUB_SHELLHASH,W1,Substrate is shellhash,|SHELLHASH
+tblASSEWQ,ASSEWQ,SURFACE_ALGAE,W1,Algal bloom on water surface,|ALGAE_BLOOM
+tblASSEWQ,ASSEWQ,SURFACE_FILM,W1,Film on water surface,|FILM
+tblASSEWQ,ASSEWQ,SURFACE_FLOC,W1,Floc on water surface,|FLOC
+tblASSEWQ,ASSEWQ,SURFACE_OTHER,W1,Other water surface(s) defined,|OTHER.+
+tblASSEWQ,ASSEWQ,SURFACE_SHEEN,W1,Sheen on water surface,|SHEEN
+tblASSEWQ,ASSEWQ,SURFACE_VEGETATION,W1,Floating aquatic vegetation on water surface,|VEGETATION
+tblASSEWQ,ASSEWQ,SW_COVERAGE,W1,Percent of AA covered with surface water,
+tblASSEWQ,ASSEWQ,SW_DEPTH_MAX,W1,Maximum Depth of surface water,
+tblASSEWQ,ASSEWQ,SW_GREATER_1M,W1,Surface water > 100cm,|Y|N
+tblASSEWQ,ASSEWQ,SW_SAMPLEABLE,W1,Sampleable water (>15cm deep),|Y|N
+tblASSEWQ,ASSEWQ,TEMP,W1,Water temperature by surface water field probe,
+tblASSEWQ,ASSEWQ,TIDAL,W1,Water is tidal or non-tidal,|TIDAL|NON_TIDAL
+tblASSEWQ,ASSEWQ,VEG_PRESENT,W1,Vegetation is present in water,|Y|N
+tblASSEWQ,ASSEWQ,W1_REVIEW,W1,Was form reviewed,|Y|N
+tblASSEWQ,ASSEWQ,WATER_PRESENCE,W1,Surface water,|Y|N
+tblASSEWQ,ASSEWQ,WATER_SAMPLEABLE,W1,Sampleable water,|Y|N
+tblASSEWQ,ASSEWQ,WATER_SOURCE,W1,"Salinity of water: freshwater, brackish, saline",|FRESH|BRACKISH|SALINE
+tblASSEWQ,ASSEWQ,WATER_TYPE,W1,Predominant water feature type,|CHANNEL_STREAM|BACKWATER|LAKE|STANDING|ESTUARINE_TIDAL|OTHER
+tblASSEWQ,ASSEWQ,WATER_TYPE_OTHER,W1,Water body is some other type,
+tblBUFFER,BUFF,BUFF_LAT,BUFFER,"Location of plot coordinates, latitude dd",
+tblBUFFER,BUFF,BUFF_LON,BUFFER,"Location of plot coordinates, longitude dd",
+tblBUFFER,BUFF,BUFFER_REVIEW,BUFFER,Physical alteration form (P-2) reviewed?,|Y|N
+tblBUFFER,BUFF,PLOT_LAT,BUFFER,Buffer plot latitude (decimal degrees),
+tblBUFFER,BUFF,PLOT_LOC,BUFFER,"Location of plot coordinates, latitude dd",|AA|N3|S3|E3|W3|FA
+tblBUFFER,BUFF,PLOT_LON,BUFFER,Buffer plot longitude (decimal degrees),
+tblBUFFER,BUFF,PLOT_NOT_SAMPLED,BUFFER,Indicator that plot was not sampled,PLOT_1|PLOT_2|PLOT_3|BLANK
+tblBUFFER,BUFF,PLOT_OBSERVED,BUFFER,Plot observed from outside plot boundaries,|Y|N
+tblBUFFER,BUFF,SOILHD_IMPERVIOUS_SURFACE,BUFFER,"Buildings, housing structures, parking lots, driveways, sidewalks, and other surfaces that have imperviousfootprints (i.e., concrete, asphalt, pavement)",|Y|N
+tblBUFFER,BUFF,SOILHD_NONE_PRESENT,BUFFER,No soil hardening physical alterations present,|Y|N
+tblBUFFER,BUFF,SOILHD_NONPAVED_TRAILS,BUFFER,"Non-paved trails or matted vegetation created by livestock, domesticated or feral animals, or humans",|Y|N
+tblBUFFER,BUFF,SOILHD_PAVED_ROADS,BUFFER,"Paved road, including asphalt, concrete, chip and seal, and other impervious surface types",|Y|N
+tblBUFFER,BUFF,SOILHD_RR_POLE_PILING,BUFFER,"Impervious footprint from the presence of a railroad track, utility pole, or piling (e.g., powerline pole, fence posts,raised boardwalk posts, dock pilings)",|Y|N
+tblBUFFER,BUFF,SOILHD_SOIL_COMPACTION,BUFFER,"Compacted soil or pugging as a result of trampling, rooting, or wallowing by livestock, domesticated, or feral animals, or humans and human activities, such as hiking and camping",|Y|N
+tblBUFFER,BUFF,SOILHD_UNPAVED_ROADS,BUFFER,"Unpaved road, including gravel, aggregate, dirt, grass, sand, and other semi-permeable surface types",|Y|N
+tblBUFFER,BUFF,SOILHD_VEHICLE_RUTS,BUFFER,Vehicle ruts or offroad vehicle damage to the soil surface (excluding unpaved dirt roads),|Y|N
+tblBUFFER,BUFF,SOILHD_WELLS_PIPELINE,BUFFER,"Presence of oil or gas wells, oil/gas/utility pipeline (above or below ground), or active/historic drilling",|Y|N
+tblBUFFER,BUFF,SOILMD_EXCAVATION_DREDGING,BUFFER,"Active or historic excavation or dredging, including gravel pits and transport channels",|Y|N
+tblBUFFER,BUFF,SOILMD_LANDFILL,BUFFER,Presence of an active or historic landfill,|Y|N
+tblBUFFER,BUFF,SOILMD_MINE,BUFFER,"Presence of an active or historic, surface or underground mine",|Y|N
+tblBUFFER,BUFF,SOILMD_NONE_PRESENT,BUFFER,No soil modification physical alterations present,|Y|N
+tblBUFFER,BUFF,SOILMD_PILE,BUFFER,"Soil, gravel, spoil, and organic debris heaps (including slash and lawn waste) created by humans",|Y|N
+tblBUFFER,BUFF,SOILMD_SOIL_DEPOSITION,BUFFER,Freshly deposited soil or sediment as a result of human activities,|Y|N
+tblBUFFER,BUFF,SOILMD_SOIL_EROSION,BUFFER,"Soil loss from erosion, oxidation, or human-mediated subsidence (e.g., human restriction of sediment delivery toa wetland, removal of soil-stabilizing vegetation, etc.), or evidence thereof, such as root exposure",|Y|N
+tblBUFFER,BUFF,SOILMD_TILLING_PLOWING,BUFFER,"Soil tilling, plowing, disking, or harrowing, typically from agricultural practices",|Y|N
+tblBUFFER,BUFF,SOILMD_TRASH,BUFFER,"Clearly visible trash or dumping either deposited directly by humans (e.g., individuals, social camps)or indirectly by tides or wind",|Y|N
+tblBUFFER,BUFF,VEGREM_BROWSING,BUFFER,"Evidence of livestock (e.g., cows, horses, goats, sheep), feral animals (e.g., pigs), or native animals (e.g., deer, elk)gleaning leaves, bark, fruits, or green stems from trees and shrubs (Note: check box if native animals are suspected) ",|Y|N
+tblBUFFER,BUFF,VEGREM_BROWSING_TYPE,BUFFER,Type of animal browsing observed,|LIVESTOCK|NATIVE|BOTH
+tblBUFFER,BUFF,VEGREM_CLEAR_CUT,BUFFER,"Logging practice in which all or most of the trees in an area are cut down leaving stumps, debris, and, if any, onlyfew snags or wildlife/seed trees across the landscape",|Y|N
+tblBUFFER,BUFF,VEGREM_FIRE,BUFFER,"Evidence of intense fires or fire suppression; indicators include blackened forest canopy, charred/mineralized soil/peat surface, or absence of fire-dependent plant species",|Y|N
+tblBUFFER,BUFF,VEGREM_GRAZING,BUFFER,"Evidence of livestock (e.g., cows, horses, goats, sheep), feral animals (e.g., pigs), or native animals (e.g., deer, elk)eating grasses or other forbs (Note: check box if native animals are suspected)",|Y|N
+tblBUFFER,BUFF,VEGREM_GRAZING_TYPE,BUFFER,Type of animal grazing observed,|LIVESTOCK|NATIVE|BOTH
+tblBUFFER,BUFF,VEGREM_HERBICIDE_PESTICIDE,BUFFER,"Evidence of herbicide or pesticide use, including (but not limited to) yellowing or browned foliage, spray residues,or a strong chemical smell",|Y|N
+tblBUFFER,BUFF,VEGREM_MOWING_CLEARING,BUFFER,"Mowing or shrub cutting/clearing, often to maintain ease of access for a right-of-way or easement(i.e., utility, agriculture, property)",|Y|N
+tblBUFFER,BUFF,VEGREM_NONE_PRESENT,BUFFER,No vegetation removal physical alterations observed,|Y|N
+tblBUFFER,BUFF,VEGREM_PEST_DAMAGE,BUFFER,"Evidence of vegetation damage or herbivory (e.g., crown or branch dieback, leaf or bark damage, boring)from insects (native and nonnative), e.g., Emerald Ash Borer, Gypsy Moth, Asian Longhorn Beetle, Willow Borers",|Y|N
+tblBUFFER,BUFF,VEGREM_SELECTIVE_CUT,BUFFER,"Logging practice in which selected trees are removed, leaving a canopy of scattered or uniformly spaced trees thatcover at least 30% of the area. This also includes shelterwood cutting.",|Y|N
+tblBUFFER,BUFF,VEGREP_ABANDONED_FIELD,BUFFER,"Abandoned crop field or evidence of historical cultivation where the land is now revegetated withvolunteer forbs, grasses, shrubs, or trees",|Y|N
+tblBUFFER,BUFF,VEGREP_CROPS,BUFFER,"Presence of any type of row or field crop, including corn, soybean, alfalfa, hay, wheat, lettuce, cover crops, table vegetables, berries, etc.",|Y|N
+tblBUFFER,BUFF,VEGREP_FALLOW_RESTING,BUFFER,"Recent fallow or resting crop field, evident by, for example, dead corn stalks, crop debris, or bare soil",|Y|N
+tblBUFFER,BUFF,VEGREP_INTRO_PLANTS,BUFFER,"Pest plant species that are entirely nonnative (e.g., Japanese Honeysuckle, Himalayan Blackberry, Multiflora Rose, Kudzu) or partially-nonnative/cyptogenic (e.g., Reed Canarygrass, Cattail, Common Reed)",|Y|N
+tblBUFFER,BUFF,VEGREP_LAWN,BUFFER,"Area of maintained grass/turf with or without landscaping/gardens, such as in a lawn, park, cemetery, or golf course",|Y|N
+tblBUFFER,BUFF,VEGREP_NONE_PRESENT,BUFFER,No vegetation replacement physical alterations observed.,|Y|N
+tblBUFFER,BUFF,VEGREP_PASTURE,BUFFER,"Pastures have forage that is adapted for livestock and managed by seeding, mowing, fertilization, and irrigation.",|Y|N
+tblBUFFER,BUFF,VEGREP_RANGE,BUFFER,"Rangelands tend to have natural vegetation, may have some introduced plant species, and often livestock grazing.",|Y|N
+tblBUFFER,BUFF,VEGREP_SILVICULTURE,BUFFER,"Planted and cultivated trees for harvesting timber, fruit, or another product of the tree; actively, intensively managedforest plantations are included (Note: Secondary growth forests on a natural, successional trajectory are excluded.)",|Y|N
+tblBUFFER,BUFF,WADSUB_CHANNELS_RUTS,BUFFER,"Shallow channels that act as flow paths created by, for example, vehicle ruts, human, livestock, or feral animaltrails or trampling, eroded foot paths, etc.",|Y|N
+tblBUFFER,BUFF,WADSUB_CULVERT,BUFFER,"Culvert, which may be circular corrugated pipe, concrete arch or box, or other types",|Y|N
+tblBUFFER,BUFF,WADSUB_DITCH,BUFFER,"Ditches (inflowing, outflowing, or dry) or a natural stream that has been intentionally channelized by humansfor routing water from the site",|Y|N
+tblBUFFER,BUFF,WADSUB_DRAIN_TILING,BUFFER,Presence of drainage tiling - typically used to drain and move water from agricultural fields,|Y|N
+tblBUFFER,BUFF,WADSUB_IMPERVIOUS_INPUT,BUFFER,"Sheetflow into the AA or buffer plot from the presence of an impervious surface, such as roads or concrete pads",|Y|N
+tblBUFFER,BUFF,WADSUB_IRRIGATION,BUFFER,Any type of irrigation that adds water to the site,|Y|N
+tblBUFFER,BUFF,WADSUB_NONE_PRESENT,BUFFER,No water addition/subtraction physical alterations observed,|Y|N
+tblBUFFER,BUFF,WADSUB_PIPE,BUFFER,"Point source pipe for routing effluent, sewer outfall, or stormwater to site",|Y|N
+tblBUFFER,BUFF,WADSUB_WATER_WITHDRAWAL,BUFFER,Any type of water withdrawal pump,|Y|N
+tblBUFFER,BUFF,WOBSTR_CONTROL_STRUCTURE,BUFFER,"Any type of water level control structure, including weirs, tide/flood gates, and flashboard riser structures",|Y|N
+tblBUFFER,BUFF,WOBSTR_DAM,BUFFER,"A barrier constructed by humans, or a barrier constructed by beavers against a human-made structure (e.g., weir, culvert), that is perpendicular to the direction of flow, holding back water and raising the water level",|Y|N
+tblBUFFER,BUFF,WOBSTR_DIKE_BERM_LEVEE,BUFFER,Artificially-raised banks (typically constructed parallel to the direction of flow) that obstruct flooding,|Y|N
+tblBUFFER,BUFF,WOBSTR_NONE_PRESENT,BUFFER,No water flow obstruction physical alterations observed,|Y|N
+tblBUFFER,BUFF,WOBSTR_PILE,BUFFER,"Human-deposited trash, soil, gravel, spoil, and organic debris heaps (including slash or lawn waste) thatimpede or redirect water flow",|Y|N
+tblBUFFER,BUFF,WOBSTR_POND,BUFFER,"Ponds/lagoons created by humans for watering cattle, collecting wastewater or stormwater, holding irrigation water,recreational use (fishing, swimming), etc.",|Y|N
+tblBUFFER,BUFF,WOBSTR_ROAD_RAISED_BED,BUFFER,"Artificially-raised road, railroad, or walkway (e.g., boardwalk) above low ground",|Y|N
+tblBUFFER,BUFF,WOBSTR_SILVICULTURE_BEDDING,BUFFER,"Mounding of soil for silviculture (e.g., tree bedding) or for agriculture that results in impediment or redirection ofwater flow",|Y|N
+tblBUFFER,BUFF,WOBSTR_WALL_RIPRAP,BUFFER,"Wall or riprap (e.g., boulders, concrete blocks, shot rock) used to armor a shoreline or stablized a bank from erosion",|Y|N
+tblESA,ESA,ESA_AFFECTED,ESA,Was a listed species encountered while sampling? ,|Y|N
+tblESA,ESA,ESA_DISPOSITION,ESA,Disposition of listed species after encounter,|UNHARMED|INJURED|DYING|DEAD
+tblESA,ESA,ESA_ENCOUNTER_DESCRIPT,ESA,Description of encounter with listed species,
+tblESA,ESA,ESA_ENCOUNTER_TYPE,ESA,Description of the type of encounter with listed species,|NO_INTERACTION|OBSERVED_FLAGGED|CAPTURED_IN_SAMPLE|COLLECTED_PLANT_VOUCHER|ENCOUNTERED_SOIL_PIT|OTHER
+tblESA,ESA,ESA_HABITAT_DESCRIPTION,ESA,Description of adverse effects to designated critical habitat,
+tblESA,ESA,ESA_HABITAT_IDENTIFIED,ESA,The listed species for which the critical habitat is designated ,
+tblESA,ESA,ESA_LEAD_NOTIFIED,ESA,Was the EPA ESA lead notified if injury or death occurred? ,|Y
+tblESA,ESA,ESA_NUMBER_INDIVIDUALS,ESA,Number of individuals encountered,
+tblESA,ESA,ESA_REVIEW,ESA,Federal ESA form reviewed,|Y|N
+tblESA,ESA,ESA_SPECIES,ESA,The listed species encountered while sampling,
+tblHYDRO,HYDRO,CULVERTS_PRESENT,HYDRO,Culvert is  a water source,|Y
+tblHYDRO,HYDRO,CULVERTS_RANK,HYDRO,Culvert influence on site,|1|2|3
+tblHYDRO,HYDRO,ESTCHANNEL_PRESENT,HYDRO,Estuarine tidal channel(s) are a water source,|Y|N
+tblHYDRO,HYDRO,ESTCHANNEL_RANK,HYDRO,Estuarine tidal channel(s) influence on site,|1|2|3
+tblHYDRO,HYDRO,ESTSURGE_PRESENT,HYDRO,Sparsely vegetated concave surfaces contrast with vegetated slopes and convex surfaces in the same area,|Y|N
+tblHYDRO,HYDRO,ESTSURGE_RANK,HYDRO,Estuarine tidal channel(s) influence on site,|1|2|3
+tblHYDRO,HYDRO,GRDWATER_PRESENT,HYDRO,Groundwater is present,|Y|N
+tblHYDRO,HYDRO,GRDWATER_RANK,HYDRO,Groundwater influence on site,|1|2|3
+tblHYDRO,HYDRO,HYDRO_REVIEW,HYDRO,AA Hydrology form reviewed?,|Y|N
+tblHYDRO,HYDRO,INFLOW_PRESENT,HYDRO,"Stream (creeks, rivers) inflow is present",|Y|N
+tblHYDRO,HYDRO,INFLOW_RANK,HYDRO,Inflow influence on site,|1|2|3
+tblHYDRO,HYDRO,LAKE_PRESENT,HYDRO,Lake is present,|Y|N
+tblHYDRO,HYDRO,LAKE_RANK,HYDRO,Lake influence on site,|1|2|3
+tblHYDRO,HYDRO,OTHER_SOURCE_DESC,HYDRO,Other water source description,
+tblHYDRO,HYDRO,OTHER_SOURCE_PRESENT,HYDRO,Other water source - description,|Y|N
+tblHYDRO,HYDRO,OTHER_SOURCE_RANK,HYDRO,Other water source influence on site,|1|2|3
+tblHYDRO,HYDRO,OUTFLOW_DESC,HYDRO,Outflow influence on site,
+tblHYDRO,HYDRO,OUTFLOWS,HYDRO,"Stream (creeks, rivers) outflow is present",|Y|N
+tblHYDRO,HYDRO,OVBK_FLOOD_PRESENT,HYDRO,Overbank flooding water source present,|Y|N
+tblHYDRO,HYDRO,OVBK_FLOOD_RANK,HYDRO,Overbank flooding water source ranking,|1|2|3
+tblHYDRO,HYDRO,PRECIP_PRESENT,HYDRO,Precipitation is present,|Y|N
+tblHYDRO,HYDRO,PRECIP_RANK,HYDRO,Precipitation influence on site,|1|2|3
+tblHYDRO,HYDRO,PRIOR_WEATHER,HYDRO,Description of weather during the week prior to sampling,
+tblHYDRO,HYDRO,SNOW_PRESENT,HYDRO,Snow is a water source,|Y|N
+tblHYDRO,HYDRO,SNOW_RANK,HYDRO,Snow influence on site,|1|2|3
+tblHYDRO,HYDRO,SPRINGS_PRESENT,HYDRO,Spring(s) is (are) present,|Y|N
+tblHYDRO,HYDRO,SPRINGS_RANK,HYDRO,Spring influence on site,|1|2|3
+tblHYDRO,HYDRO,TIDAL_STAGE,HYDRO,Tidal stage at the beginning of sampling ,|NA|INCOMING|OUTGOING|SLACK|FLOOD
+tblHYDRO,HYDRO,TIME,HYDRO,Time of hydrology sampling,
+tblHYDRO,HYDRO,WEATHER,HYDRO,Description of weather while sampling is being conducted,
+tblHYDRO,USACOE,ALGAL_MAT,USACOE,USACOE hydrologic indicator - Algal mat or crust (B4),|Y
+tblHYDRO,USACOE,ANT,HYDRO,USACOE hydrologic indicator - Raised ant mounds (D6),|Y|N
+tblHYDRO,USACOE,AQUATIC_INV,HYDRO,USACOE hydrologic indicator - Aquatic invertebrates (or fauna) (B13),|Y|N
+tblHYDRO,USACOE,BIOTIC,HYDRO,USACOE hydrologic indicator - Biotic crust (B12),|Y|N
+tblHYDRO,USACOE,CONCAVE,HYDRO,USACOE hydrologic indicator - Sparsely vegetated concave surfaces (B8),|Y|N
+tblHYDRO,USACOE,CRAB,HYDRO,USACOE hydrologic indicator - Fiddler crab burrows (C10),|Y|N
+tblHYDRO,USACOE,CRACKS,HYDRO,USACOE hydrologic indicator - Surface soil cracks (B6),|Y|N
+tblHYDRO,USACOE,CRAYFISH,HYDRO,USACOE hydrologic indicator - Crayfish burrows (C8),|Y|N
+tblHYDRO,USACOE,DRAINAGE,HYDRO,USACOE hydrologic indicator - Drainage patterns (B10),|Y|N
+tblHYDRO,USACOE,DRIFT,HYDRO,USACOE hydrologic indicator - Drift deposits (B3),|Y|N
+tblHYDRO,USACOE,DRY,HYDRO,USACOE hydrologic indicator - Dry-season water table (C2),|Y|N
+tblHYDRO,USACOE,FROST_HEAVE,HYDRO,USACOE hydrologic indicator - Frost-heaved hummocks (D7),|Y|N
+tblHYDRO,USACOE,GEOMORPHIC,HYDRO,USACOE hydrologic indicator - Geomorphic position (D2),|Y|N
+tblHYDRO,USACOE,HIGH_TABLE,HYDRO,USACOE hydrologic indicator - High water table (A2),|Y|N
+tblHYDRO,USACOE,HYDROGEN_SULFIDE,HYDRO,Hydrogen sulfide odor present as hydrology indicator (C1),|Y|N
+tblHYDRO,USACOE,IRON,HYDRO,USACOE hydrologic indicator - Iron deposits (B5),|Y|N
+tblHYDRO,USACOE,IRON_SOILS,HYDRO,USACOE hydrologic indicator - Recent iron reduction in tilled soils (C6),|Y|N
+tblHYDRO,USACOE,LEAVES,HYDRO,USACOE hydrologic indicator - Water-stained leaves (B9),|Y|N
+tblHYDRO,USACOE,MARL,HYDRO,USACOE hydrologic indicator - Marl deposits (B15),|Y|N
+tblHYDRO,USACOE,MICROTOPOGRAPHIC,USACOE,USACOE hydrologic indicator - Microtppographic relief (D4),|Y
+tblHYDRO,USACOE,MOSS,HYDRO,USACOE hydrologic indicator - Moss trim lines (B16),|Y|N
+tblHYDRO,USACOE,MUCK,HYDRO,USACOE hydrologic indicator - Thin muck surface (C7),|Y|N
+tblHYDRO,USACOE,OX_RHIZO,USACOE,USACOE hydrologic indicator - Oxidized rhizospheres along living roots (C3),|Y
+tblHYDRO,USACOE,RED_IRON,HYDRO,USACOE hydrologic indicator - Presence of reduced iron (C4),|Y|N
+tblHYDRO,USACOE,SALT,HYDRO,USACOE hydrologic indicator - Salt crust (B11),|Y|N
+tblHYDRO,USACOE,SALT_DEPOSITS,HYDRO,USACOE hydrologic indicator - Salt deposits (C5),|Y|N
+tblHYDRO,USACOE,SATURATION,HYDRO,USACOE hydrologic indicator - Soil saturation (A3),|Y|N
+tblHYDRO,USACOE,SEDIMENT,HYDRO,USACOE hydrologic indicator - Sediment deposits (B2),|Y|N
+tblHYDRO,USACOE,SHALLOW_AQUITARD,HYDRO,USACOE hydrologic indicator - Shallow aquitard (D3),|Y|N
+tblHYDRO,USACOE,SPHAGNUM_MOSS,HYDRO,Sphagnum moss present as hydrology indicator (D8),|Y|N
+tblHYDRO,USACOE,STRESSED_PLANTS,HYDRO,USACOE hydrologic indicator - Stunted or stressed plants (D1),|Y|N
+tblHYDRO,USACOE,SULFIDE_ODOR,USACOE,USACOE hydrologic indicator - Hydrogen sulfide odor (C1),|Y
+tblHYDRO,USACOE,SURFACE_WATER,HYDRO,USACOE hydrologic indicator - Surface water (A1),|Y|N
+tblHYDRO,USACOE,TRUE_AQUATIC,HYDRO,USACOE hydrologic indicator - True aquatic plants (B14),|Y|N
+tblHYDRO,USACOE,WATER_MARKS,HYDRO,USACOE hydrologic indicator - Water marks (B1),|Y|N
+tblPLANT,PLANT,ACTUAL_DATE,V2,"Actual date sample was collected, if different from DATE_COL",
+tblPLANT,PLANT,COLLECT_NO,V2,Vascular plant collection number,
+tblPLANT,PLANT,COVER,V2,Percent cover in plot,
+tblPLANT,PLANT,COVER_NE,SPECIES,Cover in NE corner of plot for cover calculator,
+tblPLANT,PLANT,COVER_NW,SPECIES,Cover in NW corner of plot for cover calculator,
+tblPLANT,PLANT,COVER_SE,SPECIES,Cover in SE corner of plot for cover calculator,
+tblPLANT,PLANT,COVER_SW,SPECIES,Cover in SW corner of plot for cover calculator,
+tblPLANT,PLANT,HEIGHT,V2,"Height class (1=lt 0.5m, 2= gt 0.5m to 2m, 3= gt 2.5m 4=gt 5 to 15 m, 5= gt 15 to 30m, 6=gt30m, E= liana, vine or epiphyte species)",|1|2|3|4|5|6|E
+tblPLANT,PLANT,IS_TES,SPECIES,Threatened or endangered species present in plot,|Y|N
+tblPLANT,PLANT,NE,V2,Prescence data for each species observed in NE corner of veg plot (smallest size in which species occurs),|S|M|W
+tblPLANT,PLANT,PLOTS_SAMPLED,V2,Number of plots sampled,|0|1|2|3|4|5
+tblPLANT,PLANT,SPECIES,V2,Species name or Pseudonym,
+tblPLANT,PLANT,SPECIES_REVIEW,SPECIES,V-2 form reviewed?,
+tblPLANT,PLANT,SW,V2,Prescence data for each species observed in SW corner of veg plot (smallest size in which species occurs),|S|M|W
+tblPOINTVERIFICATION,ASSEESTAB,CREW_ID,AA1,Name of this field crew,
+tblPOINTVERIFICATION,PTVER,ACCESS_ISSUES_DEEP,PTVER,Access issues - Deep water,|Y|N
+tblPOINTVERIFICATION,PTVER,ACCESS_ISSUES_DENSE,PTVER,Access issues - Dense vegetation,|Y|N
+tblPOINTVERIFICATION,PTVER,ACCESS_ISSUES_LIVESTOCK,PTVER,Access issues - Livestock,|Y|N
+tblPOINTVERIFICATION,PTVER,ACCESS_ISSUES_OTHER,PTVER,Access issues - Other,|OTHER:.+
+tblPOINTVERIFICATION,PTVER,ACCESS_ISSUES_STEEP,PTVER,Access issues - Steep/Unstable terrain,|Y|N
+tblPOINTVERIFICATION,PTVER,AFFILIATION,PTVER,Affiliation(s) of site evaluator(s),
+tblPOINTVERIFICATION,PTVER,DIRECTIONS,PTVER,Directions to sampling site,
+tblPOINTVERIFICATION,PTVER,EVALUATOR,PTVER,Name(s) of site evaluator(s),
+tblPOINTVERIFICATION,PTVER,POINT_VERIFIED_AERIAL,PTVER,POINT verified using AERIAL,|Y|N
+tblPOINTVERIFICATION,PTVER,POINT_VERIFIED_GPS,PTVER,POINT verified using GPS,|Y|N
+tblPOINTVERIFICATION,PTVER,POINT_VERIFIED_OTHER,PTVER,POINT verified using OTHER,|OTHER:.+
+tblPOINTVERIFICATION,PTVER,POINT_VERIFIED_TOPO,PTVER,POINT verified using TOPO,|Y|N
+tblPOINTVERIFICATION,PTVER,PTVER_REVIEW,PTVER,Point verification form reviewed?,|Y|N
+tblPOINTVERIFICATION,PTVER,SITE_ID,AA1,Site id,
+tblPOINTVERIFICATION,PTVER,SITESAMP,PTVER,Original site is sampleable,|Y|N
+tblPOINTVERIFICATION,PTVER,SPECIAL_ACCESS_LOCKED,PTVER,Special access requirements - Locked gates,|Y|N
+tblPOINTVERIFICATION,PTVER,SPECIAL_ACCESS_OTHER,PTVER,Special access requirements - Other,|OTHER:.+
+tblPOINTVERIFICATION,PTVER,SPECIAL_ACCESS_PERMITS,PTVER,Special access requirements - Permits required,|Y|N
+tblPOINTVERIFICATION,PTVER,STATE,PTVER,State in which site is located,AK|AL|AR|AZ|CA|CO|CT|DC|DE|FL|GA|HI|IA|ID|IL|IN|KS|KY|LA|MA|MD|ME|MI|MN|MO|MS|MT|NC|ND|NE|NH|NJ|NM|NV|NY|OH|OK|OR|PA|RI|SC|SD|TN|TX|UT|VA|VT|WA|WI|WV|WY
+tblPOINTVERIFICATION,PTVER,VALXSITE,PTVER,The categorical value representing site conditions for the one XSTATUS category applicable to the site,|EW|EH|PRLEM|PRLSS|PRLFO|PRLUBAB|PRLF|TEMP_NONSAMP|INACCESS_TEMP|DENIED|INACCESS_PERM|AREA|SIZE|HGM|NONWETLAND|NONTARGET|ACTIVE_CROP|AG_AQUA|INNUNDATED|INUNDATED|OTHER_NONSAMP
+tblPOINTVERIFICATION,PTVER,VALXSITE_OTHER,PTVER,Explanation of Other reason site non-target,
+tblPOINTVERIFICATION,PTVER,VISIT_NO,AA1,Visit: 1/2,
+tblPOINTVERIFICATION,PTVER,XSTATUS,PTVER,Broad category to describe sampleability of site,|POINT_SAMPLEABLE|SHIFTED_POINT_SAMPLEABLE|NONSAMP_TEMP|NONSAMP_NOACCESS|NONSAMP_AA|NONSAMP_NONTARGET
+tblSAMPLES,CHEM,CHILLED,W1,Was chemistry sampled chilled?,|Y|N
+tblSAMPLES,CHEM,NOT_COLLECTED,W1,No CHEM sample collected,|Y|N
+tblSAMPLES,CHEM,NOT_COLLECTED,TRACKING,No CHEM sample collected,|Y
+tblSAMPLES,CHEM,SAMPLE_ID,TRACKING,CHEM sample id,
+tblSAMPLES,CHEM,STREAM_WIDTH,W1,Channel or stream width where water sample collected for water chemistry,
+tblSAMPLES,CHEM,SURFACE_FLOW,W1,Surface flow type at time of water sample collection (Flowing/Still),
+tblSAMPLES,CHEM,WATER_LAT,W1,Latitude of CHEM sample,
+tblSAMPLES,CHEM,WATER_LON,W1,Longitude of CHEM sample,
+tblSAMPLES,CHEM,WATER_TIME,W1,Time of CHEM sample,
+tblSAMPLES,CHEM,WATERBODY_EXTENT,W1,Waterbody extent at water collection: entirely within AA or extends outside AA,
+tblSAMPLES,CHEM,WATERSAMP_DEPTH,W1,Depth of CHEM sample,
+tblSAMPLES,CHLA,NOT_COLLECTED,TRACKING,No CHLA sample collected,|Y
+tblSAMPLES,CHLA,SAMPLE_ID,TRACKING,CHLA sample id,
+tblSAMPLES,MICX,CHILLED,W1,Was microcystin sampled chilled?,|Y|N
+tblSAMPLES,MICX,NOT_COLLECTED,W1,No MICX sample collected,|Y|N
+tblSAMPLES,MICX,NOT_COLLECTED,TRACKING,No MICX sample collected,|Y
+tblSAMPLES,MICX,SAMPLE_ID,TRACKING,MICX sample id,
+tblSAMPLES,QVEG,NOT_COLLECTED,SOIL,No QVEG sample collected from site,|Y
+tblSAMPLES,SDSC,NOT_COLLECTED,SOIL,No SDSC sample collected,|Y
+tblSAMPLES,SDSC,NOT_COLLECTED,SOIL,No SDSC sample collected,|Y
+tblSAMPLES,SDSC,SAMPLE_ID,SOIL,Sample ID: Standard depth core soil sample,
+tblSAMPLES,SHBD,ITEM_NO,SOIL,Number of soil bulk density samples collected,
+tblSAMPLES,SHBD,NOT_COLLECTED,SOIL,No SHBD samples collected,|Y
+tblSAMPLES,SHBD,NOT_COLLECTED,SOIL,No SHBD samples collected,|Y
+tblSAMPLES,SHBD,SAMPLE_ID,SOIL,Sample ID: Soil horizon bulk density sample,
+tblSAMPLES,SHCH,ITEM_NO,SOIL,Number of soil chemistry samples,
+tblSAMPLES,SHCH,NOT_COLLECTED,SOIL,No SHCH samples collected from site,|Y
+tblSAMPLES,SHCH,NOT_COLLECTED,SHCH,No SHCH samples collected from site,|Y
+tblSAMPLES,SHCH,SAMPLE_ID,SHCH,Sample ID: Soil horizon chemistry sample,
+tblSAMPLES,SISO,NOT_COLLECTED,SOIL,No SISO sample collected from site,|Y
+tblSAMPLES,SISO,NOT_COLLECTED,SOIL,No SISO sample collected from site,|Y
+tblSAMPLES,SISO,SAMPLE_ID,SOIL,Sample ID: Soil isotope sample,
+tblSAMPLES,UVEG,NOT_COLLECTED,SOIL,No UVEG sample collected from site,|Y
+tblSAMPLES,VEGQ,SAMPLE_ID,TRACKING,Vascular plant collection qa voucher specimen,
+tblSAMPLES,VEGU,SAMPLE_ID,TRACKING,Vascular plant collection unknown specimen,
+tblSAMPLES,WCHL,SAMPLE_ID,TRACKING,WCHL sample id,
+tblSAMPLES,WCHL,SAMPLE_ID_NOT_USED,W1,Water chlorophyll a sample ID,
+tblSAMPLES,WCHL,VOLUME_FILTERED,W1,VOLUME of WCHL sample,
+tblSOILPROFILE,SOIL_PROF,A1,SOIL,A1- Histosol (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,A10,SOIL,"A10 - 2 cm Muck (M, N)",|Y
+tblSOILPROFILE,SOIL_PROF,A11,SOIL,A11 - Depleted Below Dark Surface (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,A12,SOIL,A12 - Thick Dark Surface (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,A16,SOIL,A16 - Coast Prairie Redox (T),|Y
+tblSOILPROFILE,SOIL_PROF,A17,SOIL,"A17 Hydric soil indicator: Mesic spodic - LRR:R (MLRA 144A and 145), S (MLRA 149B)",|Y|N
+tblSOILPROFILE,SOIL_PROF,A18,SOIL,A18 Hydric soil indicator,|Y|N
+tblSOILPROFILE,SOIL_PROF,A2,SOIL,A2 - Histic Epipedon (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,A3,SOIL,A3 - Black Histic (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,A4,SOIL,A4 - Hydrogen Sulfide (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,A5,SOIL,"A5 - Stratified Layers (C, F, K-U)",|Y
+tblSOILPROFILE,SOIL_PROF,A6,SOIL,"A6 - Organic Bodies (P, T, U)",|Y
+tblSOILPROFILE,SOIL_PROF,A7,SOIL,"A7 - 5 cm Mucky Mineral (P, T, U)",|Y
+tblSOILPROFILE,SOIL_PROF,A8,SOIL,A8 - Muck presence (U),|Y
+tblSOILPROFILE,SOIL_PROF,A9,SOIL,"A9 - 1 cm Muck (D, F, G, H, P, T)",|Y
+tblSOILPROFILE,SOIL_PROF,ABRUPT,SOIL,Lower horizon boundary is abrupt (< 2cm thick),|Y|N
+tblSOILPROFILE,SOIL_PROF,ACTUAL_DATE,SOIL,"Actual date sample was collected, if different from DATE_COL",
+tblSOILPROFILE,SOIL_PROF,ALTERNATE_CORNER,SOIL,The Veg Plot corner to which the alternate Soil Plot location is nearest,|NW|NE|SW|SE
+tblSOILPROFILE,SOIL_PROF,ALTERNATE_VEG_PLOT,SOIL,The Veg Plot to which the alternate Soil Plot location is nearest,|1|2|3|4|5
+tblSOILPROFILE,SOIL_PROF,BD1,SOIL,Bulk density sample rep 1 collected at horizon,|Y|N
+tblSOILPROFILE,SOIL_PROF,BD2,SOIL,Bulk density sample rep 2 collected at horizon,|Y|N
+tblSOILPROFILE,SOIL_PROF,BD3,SOIL,Bulk density sample rep 3 collected at horizon,|Y|N
+tblSOILPROFILE,SOIL_PROF,BEARING,SOIL,Magnetic N bearing to nearest Veg Plot from Alternate Soil Plot location,
+tblSOILPROFILE,SOIL_PROF,COLOR_CHANGE,SOIL,Soil color for the soil changed after exposure to air at the depth at which the initial reading was made,|Y
+tblSOILPROFILE,SOIL_PROF,COLOR_DEPTH,SOIL,Depth at which initial color reading was made,
+tblSOILPROFILE,SOIL_PROF,DISTANCE,SOIL,Distance of Soil Plot from nearest Veg Plot corner,
+tblSOILPROFILE,SOIL_PROF,F1,SOIL,"F1 - Loamy Mucky Mineral (A-M, O)",|Y
+tblSOILPROFILE,SOIL_PROF,F10,SOIL,F10 - Marl (U),|Y
+tblSOILPROFILE,SOIL_PROF,F11,SOIL,F11 - Depleted Ochric (T),|Y
+tblSOILPROFILE,SOIL_PROF,F12,SOIL,"F12 - Iron-Maganese (N, P, T)",|Y
+tblSOILPROFILE,SOIL_PROF,F13,SOIL,"F13 - Umbric Surface (N, P, T)",|Y
+tblSOILPROFILE,SOIL_PROF,F16,SOIL,F16 - High Plains Depressions (H),|Y
+tblSOILPROFILE,SOIL_PROF,F17,SOIL,F17 - Delta Ochric (T),|Y
+tblSOILPROFILE,SOIL_PROF,F18,SOIL,F18 - Reduced Vertic (T),|Y|N
+tblSOILPROFILE,SOIL_PROF,F19,SOIL,F19 - Piedmont Flood Plain Soils (S),|Y
+tblSOILPROFILE,SOIL_PROF,F2,SOIL,F2 - Loamy Gleyed Matrix (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,F20,SOIL,"F20 - Anomalus Bright Loamy Soils (S, T)",|Y
+tblSOILPROFILE,SOIL_PROF,F21,SOIL,"F21 -Red parent material - LRR N (MLRA 127, LRR R (MLRA145), LRR S (MLRA 147, 148)",|Y|N
+tblSOILPROFILE,SOIL_PROF,F22,SOIL,"F22 - Very shallow dark surfaces - LRR P (MLRA 128, 152A), LRR U (MLRA154)",|Y|N
+tblSOILPROFILE,SOIL_PROF,F3,SOIL,F3 - Depleted Matrix (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,F6,SOIL,F6 - Redox Dark Surface (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,F7,SOIL,F7 - Depleted Dark Surface (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,F8,SOIL,F8 - Redox Depression (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,F9,SOIL,F9 - Vernal Pools (B-D),|Y|N
+tblSOILPROFILE,SOIL_PROF,FIPS_CODE,SOIL,County FIPS code,
+tblSOILPROFILE,SOIL_PROF,GT_3M_CENTER,SOIL,Center of soil pit > 3m from veg plot corner,|Y|N
+tblSOILPROFILE,SOIL_PROF,HORIZON_DEPTH,SOIL,Pit depth for initial excavation down to 60cm for profile description of all pits,
+tblSOILPROFILE,SOIL_PROF,HORIZON_NAME,SOIL,Horizon Name assigned in field or by NRCS Soil Scientist post-sampling,
+tblSOILPROFILE,SOIL_PROF,IMPENETRABLE_BEDROCK,SOIL,Impenetrable layer (Bedrock) encountered while digging and which prevents sampling to 100 cm,|BEDROCK
+tblSOILPROFILE,SOIL_PROF,IMPENETRABLE_BOULDER,SOIL,Impenetrable layer (Boulder) encountered while digging and which prevents sampling to 100 cm,|BOULDER
+tblSOILPROFILE,SOIL_PROF,IMPENETRABLE_CEMENT,SOIL,Impenetrable layer (Cemented layer) encountered while digging and which prevents sampling to 100 cm,
+tblSOILPROFILE,SOIL_PROF,IMPENETRABLE_CLAY,SOIL,Impenetrable layer (Clay) encountered while digging and which prevents sampling to 100 cm,|CLAY
+tblSOILPROFILE,SOIL_PROF,IMPENETRABLE_OTHER,SOIL,Impenetrable layer encountered (Other) while digging and which prevents sampling to 100 cm,OTHER:.+
+tblSOILPROFILE,SOIL_PROF,INITIAL_CHROMA,SOIL,"For inundated or saturated soil, initial color of soil - CHROMA",|0|1|2|3|4|6|8
+tblSOILPROFILE,SOIL_PROF,INITIAL_HUE,SOIL,"For inundated or saturated soil, initial color of soil - HUE",|5R|7.5R|10R|2.5YR|5YR|7.5YR|10YR|2.5Y|5Y|10Y|5GY|10GY|5G|5BG|10BG|5B|10B|5PB|N
+tblSOILPROFILE,SOIL_PROF,INITIAL_VALUE,SOIL,"For inundated or saturated soil, initial color of soil - VALUE",|2|2.5|3|4|5|6|7|8
+tblSOILPROFILE,SOIL_PROF,INUNDATED_SOIL,SOIL,Presence of inundated or saturated soil in pit immediately after soil pit is excavated,|Y
+tblSOILPROFILE,SOIL_PROF,LIGHTING,SOIL,Lighting conditions while soil profile was being described,|BRIGHT|DAPPLED|OVERCAST|SHADED
+tblSOILPROFILE,SOIL_PROF,LRR,SOIL,Land Resource Region,
+tblSOILPROFILE,SOIL_PROF,MAP_UNIT_KEY,SOIL,Soil Map Unit Key; unique identifier of soil map unit in SSURGO,
+tblSOILPROFILE,SOIL_PROF,MASKED_SAND,SOIL,Percent of sand grains masked by organic matter,
+tblSOILPROFILE,SOIL_PROF,MEASURED_DEPTH,SOIL,Measured depth of organic material (cm),
+tblSOILPROFILE,SOIL_PROF,MOTTLES,SOIL,Mottles,|Y|N
+tblSOILPROFILE,SOIL_PROF,NO_HYDRIC_OBSERVED,SOIL,No Hydric Soil Field Indicator observed,|Y
+tblSOILPROFILE,SOIL_PROF,NON_NRCS_SOIL_SCIENTIST,SOIL,Name of trained soil scientist reviewing the soil profile description in the field,
+tblSOILPROFILE,SOIL_PROF,NRCS_INTENSIFICATION_STUDY,SOIL,Sample location NCRS sampled as part of NCRS Intensification study,|NWCA_SOIL_PIT|AA
+tblSOILPROFILE,SOIL_PROF,NRCS_SOIL_SCIENTIST,SOIL,Name of NRCS soil scientist reviewing soil profile description in the field,
+tblSOILPROFILE,SOIL_PROF,ORGANIC_BODIES,SOIL,Organic bodies,|Y|N
+tblSOILPROFILE,SOIL_PROF,ORGANIC_FILLINGS,SOIL,Organic infillings,|Y|N
+tblSOILPROFILE,SOIL_PROF,OXIDIZED_CHROMA,SOIL,"For inundated or saturated soil, color of soil after oxidation - CHROMA",|0|1|2|3|4|6|8
+tblSOILPROFILE,SOIL_PROF,OXIDIZED_HUE,SOIL,"For inundated or saturated soil, color of soil after oxidation - HUE",|5R|7.5R|10R|2.5YR|5YR|7.5YR|10YR|2.5Y|5Y|10Y|5GY|10GY|5G|5BG|10BG|5B|10B|5PB|N
+tblSOILPROFILE,SOIL_PROF,OXIDIZED_VALUE,SOIL,"For inundated or saturated soil, color of soil after oxidation - VALUE",|2|2.5|3|4|5|6|7|8
+tblSOILPROFILE,SOIL_PROF,PEAT_EXTENDS,SOIL,Organic material extends beyond 125 cm?,|Y|N
+tblSOILPROFILE,SOIL_PROF,PIT_BELOW_1M,SOIL,Depth of pit less than 125 cm due to impenetrable layer,
+tblSOILPROFILE,SOIL_PROF,PIT_DEPTH,SOIL,Soil pit depth (depth of profile description),
+tblSOILPROFILE,SOIL_PROF,PIT_METHOD,SOIL,Method of excavation,
+tblSOILPROFILE,SOIL_PROF,REASON_MOVED,SOIL,Reason for moving soil pit if center of soil plot is greater than 3m from veg plot corner,
+tblSOILPROFILE,SOIL_PROF,REDOX_CONC_CHROMA,SOIL,Chroma of the predominant redox concentrations,
+tblSOILPROFILE,SOIL_PROF,REDOX_CONC_HUE,SOIL,Hue of the predominant redox concentrations,|5R|7.5R|10R|2.5YR|5YR|7.5YR|10YR|2.5Y|5Y|10Y|5GY|10GY|5G|5BG|10BG|5B|10B|5PB|N
+tblSOILPROFILE,SOIL_PROF,REDOX_CONC_VALUE,SOIL,Value of the predominant redox concentrations,
+tblSOILPROFILE,SOIL_PROF,REDOX_CONCENTRATION,SOIL,Percent REDOX Concentrations,
+tblSOILPROFILE,SOIL_PROF,REDOX_DEPL_CHROMA,SOIL,Chroma of the predominant redox depletions,
+tblSOILPROFILE,SOIL_PROF,REDOX_DEPL_HUE,SOIL,Hue of the predominant redox depletions,|5R|7.5R|10R|2.5YR|5YR|7.5YR|10YR|2.5Y|5Y|10Y|5GY|10GY|5G|5BG|10BG|5B|10B|5PB|N
+tblSOILPROFILE,SOIL_PROF,REDOX_DEPL_VALUE,SOIL,Value of the predominant redox depletions,
+tblSOILPROFILE,SOIL_PROF,REDOX_DEPLETION,SOIL,Percent redox depletions,
+tblSOILPROFILE,SOIL_PROF,REDOX_N,SOIL,Redox concentrations occur as nodules/concretions,|Y|N
+tblSOILPROFILE,SOIL_PROF,REDOX_P,SOIL,Redox concentrations occur as pore linings,|Y|N
+tblSOILPROFILE,SOIL_PROF,REDOX_S,SOIL,Redox concentrations occur as soft masses,|Y|N
+tblSOILPROFILE,SOIL_PROF,REVIEW_OF_SOIL_PROFILE,SOIL,Review of soil profile and designation of horizon names,|NRCS_SOIL_SCIENTIST|OTHER_SOIL_SCIENTIST|REVIEW_LATER
+tblSOILPROFILE,SOIL_PROF,ROCK_FRAGMENTS,SOIL,Percent of horizon occupied by rock fragments > 2mm,
+tblSOILPROFILE,SOIL_PROF,ROOTS,SOIL,Percent of horizon occupied by roots,
+tblSOILPROFILE,SOIL_PROF,S1,SOIL,"S1 - Sandy Mucky Mineral (A-O, R, S)",|Y
+tblSOILPROFILE,SOIL_PROF,S11,SOIL,"S11 - High chroma sands - LRRs K, L",|Y|N
+tblSOILPROFILE,SOIL_PROF,S12,SOIL,"S12 - Barrier islands 1 cm muck - LRR T (MLRA 153B, 153D)",|Y|N
+tblSOILPROFILE,SOIL_PROF,S2,SOIL,"S2 - 2.5 cm Mucky Peat or Peat (G, H)",|Y
+tblSOILPROFILE,SOIL_PROF,S3,SOIL,"S3 - 5 cm Mucky Peat or Peat (F, M, R)",|Y
+tblSOILPROFILE,SOIL_PROF,S4,SOIL,S4 - Sandy Gleyed Matrix (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,S5,SOIL,S5 - Sandy Redox (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,S6,SOIL,S6 - Stripped Matrix (A-U),|Y
+tblSOILPROFILE,SOIL_PROF,S7,SOIL,"S7 - Dark Surface (N, P, R-U)",|Y
+tblSOILPROFILE,SOIL_PROF,S8,SOIL,S8 - Polyvalue Below Surface (R-U),|Y
+tblSOILPROFILE,SOIL_PROF,S9,SOIL,S9 - Thick Dark Surface (R-U),|Y
+tblSOILPROFILE,SOIL_PROF,SHCH,SOIL,Soil chemistry sample collected at horizon,|Y|N
+tblSOILPROFILE,SOIL_PROF,SM_CHROMA,SOIL,soil Matrix Chroma as determined using a Munsell Soil Color Book,
+tblSOILPROFILE,SOIL_PROF,SM_HUE,SOIL,Soil Matrix Hue as determined using a Munsell Soil Color Book,|5R|7.5R|10R|2.5YR|5YR|7.5YR|10YR|2.5Y|5Y|10Y|5GY|10GY|5G|5BG|10BG|5B|10B|5PB|N
+tblSOILPROFILE,SOIL_PROF,SM_VALUE,SOIL,Soil Matrix Value as determined using a Munsell Soil Color Book,
+tblSOILPROFILE,SOIL_PROF,SOIL_LAT,SOIL,Soil plot latitude,
+tblSOILPROFILE,SOIL_PROF,SOIL_LON,SOIL,Soil plot longitude,
+tblSOILPROFILE,SOIL_PROF,SOIL_REVIEW,SOIL,Soil form (S-1) reviewed?,|Y|N
+tblSOILPROFILE,SOIL_PROF,SOIL_TEXTURE,SOIL,Soil texture,|P|MP|M|S|L|MS|ML
+tblSOILPROFILE,SOIL_PROF,STANDARD_CORNER,SOIL,The Veg Plot corner to which the Soil Plot is nearest,|NW|NE|SW|SE
+tblSOILPROFILE,SOIL_PROF,STANDARD_VEG_PLOT,SOIL,The Veg Plot to which the Soil Plot is nearest,|1|2|3|4|5
+tblSOILPROFILE,SOIL_PROF,STRIPPED_MATRIX,SOIL,Stripped Matrix,|Y|N
+tblSOILPROFILE,SOIL_PROF,SULFIDE_ODOR,SOIL,Detection of hydrogen sulfide odor upon excavation,|Y
+tblSOILPROFILE,SOIL_PROF,SURFACE_WATER_DEPTH,SOIL,Water table depth below surface (negative) or height above surface (positive),
+tblSOILPROFILE,SOIL_PROF,TIME_EVACUATION,SOIL,Time of pit excavation,
+tblSOILPROFILE,SOIL_PROF,TIME_EXCAVATION,SOIL,Time on 24 clock when soil pit was excavated,
+tblSOILPROFILE,SOIL_PROF,WATER_LEVEL,SOIL,Water table level determination method,|STANDING_WATER|SATURATION|NO_WATER
+tblSOILPROFILE,SOIL_PROF,WATER_TABLE,SOIL,Depth of water table relative to soil surface,|ABOVE|ZERO|BELOW
+tblTREE,TREE,HMED_TREE,V4,"For each tree species, cover of trees > 5m to 15m tall",
+tblTREE,TREE,JR_SNAG,SNAGS,Counts of dead trees/snags 51 to 75cm DBH,
+tblTREE,TREE,JR_TREE,V4,"For each tree species, counts of trees 51 to 75cm DBH",
+tblTREE,TREE,LMED_TREE,V4,"For each tree species, cover of trees > 2 to 5m tall",
+tblTREE,TREE,PLOTS_SAMPLED,V4,Number of plots sampled,
+tblTREE,TREE,SMALL_TREE,V4,"For each tree species, cover of trees 0.5m to 2m tall",
+tblTREE,TREE,SNAG_REVIEW,SNAGS,Was form reviewed,|Y|N
+tblTREE,TREE,STANDING,SNAGS,Estimate of small standing trees/snags on plot,|0|1-10|11-20|>20
+tblTREE,TREE,TALL_TREE,V4,"For each tree species, cover of trees > 15m to 30m tall",
+tblTREE,TREE,THICK_SNAG,SNAGS,Counts of dead trees/snags 76 to 100cm DBH,
+tblTREE,TREE,THICK_TREE,V4,"For each tree species, counts of trees, dead trees/snags 76 to 100cm DBH",
+tblTREE,TREE,THIN_SNAG,SNAGS,Counts of dead trees/snags 26 to 50cm DBH,
+tblTREE,TREE,THIN_TREE,V4,"For each tree species, counts of trees 26 to 50cm DBH",
+tblTREE,TREE,TREE_SPECIES,V4,"Scientific Name for each tree species encountered in the Veg Plot, or if an unknown the pseudonym for the species",
+tblTREE,TREE,V4_REVIEW,SNAGS,Form V-4 reviewed?,
+tblTREE,TREE,VSMALL_TREE,V4,"For each tree species, cover of trees < 0.5m tall",
+tblTREE,TREE,VTALL_TREE,V4,"For each tree species, cover of trees > 30m tall",
+tblTREE,TREE,XTHICK_SNAG,SNAGS,Counts of dead trees/snags 101 to 200 cm DBH,
+tblTREE,TREE,XTHICK_TREE,V4,"For each tree species, counts of trees 101 to 200 cm DBH",
+tblTREE,TREE,XTHIN_SNAG,SNAGS,Counts of dead trees/snags 11 to 25cm DBH,
+tblTREE,TREE,XTHIN_TREE,V4,"For each tree species, counts of trees 11 to 25cm DBH",
+tblTREE,TREE,XXTHICK_TREE,V4,"For each tree species, counts of trees > 200 cm DBH",
+tblTREE,TREE,XXTHIN_SNAG,SNAGS,Dead trees/snags 5 to 10 cm DBH (diameter breast height),
+tblTREE,TREE,XXTHIN_TREE,V4,"For each tree species, counts of trees 5 to 10 cm DBH (diameter breast height)",
+tblVEGPLOT,VEGPLOT,ACTUAL_DATE,VEGPLOT,Date this form was filled out,
+tblVEGPLOT,VEGPLOT,CITATION_1,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_2,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_3,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_4,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_5,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_6,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_7,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,CITATION_8,VEGPLOT,Citations for Floras/Field Guides/Databases used for plant identification,
+tblVEGPLOT,VEGPLOT,OBSTACLE,VEGPLOT,Obstacle veg plot layout used,|Y|N
+tblVEGPLOT,VEGPLOT,OBSTACLE_DEEP,VEGPLOT,Obstacle type: deep water,|Y|N
+tblVEGPLOT,VEGPLOT,OBSTACLE_OTHER,VEGPLOT,Obstacle type: other,
+tblVEGPLOT,VEGPLOT,OBSTACLE_SAFETY,VEGPLOT,Obstacle type: safety hazard,|Y|N
+tblVEGPLOT,VEGPLOT,OBSTACLE_TIDE,VEGPLOT,Obstacle type: tide channel,|Y|N
+tblVEGPLOT,VEGPLOT,PLOT_LAYOUT,VEGPLOT,Vegetation plot layout,|STANDARD|WIDE_POLYGON|NARROW_POLYGON|WETLAND_BOUNDARY
+tblVEGPLOT,VEGPLOT,VEGPLOT_REVIEW,VEGPLOT,Form V-1 reviewed?,|Y|N
+tblVEGPLOT,VEGPLOT,WETLAND_TYPE_1,VEGPLOT,Predominant NWCA target wetland type in plot 1,
+tblVEGPLOT,VEGPLOT,WETLAND_TYPE_2,VEGPLOT,Predominant NWCA target wetland type in plot 2,
+tblVEGPLOT,VEGPLOT,WETLAND_TYPE_3,VEGPLOT,Predominant NWCA target wetland type in plot 3,
+tblVEGPLOT,VEGPLOT,WETLAND_TYPE_4,VEGPLOT,Predominant NWCA target wetland type in plot 4,
+tblVEGPLOT,VEGPLOT,WETLAND_TYPE_5,VEGPLOT,Predominant NWCA target wetland type in plot 5,
+tblVEGPLOTLOC,VEGPLOT,VEG_PLOT_LAT,VEGPLOT,Location of plot,
+tblVEGPLOTLOC,VEGPLOT,VEG_PLOT_LON,VEGPLOT,Location of plot,
+tblVEGTYPE,GROUND,DEPTH_NE,V3,Litter depth (cm) in center of 1-m2 quadrat at NE corner of Veg Plot,
+tblVEGTYPE,GROUND,DEPTH_SW,V3,Litter depth (cm) in center of 1-m2 quadrat at SW corner of Veg Plot,
+tblVEGTYPE,GROUND,EXPOSED_GRAVEL,V3,Cover exposed gravel/cobble (~2mm to 25cm),
+tblVEGTYPE,GROUND,EXPOSED_ROCK,V3,Cover exposed rock (> 25cm),
+tblVEGTYPE,GROUND,EXPOSED_SOIL,V3,Cover exposed soil/sediment,
+tblVEGTYPE,GROUND,PLOTS_SAMPLED,V3,Total number plots sampled,
+tblVEGTYPE,GROUND,PREDOMINANT_DEPTH,V3,Predominant water depth,
+tblVEGTYPE,GROUND,PREDOMINANT_LITTER,V3,Predominant litter type,|C|D|G|F|R|E
+tblVEGTYPE,GROUND,TIME,V3,Time water depth measurements were made,
+tblVEGTYPE,GROUND,TOTAL_LITTER,V3,Total cover of litter,
+tblVEGTYPE,GROUND,TOTAL_WATER,V3,Total cover of water,
+tblVEGTYPE,GROUND,WD_COARSE,V3,Cover of coarse woody debris (> 5cm diameter),
+tblVEGTYPE,GROUND,WD_FINE,V3,Cover of fine woody debris (< 5cm diameter),
+tblVEGTYPE,VEGTYPE,ALGAE,V3,% Cover of filamentous or mat forming algae,
+tblVEGTYPE,VEGTYPE,ARBOREAL_ABUNDANCE,V3,Abundance of arboreal epiphytic byrophytes and lichens,|NONE|SPARSE|COMMON|ABUNDANT
+tblVEGTYPE,VEGTYPE,BRYOPHYTES,V3,"% Cover of Byrophytes growing on ground surfaces, logs, rocks, etc.",
+tblVEGTYPE,VEGTYPE,FLOATING_AQ,V3,% Cover Floating Aquatic Vegetation,
+tblVEGTYPE,VEGTYPE,HMED_VEG,V3,% Cover Vegetation > 5m to 15m tall,
+tblVEGTYPE,VEGTYPE,LIANAS,V3,"% Cover Lianas, vines, and vascular epiphytes",
+tblVEGTYPE,VEGTYPE,LICHENS,V3,"% Cover of Lichens growing on ground surfaces, logs, rocks, etc.",
+tblVEGTYPE,VEGTYPE,MACROALGAE,V3,% Cover of macroalage (freshwater species/seaweeds),
+tblVEGTYPE,VEGTYPE,MED_VEG,V3,% Cover Vegetation >2m to 5 tall,
+tblVEGTYPE,VEGTYPE,PEAT_MOSS,V3,Bryophytes dominated by Sphagnum or other peat forming moss,|Y|N
+tblVEGTYPE,VEGTYPE,PLOTS_SAMPLED,V3,Total number plots sampled,
+tblVEGTYPE,VEGTYPE,SMALL_VEG,V3,% Cover Vegetation 0.5 to 2m tall,
+tblVEGTYPE,VEGTYPE,SUBMERGED_AQ,V3,% Cover Submerged Aquatic Vegetation,
+tblVEGTYPE,VEGTYPE,TALL_VEG,V3,% Cover Vegetation > 15m to 30m tall,
+tblVEGTYPE,VEGTYPE,V3_REVIEW,V3,Form V-3 reviewed?,
+tblVEGTYPE,VEGTYPE,VSMALL_VEG,V3,% Cover Vegetation < 0.5m tall,
+tblVEGTYPE,VEGTYPE,VTALL_VEG,V3,% Cover Vegetation > 30m tall,

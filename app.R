@@ -18,7 +18,7 @@ ui <- fluidPage(
 
    shinyjs::useShinyjs(),
    # Application title
-   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.3)",
+   navbarPage("NARS Data Extraction & Reporting Tool for Desktop (v. 2.1.4)",
               # Instructions and About ----
               tabPanel(span('About',title='How to use this Shiny app'),
                        fluidRow(column(2, imageOutput("narsLogo")),
@@ -45,8 +45,7 @@ ui <- fluidPage(
                        fluidRow(column(1), column(10, h3(strong('Instructions')),
                                                   p('After compiling all of the .JSON files for a site visit into a single directory, 
                                                   users are ready to extract and organize the data. On the Data Upload and Extraction 
-                                                  tab, users first select the survey app used to collect the data (NRSA 2018-19, 
-                                                  NLA 2017, NLA 2022, NCCA 2020, or NWCA 2021), then select the directory where their data is saved 
+                                                  tab, users first select the survey app used to collect the data, then select the directory where their data is saved 
                                                     to upload .JSON files to the app for processing. Once the data is uploaded to 
                                                     the app, click the',
                                                     span(strong('Parse data in selected files')), 'button. Then users will have 
@@ -70,7 +69,7 @@ ui <- fluidPage(
                                                              'NLA 2017' = 'nla17',
                                                              'NLA 2022' = 'nla22',
                                                              'NCCA 2020/2025' = 'ncca20',
-                                                             'NWCA 2021' = 'nwca21'),
+                                                             'NWCA 2021/2026' = 'nwca21'),
                                                  select = ''),
                                     h4(strong('Instructions')),
                                     p('1) Select all the .JSON files associated with a single site visit by clicking on the ‘Browse’

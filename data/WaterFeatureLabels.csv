@@ -1,0 +1,7 @@
+PARAMETER,ALIAS
+BACKWATER_SLOUGH,"Slough, backwater, or off-channel area"
+CHANNEL_STREAM,"River, stream, or ditch"
+DEEP_DEPRESSION,Isolated pool deeper than 30 cm
+LAKE,Open water area of lakes and ponds
+SHALLOW_DEPRESSION,Isolated pool shallower than 30 cm
+TIDAL_CHANNEL,Brackish or salt water tidal channel

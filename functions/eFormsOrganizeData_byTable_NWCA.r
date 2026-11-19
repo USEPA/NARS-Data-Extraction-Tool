@@ -28,6 +28,7 @@ eFormsOrganize_byTable.nwca <- function(rawData){
          V3 = {rr <- organizeV3.nwca(parsedData)},
          SNAGS = {rr <- organizeV4.nwca(parsedData)},
          W1 = {rr <- organizeWater.nwca(parsedData)},
+         ESA = {rr <- organizeESA.ncca(parsedData)},
          stop("unknown sample type")
   )
   
@@ -600,4 +601,18 @@ organizeWater.nwca <- function(parsedIn){
   aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
   
   return(aa.out)
+}
+
+organizeESA.nwca <- function(parsedIn){
+  aa <- parsedIn
+  aa$SAMPLE_TYPE <- 'ESA'
+  
+  varLong <- names(parsedIn)
+  aa.long <- reshape(aa, idvar=c('SAMPLE_TYPE'), varying = varLong, times = varLong,
+                     v.names = 'RESULT', timevar = 'PARAMETER', direction = 'long')
+  
+  aa.long$PARAMETER <- with(aa.long, gsub("ESA\\.", "", PARAMETER))
+  aa.long <- subset(aa.long, str_detect(PARAMETER, 'REVIEW')==FALSE)
+  
+  aa.out <- base::subset(aa.long, select = c('SAMPLE_TYPE','PARAMETER','RESULT'))
 }
